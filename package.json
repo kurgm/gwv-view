@@ -16,8 +16,10 @@
   },
   "homepage": "https://github.com/kurgm/gwv-view#readme",
   "dependencies": {
+    "@types/material-ui": "^0.17.7",
     "@types/react": "^15.0.24",
     "@types/react-dom": "^15.5.0",
+    "@types/react-tap-event-plugin": "0.0.30",
     "caniuse-api": "^1.6.1",
     "material-ui": "^0.18.1",
     "react": "^15.5.4",
