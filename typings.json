@@ -1,0 +1,8 @@
+{
+  "globalDependencies": {
+    "material-ui": "registry:dt/material-ui#0.16.0+20170323194905"
+  },
+  "dependencies": {
+    "react-tap-event-plugin": "registry:dt/react-tap-event-plugin#0.0.0+20160726072212"
+  }
+}
