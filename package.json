@@ -1,0 +1,32 @@
+{
+  "name": "gwv-view",
+  "version": "1.0.0",
+  "description": "Viewer of results of GlyphWiki data validator",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kurgm/gwv-view.git"
+  },
+  "author": "twe",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kurgm/gwv-view/issues"
+  },
+  "homepage": "https://github.com/kurgm/gwv-view#readme",
+  "dependencies": {
+    "@types/react": "^15.0.24",
+    "@types/react-dom": "^15.5.0",
+    "caniuse-api": "^1.6.1",
+    "material-ui": "^0.18.1",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-tap-event-plugin": "^2.0.1"
+  },
+  "devDependencies": {
+    "awesome-typescript-loader": "^3.1.3",
+    "source-map-loader": "^0.2.1",
+    "webpack": "^2.5.1"
+  }
+}
