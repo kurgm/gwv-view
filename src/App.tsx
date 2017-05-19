@@ -1,13 +1,19 @@
 import * as React from "react";
 
-import getMuiTheme from "material-ui/styles/getMuiTheme";
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import { HashRouter, Route, Switch } from "react-router-dom";
+
+import Master from "./components/Master";
+
+import Home from "./components/Home";
 
 const App = () => (
-	<MuiThemeProvider muiTheme={getMuiTheme()}>
-		<div>
-		</div>
-	</MuiThemeProvider>
+	<HashRouter>
+		<Master>
+			<Switch>
+				<Route exact path="/" component={Home} />
+			</Switch>
+		</Master>
+	</HashRouter>
 );
 
 export default App;

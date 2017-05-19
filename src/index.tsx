@@ -1,9 +1,9 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import injectTapEventPlugin = require("react-tap-event-plugin");
-import App from "./App";
-
+import * as injectTapEventPlugin from "react-tap-event-plugin";
 injectTapEventPlugin();
+
+import App from "./App";
 
 ReactDOM.render(
 	<App />,
