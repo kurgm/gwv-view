@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Viewer of results of GlyphWiki data validator",
   "scripts": {
+    "build": "webpack --progress",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
