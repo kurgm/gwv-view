@@ -57,7 +57,7 @@ class Master extends React.Component<{}, IMasterState> {
 			} as React.CSSProperties,
 		};
 	}
-	private handleLeftIconButtonTouchTap() {
+	private handleLeftIconButtonTouchTap = () => {
 		this.setState({
 			navDrawerOpen: !this.state.navDrawerOpen,
 		});
