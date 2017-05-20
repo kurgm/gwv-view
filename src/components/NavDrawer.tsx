@@ -18,6 +18,7 @@ interface INavDrawerProps {
 	open: boolean;
 	style?: React.CSSProperties;
 	containerStyle?: React.CSSProperties;
+	zDepth?: number;
 }
 
 class NavDrawer extends React.Component<INavDrawerProps, {}> {
@@ -30,10 +31,11 @@ class NavDrawer extends React.Component<INavDrawerProps, {}> {
 			open,
 			style,
 			containerStyle,
+			zDepth,
 		} = this.props;
 		return (
 			<Drawer
-				{...{style, docked, open, containerStyle}}
+				{...{style, docked, open, containerStyle, zDepth}}
 				onRequestChange={onNavDrawerRequestChange}
 			>
 				<Divider/>

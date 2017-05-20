@@ -46,8 +46,15 @@ class Master extends React.Component<{
 		const title = "GlyphWiki dump 検証";
 		const styles = this.getStyle();
 
-		const { navDrawerOpen } = this.state;
-		const docked = false;
+		let { navDrawerOpen } = this.state;
+		let docked = false;
+		if (this.props.width === LARGE) {
+			navDrawerOpen = true;
+			docked = true;
+			styles.root.paddingLeft = styles.appBarTitle.paddingLeft = muiTheme.drawer!.width!;
+			styles.appBar.right = 0;
+			styles.navDrawerContainer.borderRight = "1px solid rgba(0,0,0,.14)";
+		}
 
 		const location: Location = this.context.router.route.location;
 		return (
@@ -57,6 +64,8 @@ class Master extends React.Component<{
 						onLeftIconButtonTouchTap={this.handleLeftIconButtonTouchTap}
 						title={title}
 						style={styles.appBar}
+						showMenuIconButton={!docked}
+						titleStyle={styles.appBarTitle}
 					/>
 					<NavDrawer
 						docked={docked}
@@ -65,6 +74,7 @@ class Master extends React.Component<{
 						onNavDrawerRequestChange={this.handleNavDrawerRequestChange}
 						open={navDrawerOpen}
 						containerStyle={styles.navDrawerContainer}
+						zDepth={docked ? 0 : 2}
 					/>
 					<div style={styles.root}>
 						{this.props.children}
@@ -79,6 +89,9 @@ class Master extends React.Component<{
 			appBar: {
 				position: "fixed",
 				top: 0,
+			} as React.CSSProperties,
+			appBarTitle: {
+				paddingLeft: 0,
 			} as React.CSSProperties,
 			navDrawerContainer: {
 				paddingTop: spacing.desktopKeylineIncrement,
