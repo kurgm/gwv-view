@@ -61,6 +61,7 @@ class Master extends React.Component<{}, IMasterState> {
 						onListChange={this.handleNavDrawerListChange}
 						onNavDrawerRequestChange={this.handleNavDrawerRequestChange}
 						open={navDrawerOpen}
+						containerStyle={styles.navDrawerContainer}
 					/>
 					<div style={styles.root}>
 						{this.props.children}
@@ -75,6 +76,9 @@ class Master extends React.Component<{}, IMasterState> {
 			appBar: {
 				position: "fixed",
 				top: 0,
+			} as React.CSSProperties,
+			navDrawerContainer: {
+				paddingTop: spacing.desktopKeylineIncrement,
 			} as React.CSSProperties,
 			root: {
 				paddingTop: spacing.desktopKeylineIncrement,

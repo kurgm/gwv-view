@@ -3,8 +3,10 @@ import * as React from "react";
 import { Location } from "history";
 
 import { TouchTapEvent } from "material-ui";
+import Divider from "material-ui/Divider";
 import Drawer from "material-ui/Drawer";
 import { List, ListItem, makeSelectable } from "material-ui/List";
+import spacing from "material-ui/styles/spacing";
 
 const SelectableList = makeSelectable(List);
 
@@ -14,7 +16,8 @@ interface INavDrawerProps {
 	onListChange: (e: TouchTapEvent, value: any) => void;
 	onNavDrawerRequestChange: (opening: boolean, reason: string) => void;
 	open: boolean;
-	style?: object;
+	style?: React.CSSProperties;
+	containerStyle?: React.CSSProperties;
 }
 
 class NavDrawer extends React.Component<INavDrawerProps, {}> {
@@ -26,12 +29,14 @@ class NavDrawer extends React.Component<INavDrawerProps, {}> {
 			onListChange,
 			open,
 			style,
+			containerStyle,
 		} = this.props;
 		return (
 			<Drawer
-				{...{style, docked, open}}
+				{...{style, docked, open, containerStyle}}
 				onRequestChange={onNavDrawerRequestChange}
 			>
+				<Divider/>
 				<SelectableList
 					onChange={onListChange}
 					value={location.pathname}
