@@ -14,7 +14,7 @@ import {
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import spacing from "material-ui/styles/spacing";
-import withWidth, { LARGE, MEDIUM, Options } from "material-ui/utils/withWidth";
+import withWidth, { LARGE, MEDIUM, SMALL } from "material-ui/utils/withWidth";
 
 import NavDrawer from "./NavDrawer";
 
@@ -52,7 +52,6 @@ class Master extends React.Component<{
 			navDrawerOpen = true;
 			docked = true;
 			styles.root.paddingLeft = styles.appBarTitle.paddingLeft = muiTheme.drawer!.width!;
-			styles.appBar.right = 0;
 			styles.navDrawerContainer.borderRight = "1px solid rgba(0,0,0,.14)";
 		}
 
@@ -66,12 +65,13 @@ class Master extends React.Component<{
 						style={styles.appBar}
 						showMenuIconButton={!docked}
 						titleStyle={styles.appBarTitle}
+						iconStyleLeft={styles.appBarIconLeft}
 					/>
 					<NavDrawer
-						docked={docked}
 						location={location}
 						onListChange={this.handleNavDrawerListChange}
-						onNavDrawerRequestChange={this.handleNavDrawerRequestChange}
+						docked={docked}
+						onRequestChange={this.handleNavDrawerRequestChange}
 						open={navDrawerOpen}
 						containerStyle={styles.navDrawerContainer}
 						zDepth={docked ? 0 : 2}
@@ -85,19 +85,30 @@ class Master extends React.Component<{
 	}
 
 	private getStyle() {
+		if (this.props.width === SMALL) {
+			muiTheme.appBar!.height = 56;
+			muiTheme.appBar!.padding = 16;
+		} else {
+			muiTheme.appBar!.height = 64;
+			muiTheme.appBar!.padding = 24;
+		}
 		return {
 			appBar: {
 				position: "fixed",
 				top: 0,
 			} as React.CSSProperties,
+			appBarIconLeft: {
+				marginLeft: -12,
+			} as React.CSSProperties,
 			appBarTitle: {
-				paddingLeft: 0,
+				fontSize: 20,
+				paddingLeft: 12,
 			} as React.CSSProperties,
 			navDrawerContainer: {
-				paddingTop: spacing.desktopKeylineIncrement,
+				paddingTop: muiTheme.appBar!.height!,
 			} as React.CSSProperties,
 			root: {
-				paddingTop: spacing.desktopKeylineIncrement,
+				paddingTop: muiTheme.appBar!.height!,
 			} as React.CSSProperties,
 		};
 	}

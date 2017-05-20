@@ -10,33 +10,22 @@ import spacing from "material-ui/styles/spacing";
 
 const SelectableList = makeSelectable(List);
 
-interface INavDrawerProps {
-	docked: boolean;
+interface INavDrawerProps extends __MaterialUI.DrawerProps {
 	location: Location;
 	onListChange: (e: TouchTapEvent, value: any) => void;
-	onNavDrawerRequestChange: (opening: boolean, reason: string) => void;
-	open: boolean;
-	style?: React.CSSProperties;
-	containerStyle?: React.CSSProperties;
-	zDepth?: number;
 }
 
 class NavDrawer extends React.Component<INavDrawerProps, {}> {
 	public render() {
 		const {
 			location,
-			docked,
-			onNavDrawerRequestChange,
 			onListChange,
-			open,
-			style,
-			containerStyle,
-			zDepth,
+			children,
+			...rest,
 		} = this.props;
 		return (
 			<Drawer
-				{...{style, docked, open, containerStyle, zDepth}}
-				onRequestChange={onNavDrawerRequestChange}
+				{...rest}
 			>
 				<Divider/>
 				<SelectableList
