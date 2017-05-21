@@ -5,7 +5,9 @@
     ],
     "jsRules": {},
     "rules": {
-      "indent": [true, "tabs"]
+      "indent": [true, "tabs"],
+      "max-classes-per-file": false,
+      "no-bitwise": false
     },
     "rulesDirectory": []
 }

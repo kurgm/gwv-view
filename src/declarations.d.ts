@@ -12,3 +12,5 @@ declare module "material-ui/utils/withWidth" {
 	export default function withWidth<P>(options?: Options):
 		(component: React.ComponentClass<P & IProps>) => React.ComponentClass<P>;
 }
+
+type KageLine = [number, string];

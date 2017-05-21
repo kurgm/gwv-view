@@ -24,9 +24,7 @@ class NavDrawer extends React.Component<INavDrawerProps, {}> {
 			...rest,
 		} = this.props;
 		return (
-			<Drawer
-				{...rest}
-			>
+			<Drawer {...rest}>
 				<Divider />
 				<SelectableList
 					onChange={onListChange}
