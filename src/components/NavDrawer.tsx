@@ -27,7 +27,7 @@ class NavDrawer extends React.Component<INavDrawerProps, {}> {
 			<Drawer
 				{...rest}
 			>
-				<Divider/>
+				<Divider />
 				<SelectableList
 					onChange={onListChange}
 					value={location.pathname}

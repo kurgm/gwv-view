@@ -52,5 +52,9 @@
   },
   "include": [
     "./src/**/*"
-  ]
+  ],
+  "formatCodeOptions": {
+    "ConvertTabsToSpaces": false,
+    "NewLineCharacter": "\n"
+  }
 }
