@@ -13,7 +13,7 @@ export interface IValidateResultProps<T> {
 	getRowRenderer(type: string): React.SFC<{ item: T; }>;
 }
 
-class ValidateResult extends React.Component<IValidateResultProps<any>, {}> {
+export class ValidateResult extends React.Component<IValidateResultProps<any>, {}> {
 	public render() {
 		return (
 			<div>
@@ -44,5 +44,40 @@ class ValidateResult extends React.Component<IValidateResultProps<any>, {}> {
 		);
 	}
 }
+
+export const SimpleColumnRow = (params: { columns: React.ReactNode[] }) => (
+	<TableRow>
+		{params.columns.map((column) => (
+			<TableRowColumn>
+				{column}
+			</TableRowColumn>
+		))}
+	</TableRow>
+);
+
+export class Glyph extends React.Component<{ name: string }, {}> {
+	public render() {
+		// FIXME: should do lazy loading
+		return (
+			<a href={`https://glyphwiki.org/wiki/${this.props.name}`} className="glyphLink">
+				<img
+					src={`https://glyphwiki.org/glyph/${this.props.name}.50px.png`}
+					width="50"
+					height="50"
+					alt={this.props.name}
+					className="thumb"
+				/>
+				{this.props.name}
+			</a>
+		);
+	}
+}
+
+export const KageLine = (props: { data: KageLineData }) => (
+	<span>
+		{props.data[0] + 1}行目：
+		<code>{props.data[1]}</code>
+	</span>
+);
 
 export default ValidateResult;

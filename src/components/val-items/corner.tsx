@@ -5,9 +5,9 @@ import {
 	Table, TableBody, TableFooter, TableHeader, TableHeaderColumn, TableRow, TableRowColumn,
 } from "material-ui/Table";
 
-import ValidateResult from "../ValidateResult";
+import { Glyph, KageLine, SimpleColumnRow, ValidateResult } from "../ValidateResult";
 
-type IValue = [string, KageLine, KageLine];
+type IValue = [string, KageLineData, KageLineData];  // glyph name, tate, yoko
 
 class CornerComponent extends React.Component<{ result: { [type: string]: IValue[]; }; }, {}> {
 	public static id = "corner";
@@ -30,32 +30,41 @@ class CornerComponent extends React.Component<{ result: { [type: string]: IValue
 	}
 
 	private getGroupTitle(typeStr: string) {
+		const cornerTypes = [
+			"左上カド", "左下カド", "右上カド", "右下カド", "左下zh用旧カド", "擬似右下H/Tカド",
+			"左下zh用新カド", "接続(横)", "開放", "接続(縦)", "右下H/Tカド"];
 		const type = parseInt(typeStr, 16);
-		if (type === 0x19) {
-			return "左下カドに接続(縦)形状が使用されています。（左下zh用旧形状を使用するべきでしょう。）";
-		} else if (type === 0x14) {
-			return "左下zh用旧形状が使用されていますが、左下カド形状を使用するべきかもしれません。";
-		} else if (type === 0x16) {
-			return "左下zh用新形状が使用されていますが、左下カド形状を使用するべきかもしれません。";
-		} else if (type === 0x61) {
-			return "左下カド形状が使用されていますが、左下zh用新形状を使用するべきかもしれません。";
+		const usedCornerType = cornerTypes[type & 0x0f];
+		const guessedCornerType = cornerTypes[type >> 4];
+		switch (type) {
+			case 0x14:
+			case 0x16:
+			case 0x61:
+				return `${usedCornerType}形状が使用されていますが、${guessedCornerType}形状を使用するべきかもしれません。`;
+			case 0x19:
+				return "左下カドに接続(縦)形状が使用されています。（左下zh用旧形状を使用するべきでしょう。）";
 		}
-		const s = ["左上カド", "左下カド", "右上カド", "右下カド", "左下zh用旧カド", "擬似右下H/Tカド", "左下zh用新カド", "接続(横)", "開放", "接続(縦)", "右下H/Tカド"];
 		if (type % 0x11 === 0) {
-			return `${s[type & 0xf]}が離れています。`;
+			return `${usedCornerType}が離れています。`;
 		}
-		return `${s[type >> 4]}に${s[type & 0xf]}形状が使用されています。`;
+		return `${guessedCornerType}に${usedCornerType}形状が使用されています。`;
 	}
 	private getTableHeaderRow(type: string) {
 		return (
-			// TODO: implement
-			<TableRow />
+			<SimpleColumnRow columns={[
+				"グリフ名",
+				"縦画",
+				"横画",
+			]} />
 		);
 	}
 	private getRowRenderer(type: string) {
 		return (props: { item: IValue; }) => (
-			// TODO: implement
-			<TableRow />
+			<SimpleColumnRow columns={[
+				<Glyph name={props.item[0]} />,
+				<KageLine data={props.item[1]} />,
+				<KageLine data={props.item[2]} />,
+			]} />
 		);
 	}
 }

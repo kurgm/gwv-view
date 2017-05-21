@@ -13,4 +13,4 @@ declare module "material-ui/utils/withWidth" {
 		(component: React.ComponentClass<P & IProps>) => React.ComponentClass<P>;
 }
 
-type KageLine = [number, string];
+type KageLineData = [number, string];
