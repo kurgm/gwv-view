@@ -14,9 +14,11 @@ import {
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import spacing from "material-ui/styles/spacing";
-import withWidth, { LARGE, MEDIUM, SMALL } from "material-ui/utils/withWidth";
+import withWidth, { IProps as WithWidthProps, LARGE, MEDIUM, SMALL } from "material-ui/utils/withWidth";
 
 import NavDrawer from "./NavDrawer";
+
+interface IMasterProps { }  // tslint:disable-line:no-empty-interface
 
 interface IMasterState {
 	navDrawerOpen: boolean;
@@ -29,9 +31,7 @@ const muiTheme = getMuiTheme({
 	},
 });
 
-class Master extends React.Component<{
-	width: number,
-}, IMasterState> {
+class Master extends React.Component<IMasterProps & WithWidthProps, IMasterState> {
 
 	public static contextTypes = {
 		router: PropTypes.object,
@@ -130,4 +130,4 @@ class Master extends React.Component<{
 	}
 }
 
-export default withWidth()(Master);
+export default withWidth<IMasterProps>()(Master);

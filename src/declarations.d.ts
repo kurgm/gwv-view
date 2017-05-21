@@ -5,6 +5,10 @@ declare module "*.md" {
 
 // Overwrite incorrect definitions
 declare module "material-ui/utils/withWidth" {
-	export default function withWidth<C extends React.ComponentClass<P & { width: number; }>, P>(options?: Options):
-		(component: C) => React.ComponentClass<P>;
+	interface IProps {
+		width: number;
+	}
+	// It should be type subtraction, but TypeScript doesn't support it yet
+	export default function withWidth<P>(options?: Options):
+		(component: React.ComponentClass<P & IProps>) => React.ComponentClass<P>;
 }
