@@ -14,3 +14,13 @@ declare module "material-ui/utils/withWidth" {
 }
 
 type KageLineData = [number, string];
+
+// tslint:disable-next-line:interface-name
+interface Window {
+	gwvCallback: (data: IJSONPCallback) => void;
+}
+
+interface IJSONPCallback {
+	result: { [id: string]: any; };
+	lastModified: number;
+}

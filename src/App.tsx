@@ -6,14 +6,43 @@ import Master from "./components/Master";
 
 import Home from "./components/Home";
 
-const App = () => (
-	<HashRouter>
-		<Master>
-			<Switch>
-				<Route exact path="/" component={Home} />
-			</Switch>
-		</Master>
-	</HashRouter>
-);
+import validationItems from "./validationItems";
+
+import CornerComponent from "./components/val-items/corner";
+
+class App extends React.Component<{}, { data: IJSONPCallback | null }> {
+
+	public state = {
+		data: null as IJSONPCallback | null,
+	};
+
+	public componentDidMount() {
+		window.gwvCallback = (data: IJSONPCallback) => {
+			this.setState({ data });
+		};
+		const jsonUrl = "https://script.google.com/macros/s/AKfycbyZCl8KPrCHtzT8ywcE0tEgb7Yo8LfgldbkTz4O6eJ2i3v80pu-/exec";
+		const names = validationItems.map((item) => item.id);
+		const s = document.createElement("script");
+		s.setAttribute("type", "text/javascript");
+		s.setAttribute("src", `${jsonUrl}?callback=gwvCallback&name=${names.join(",")}`);
+		document.getElementsByTagName("head")[0].appendChild(s);
+	}
+	public render() {
+		return (
+			<HashRouter>
+				<Master>
+					<Switch>
+						<Route exact path="/" component={Home} />
+
+						{/* TODO: generate from validationItems */}
+						<Route path="/corner" component={(props) => (
+							<CornerComponent result={this.state.data && this.state.data.result.corner} />
+						)} />
+					</Switch>
+				</Master>
+			</HashRouter>
+		);
+	}
+}
 
 export default App;

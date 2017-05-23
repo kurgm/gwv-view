@@ -2,7 +2,7 @@ import ValidateResult from "./components/ValidateResult";
 
 import CornerComponent from "./components/val-items/corner";
 
-interface IValidateResultComponent extends React.ComponentClass<{ result: { [type: string]: any[]; }; }> {
+export interface IValidateResultComponent extends React.ComponentClass<{ result: { [type: string]: any[]; } | null; }> {
 	id: string;
 	title: string;
 }

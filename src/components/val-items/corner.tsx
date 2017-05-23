@@ -5,11 +5,11 @@ import {
 	Table, TableBody, TableFooter, TableHeader, TableHeaderColumn, TableRow, TableRowColumn,
 } from "material-ui/Table";
 
-import { Glyph, KageLine, SimpleColumnRow, ValidateResult } from "../ValidateResult";
+import { Glyph, KageLine, SimpleColumnHeader, SimpleColumnRow, ValidateResult } from "../ValidateResult";
 
 type IValue = [string, KageLineData, KageLineData];  // glyph name, tate, yoko
 
-class CornerComponent extends React.Component<{ result: { [type: string]: IValue[]; }; }, {}> {
+class CornerComponent extends React.Component<{ result: { [type: string]: IValue[]; } | null; }, {}> {
 	public static id = "corner";
 	public static title = "カド形状・接続";
 
@@ -51,7 +51,7 @@ class CornerComponent extends React.Component<{ result: { [type: string]: IValue
 	}
 	private getTableHeaderRow(type: string) {
 		return (
-			<SimpleColumnRow columns={[
+			<SimpleColumnHeader columns={[
 				"グリフ名",
 				"縦画",
 				"横画",
