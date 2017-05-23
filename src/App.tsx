@@ -34,7 +34,7 @@ class App extends React.Component<{}, { data: IJSONPCallback | null }> {
 					<Switch>
 						<Route exact path="/" component={Home} />
 						{validationItems.map((ItemComponent) => (
-							<Route path={`/${ItemComponent.id}`} component={(props) => (
+							<Route path={`/result/${ItemComponent.id}`} component={(props) => (
 								<ItemComponent result={this.state.data && this.state.data.result[ItemComponent.id]} />
 							)} key={ItemComponent.id} />
 						))}
