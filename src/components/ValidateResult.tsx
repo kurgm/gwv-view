@@ -1,6 +1,8 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
+import spacing from "material-ui/styles/spacing";
+
 import CircularProgress from "material-ui/CircularProgress";
 import {
 	Table, TableBody, TableFooter, TableHeader, TableHeaderColumn, TableRow, TableRowColumn,
@@ -16,8 +18,9 @@ export interface IValidateResultProps<T> {
 
 export class ValidateResult extends React.Component<IValidateResultProps<any>, {}> {
 	public render() {
+		const styles = this.getStyles();
 		return (
-			<div>
+			<div style={styles.content}>
 				{this.props.description}
 				{this.props.result
 					? (
@@ -26,22 +29,18 @@ export class ValidateResult extends React.Component<IValidateResultProps<any>, {
 							return (
 								<div key={type}>
 									<h2>{this.props.getGroupTitle(type)}</h2>
-									{
-										<Table
-											selectable={false}
-										>
-											<TableHeader>
-												{/* TODO: search bar */}
-												{this.props.getTableHeaderRow(type)}
-											</TableHeader>
-											<TableBody>
-												{this.props.result![type].slice(0, /* FIXME */ 50).map((item, idx) => (
-													<RowRenderer item={item} key={idx} />
-												))}
-											</TableBody>
-											{/* TODO: pager */}
-										</Table>
-									}
+									{/* TODO: search bar */}
+									<Table selectable={false}>
+										<TableHeader>
+											{this.props.getTableHeaderRow(type)}
+										</TableHeader>
+										<TableBody>
+											{this.props.result![type].slice(0, /* FIXME */ 50).map((item, idx) => (
+												<RowRenderer item={item} key={idx} />
+											))}
+										</TableBody>
+										{/* TODO: pager */}
+									</Table>
 								</div>
 							);
 						})
@@ -54,6 +53,14 @@ export class ValidateResult extends React.Component<IValidateResultProps<any>, {
 				}
 			</div>
 		);
+	}
+
+	private getStyles() {
+		return {
+			content: {
+				margin: spacing.desktopGutter,
+			} as React.CSSProperties,
+		};
 	}
 }
 
@@ -68,7 +75,7 @@ export const SimpleColumnHeader = (params: { columns: React.ReactNode[] }) => (
 );
 
 export const SimpleColumnRow = (params: { columns: React.ReactNode[] }) => (
-	<TableRow>
+	<TableRow hoverable>
 		{params.columns.map((column, i) => (
 			<TableRowColumn key={`${i}`}>
 				{column}
