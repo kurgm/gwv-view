@@ -19,37 +19,39 @@ export class ValidateResult extends React.Component<IValidateResultProps<any>, {
 		return (
 			<div>
 				{this.props.description}
-				{Object.keys(this.props.result).map((type) => {
-					const RowRenderer = this.props.getRowRenderer(type);
-					return (
-						<div key={type}>
-							<h2>{this.props.getGroupTitle(type)}</h2>
-							{this.props.result
-								? (
-									<Table
-										selectable={false}
-									>
-										<TableHeader>
-											{/* TODO: search bar */}
-											{this.props.getTableHeaderRow(type)}
-										</TableHeader>
-										<TableBody>
-											{this.props.result[type].slice(0, /* FIXME */ 50).map((item, idx) => (
-												<RowRenderer item={item} key={idx} />
-											))}
-										</TableBody>
-										{/* TODO: pager */}
-									</Table>
-								)
-								: (
-									<div style={{ textAlign: "center" }}>
-										<CircularProgress />
-									</div>
-								)
-							}
+				{this.props.result
+					? (
+						Object.keys(this.props.result).map((type) => {
+							const RowRenderer = this.props.getRowRenderer(type);
+							return (
+								<div key={type}>
+									<h2>{this.props.getGroupTitle(type)}</h2>
+									{
+										<Table
+											selectable={false}
+										>
+											<TableHeader>
+												{/* TODO: search bar */}
+												{this.props.getTableHeaderRow(type)}
+											</TableHeader>
+											<TableBody>
+												{this.props.result![type].slice(0, /* FIXME */ 50).map((item, idx) => (
+													<RowRenderer item={item} key={idx} />
+												))}
+											</TableBody>
+											{/* TODO: pager */}
+										</Table>
+									}
+								</div>
+							);
+						})
+					)
+					: (
+						<div style={{ textAlign: "center" }}>
+							<CircularProgress />
 						</div>
-					);
-				})}
+					)
+				}
 			</div>
 		);
 	}
