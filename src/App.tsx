@@ -33,11 +33,11 @@ class App extends React.Component<{}, { data: IJSONPCallback | null }> {
 				<Master>
 					<Switch>
 						<Route exact path="/" component={Home} />
-
-						{/* TODO: generate from validationItems */}
-						<Route path="/corner" component={(props) => (
-							<CornerComponent result={this.state.data && this.state.data.result.corner} />
-						)} />
+						{validationItems.map((ItemComponent) => (
+							<Route path={`/${ItemComponent.id}`} component={(props) => (
+								<ItemComponent result={this.state.data && this.state.data.result[ItemComponent.id]} />
+							)} key={ItemComponent.id} />
+						))}
 					</Switch>
 				</Master>
 			</HashRouter>
