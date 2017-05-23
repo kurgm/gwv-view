@@ -30,7 +30,7 @@ class App extends React.Component<{}, { data: IJSONPCallback | null }> {
 	public render() {
 		return (
 			<HashRouter>
-				<Master>
+				<Master items={this.state.data && validationItems.filter((item) => item.id in this.state.data!.result)}>
 					<Switch>
 						<Route exact path="/" component={Home} />
 						{validationItems.map((ItemComponent) => (

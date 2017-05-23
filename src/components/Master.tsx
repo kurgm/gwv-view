@@ -16,9 +16,12 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import spacing from "material-ui/styles/spacing";
 import withWidth, { IProps as WithWidthProps, LARGE, MEDIUM, SMALL } from "material-ui/utils/withWidth";
 
+import { IValidateResultComponent } from "../validationItems";
 import NavDrawer from "./NavDrawer";
 
-interface IMasterProps { }  // tslint:disable-line:no-empty-interface
+interface IMasterProps {
+	items: IValidateResultComponent[] | null;
+}
 
 interface IMasterState {
 	navDrawerOpen: boolean;
@@ -69,6 +72,7 @@ class Master extends React.Component<IMasterProps & WithWidthProps, IMasterState
 					/>
 					<NavDrawer
 						location={location}
+						items={this.props.items}
 						onListChange={this.handleNavDrawerListChange}
 						docked={docked}
 						onRequestChange={this.handleNavDrawerRequestChange}
