@@ -1,10 +1,6 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
-import {
-	Table, TableBody, TableFooter, TableHeader, TableHeaderColumn, TableRow, TableRowColumn,
-} from "material-ui/Table";
-
 import { Glyph, KageLine, SimpleColumnHeader, SimpleColumnRow, ValidateResult } from "../ValidateResult";
 
 type IValue = [string, KageLineData, KageLineData];  // glyph name, tate, yoko

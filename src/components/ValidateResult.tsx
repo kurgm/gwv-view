@@ -4,9 +4,6 @@ import * as ReactDOM from "react-dom";
 import spacing from "material-ui/styles/spacing";
 
 import CircularProgress from "material-ui/CircularProgress";
-import {
-	Table, TableBody, TableFooter, TableHeader, TableHeaderColumn, TableRow, TableRowColumn,
-} from "material-ui/Table";
 
 export interface IValidateResultProps<T> {
 	description: React.ReactChild;
@@ -30,17 +27,17 @@ export class ValidateResult extends React.Component<IValidateResultProps<any>, {
 								<div key={type}>
 									<h2>{this.props.getGroupTitle(type)}</h2>
 									{/* TODO: search bar */}
-									<Table selectable={false}>
-										<TableHeader>
+									<table className="data">
+										<thead>
 											{this.props.getTableHeaderRow(type)}
-										</TableHeader>
-										<TableBody>
+										</thead>
+										<tbody>
 											{this.props.result![type].slice(0, /* FIXME */ 50).map((item, idx) => (
 												<RowRenderer item={item} key={idx} />
 											))}
-										</TableBody>
+										</tbody>
 										{/* TODO: pager */}
-									</Table>
+									</table>
 								</div>
 							);
 						})
@@ -65,23 +62,23 @@ export class ValidateResult extends React.Component<IValidateResultProps<any>, {
 }
 
 export const SimpleColumnHeader = (params: { columns: React.ReactNode[] }) => (
-	<TableRow>
+	<tr>
 		{params.columns.map((column, i) => (
-			<TableHeaderColumn key={`${i}`}>
+			<th key={`${i}`}>
 				{column}
-			</TableHeaderColumn>
+			</th>
 		))}
-	</TableRow>
+	</tr>
 );
 
 export const SimpleColumnRow = (params: { columns: React.ReactNode[] }) => (
-	<TableRow hoverable>
+	<tr>
 		{params.columns.map((column, i) => (
-			<TableRowColumn key={`${i}`}>
+			<td key={`${i}`}>
 				{column}
-			</TableRowColumn>
+			</td>
 		))}
-	</TableRow>
+	</tr>
 );
 
 export class Glyph extends React.Component<{ name: string }, {}> {
