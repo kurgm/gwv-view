@@ -13,6 +13,9 @@ export interface IValidateResultProps<T> {
 }
 
 export class ValidateResult extends React.Component<IValidateResultProps<any>, {}> {
+	public shouldComponentUpdate(nextProps: Readonly<IValidateResultProps<any>>) {
+		return this.props.result !== nextProps.result;
+	}
 	public render() {
 		const styles = this.getStyles();
 		return (
