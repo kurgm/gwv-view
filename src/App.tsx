@@ -8,8 +8,6 @@ import Home from "./components/Home";
 
 import validationItems from "./validationItems";
 
-import CornerComponent from "./components/val-items/corner";
-
 class App extends React.Component<{}, { data: IJSONPCallback | null }> {
 
 	public state = {
@@ -42,7 +40,7 @@ class App extends React.Component<{}, { data: IJSONPCallback | null }> {
 					<Switch>
 						<Route exact path="/" component={Home} />
 						{validationItems.map((ItemComponent) => (
-							<Route path={`/result/${ItemComponent.id}`} component={(props) => (
+							<Route path={`/result/${ItemComponent.id}`} component={() => (
 								<ItemComponent result={this.state.data && this.state.data.result[ItemComponent.id]} />
 							)} key={ItemComponent.id} />
 						))}

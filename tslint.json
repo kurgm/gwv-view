@@ -7,7 +7,15 @@
     "rules": {
       "indent": [true, "tabs"],
       "max-classes-per-file": false,
-      "no-bitwise": false
+      "no-bitwise": false,
+      "variable-name": {
+        "options": [
+          "ban-keywords",
+          "check-format",
+          "allow-leading-underscore",
+          "allow-pascal-case"
+        ]
+      }
     },
     "rulesDirectory": []
 }

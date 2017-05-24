@@ -13,8 +13,7 @@ import {
 } from "material-ui/styles/colors";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import spacing from "material-ui/styles/spacing";
-import withWidth, { IProps as WithWidthProps, LARGE, MEDIUM, SMALL } from "material-ui/utils/withWidth";
+import withWidth, { IProps as WithWidthProps, LARGE, SMALL } from "material-ui/utils/withWidth";
 
 import { IValidateResultComponent } from "../validationItems";
 import NavDrawer from "./NavDrawer";
@@ -121,12 +120,12 @@ class Master extends React.Component<IMasterProps & WithWidthProps, IMasterState
 			navDrawerOpen: !this.state.navDrawerOpen,
 		});
 	}
-	private handleNavDrawerRequestChange = (opening: boolean, reason: string): void => {
+	private handleNavDrawerRequestChange = (opening: boolean, _reason: string): void => {
 		this.setState({
 			navDrawerOpen: opening,
 		});
 	}
-	private handleNavDrawerListChange = (e: TouchTapEvent, value: any): void => {
+	private handleNavDrawerListChange = (_e: TouchTapEvent, value: any): void => {
 		this.context.router.history.push(value);
 		this.setState({
 			navDrawerOpen: false,

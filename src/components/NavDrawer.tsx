@@ -7,7 +7,6 @@ import CircularProgress from "material-ui/CircularProgress";
 import Divider from "material-ui/Divider";
 import Drawer from "material-ui/Drawer";
 import { List, ListItem, makeSelectable } from "material-ui/List";
-import spacing from "material-ui/styles/spacing";
 
 import { IValidateResultComponent } from "../validationItems";
 

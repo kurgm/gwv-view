@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
 
 import { Glyph, KageLine, SimpleColumnHeader, SimpleColumnRow, ValidateResult } from "../ValidateResult";
 
@@ -45,7 +44,7 @@ class CornerComponent extends React.Component<{ result: { [type: string]: IValue
 		}
 		return `${guessedCornerType}に${usedCornerType}形状が使用されています。`;
 	}
-	private getTableHeaderRow(type: string) {
+	private getTableHeaderRow(_type: string) {
 		return (
 			<SimpleColumnHeader columns={[
 				"グリフ名",
@@ -54,7 +53,7 @@ class CornerComponent extends React.Component<{ result: { [type: string]: IValue
 			]} />
 		);
 	}
-	private getRowRenderer(type: string) {
+	private getRowRenderer(_type: string) {
 		return (props: { item: IValue; }) => (
 			<SimpleColumnRow columns={[
 				<Glyph name={props.item[0]} />,
