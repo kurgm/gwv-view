@@ -1,6 +1,8 @@
 import * as React from "react";
 
-import { Glyph, KageLine, SimpleColumnHeader, SimpleColumnRow, ValidateResult } from "../ValidateResult";
+import { Glyph, KageLine, ValidateResult } from "../ValidateResult";
+
+import { SimpleColumnHeader, SimpleColumnRow } from "../PagingTable";
 
 type IValue = [string, KageLineData, KageLineData];  // glyph name, tate, yoko
 

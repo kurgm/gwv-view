@@ -4,6 +4,8 @@ import spacing from "material-ui/styles/spacing";
 
 import CircularProgress from "material-ui/CircularProgress";
 
+import PagingTable from "./PagingTable";
+
 export interface IValidateResultProps<T> {
 	description: React.ReactChild;
 	result: { [type: string]: T[]; } | null;
@@ -23,26 +25,16 @@ export class ValidateResult extends React.Component<IValidateResultProps<any>, {
 				{this.props.description}
 				{this.props.result
 					? (
-						Object.keys(this.props.result).map((type) => {
-							const RowRenderer = this.props.getRowRenderer(type);
-							return (
-								<div key={type}>
-									<h2>{this.props.getGroupTitle(type)}</h2>
-									{/* TODO: search bar */}
-									<table className="data">
-										<thead>
-											{this.props.getTableHeaderRow(type)}
-										</thead>
-										<tbody>
-											{this.props.result![type].slice(0, /* FIXME */ 50).map((item, idx) => (
-												<RowRenderer item={item} key={idx} />
-											))}
-										</tbody>
-										{/* TODO: pager */}
-									</table>
-								</div>
-							);
-						})
+						Object.keys(this.props.result).map((type) => (
+							<PagingTable
+								key={type}
+								title={this.props.getGroupTitle(type)}
+								thead={
+									<thead>{this.props.getTableHeaderRow(type)}</thead>
+								}
+								RowRenderer={this.props.getRowRenderer(type)}
+								items={this.props.result![type]} />
+						))
 					)
 					: (
 						<div style={{ textAlign: "center" }}>
@@ -62,26 +54,6 @@ export class ValidateResult extends React.Component<IValidateResultProps<any>, {
 		};
 	}
 }
-
-export const SimpleColumnHeader = (params: { columns: React.ReactNode[] }) => (
-	<tr>
-		{params.columns.map((column, i) => (
-			<th key={`${i}`}>
-				{column}
-			</th>
-		))}
-	</tr>
-);
-
-export const SimpleColumnRow = (params: { columns: React.ReactNode[] }) => (
-	<tr>
-		{params.columns.map((column, i) => (
-			<td key={`${i}`}>
-				{column}
-			</td>
-		))}
-	</tr>
-);
 
 export class Glyph extends React.Component<{ name: string }, {}> {
 	public render() {
