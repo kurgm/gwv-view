@@ -1,6 +1,13 @@
 import * as React from "react";
 
-import { Card, CardMedia, CardTitle } from "material-ui/Card";
+import { TouchTapEvent } from "material-ui";
+import { Card, CardActions, CardMedia, CardTitle } from "material-ui/Card";
+import DropDownMenu from "material-ui/DropDownMenu";
+import IconButton from "material-ui/IconButton";
+import MenuItem from "material-ui/MenuItem";
+
+import HardwareKeyboardArrowLeft from "material-ui/svg-icons/hardware/keyboard-arrow-left";
+import HardwareKeyboardArrowRight from "material-ui/svg-icons/hardware/keyboard-arrow-right";
 
 interface IPagingTableProps<T> {
 	title: string;
@@ -23,8 +30,10 @@ class PagingTable<T> extends React.Component<IPagingTableProps<T>, IPagingTableS
 
 	public render() {
 		const { itemsPerPage, page } = this.state;
+		const numItems = this.props.items.length;
 		const start = itemsPerPage * page;
-		const end = itemsPerPage * (page + 1);
+		const end = Math.min(numItems, itemsPerPage * (page + 1));
+		const maxPage = Math.ceil(numItems / itemsPerPage) - 1;
 
 		const styles = this.getStyles();
 		return (
@@ -47,8 +56,52 @@ class PagingTable<T> extends React.Component<IPagingTableProps<T>, IPagingTableS
 						</tbody>
 						{this.props.tfoot}
 					</table>
-					{/* TODO: pager */}
 				</CardMedia>
+				<CardActions expandable style={styles.pager}>
+					<span style={{
+						margin: 0,
+					}}>
+						ページあたりの行数:
+					</span>
+					<DropDownMenu
+						value={this.state.itemsPerPage}
+						onChange={this.handleDropDownMenuChange}
+						style={{
+							fontSize: 12,
+							marginRight: 0,
+							verticalAlign: "middle",
+						}}
+					>
+						{[10, 20, 50, 100].map((n) => (
+							<MenuItem
+								value={n}
+								primaryText={n}
+								key={n}
+							/>
+						))}
+					</DropDownMenu>
+					<span style={{
+						margin: "0 20px 0 0",
+					}}>
+						{start + 1}-{end} / {numItems}
+					</span>
+					<IconButton
+						tooltip="前のページ"
+						style={styles.pagerButton}
+						onTouchTap={this.handleBackButton}
+						disabled={this.state.page <= 0}
+					>
+						<HardwareKeyboardArrowLeft />
+					</IconButton>
+					<IconButton
+						tooltip="次のページ"
+						style={styles.pagerButton}
+						onTouchTap={this.handleNextButton}
+						disabled={this.state.page >= maxPage}
+					>
+						<HardwareKeyboardArrowRight />
+					</IconButton>
+				</CardActions>
 			</Card>
 		);
 	}
@@ -66,7 +119,35 @@ class PagingTable<T> extends React.Component<IPagingTableProps<T>, IPagingTableS
 				lineHeight: "32px",
 				paddingRight: 48,
 			} as React.CSSProperties,
+			pager: {
+				color: "rgba(0, 0, 0, .54)",
+				fontSize: 12,
+				height: 48,
+				padding: "4px 2px",
+				textAlign: "right",
+			} as React.CSSProperties,
+			pagerButton: {
+				marginRight: 0,
+				verticalAlign: "middle",
+			} as React.CSSProperties,
 		};
+	}
+
+	private handleDropDownMenuChange = (_e: TouchTapEvent, _index: number, menuItemValue: any) => {
+		this.setState({
+			itemsPerPage: menuItemValue,
+			page: Math.floor(this.state.page * this.state.itemsPerPage / menuItemValue),
+		});
+	}
+	private handleBackButton = (_e: TouchTapEvent) => {
+		this.setState({
+			page: this.state.page - 1,
+		});
+	}
+	private handleNextButton = (_e: TouchTapEvent) => {
+		this.setState({
+			page: this.state.page + 1,
+		});
 	}
 }
 
