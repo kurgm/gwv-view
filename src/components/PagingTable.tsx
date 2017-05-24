@@ -66,9 +66,12 @@ class PagingTable<T> extends React.Component<IPagingTableProps<T>, IPagingTableS
 					<DropDownMenu
 						value={this.state.itemsPerPage}
 						onChange={this.handleDropDownMenuChange}
+						labelStyle={{
+							color: "inherit",
+						}}
 						style={{
-							fontSize: 12,
-							marginRight: 0,
+							fontSize: "inherit",
+							marginRight: 4,
 							verticalAlign: "middle",
 						}}
 					>
@@ -86,18 +89,18 @@ class PagingTable<T> extends React.Component<IPagingTableProps<T>, IPagingTableS
 						{start + 1}-{end} / {numItems}
 					</span>
 					<IconButton
-						tooltip="前のページ"
 						style={styles.pagerButton}
 						onTouchTap={this.handleBackButton}
 						disabled={this.state.page <= 0}
+						iconStyle={styles.pagerButtonIcon}
 					>
 						<HardwareKeyboardArrowLeft />
 					</IconButton>
 					<IconButton
-						tooltip="次のページ"
 						style={styles.pagerButton}
 						onTouchTap={this.handleNextButton}
 						disabled={this.state.page >= maxPage}
+						iconStyle={styles.pagerButtonIcon}
 					>
 						<HardwareKeyboardArrowRight />
 					</IconButton>
@@ -129,6 +132,10 @@ class PagingTable<T> extends React.Component<IPagingTableProps<T>, IPagingTableS
 			pagerButton: {
 				marginRight: 0,
 				verticalAlign: "middle",
+			} as React.CSSProperties,
+			pagerButtonIcon: {
+				color: "rgba(0, 0, 0, .54)",
+				fill: "rgba(0, 0, 0, .54)",
 			} as React.CSSProperties,
 		};
 	}
