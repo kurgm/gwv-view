@@ -20,11 +20,19 @@ class App extends React.Component<{}, { data: IJSONPCallback | null }> {
 		window.gwvCallback = (data: IJSONPCallback) => {
 			this.setState({ data });
 		};
+
+		let names = validationItems.map((item) => item.id).join(",");
+		for (const kv of location.search.slice(1).split("&")) {
+			if (kv.substring(0, 5) === "name=") {
+				names = kv.substring(5);
+				break;
+			}
+		}
+
 		const jsonUrl = "https://script.google.com/macros/s/AKfycbyZCl8KPrCHtzT8ywcE0tEgb7Yo8LfgldbkTz4O6eJ2i3v80pu-/exec";
-		const names = validationItems.map((item) => item.id);
 		const s = document.createElement("script");
 		s.setAttribute("type", "text/javascript");
-		s.setAttribute("src", `${jsonUrl}?callback=gwvCallback&name=${names.join(",")}`);
+		s.setAttribute("src", `${jsonUrl}?callback=gwvCallback&name=${names}`);
 		document.getElementsByTagName("head")[0].appendChild(s);
 	}
 	public render() {
