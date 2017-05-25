@@ -21,6 +21,6 @@ interface Window {
 }
 
 interface IJSONPCallback {
-	result: { [id: string]: any; };
+	result: { [id: string]: { [type: string]: any[]; }; };
 	lastModified: number;
 }

@@ -41,7 +41,7 @@ class PagingTable<T> extends React.Component<IPagingTableProps<T>, IPagingTableS
 				<CardTitle
 					actAsExpander
 					showExpandableButton
-					title={this.props.title}
+					title={`${this.props.title}（${this.props.items.length} 件）`}
 					style={styles.cardTitle}
 					titleStyle={styles.cardTitleTitle}
 				/>

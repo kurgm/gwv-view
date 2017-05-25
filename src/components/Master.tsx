@@ -15,11 +15,10 @@ import getMuiTheme from "material-ui/styles/getMuiTheme";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import withWidth, { IProps as WithWidthProps, LARGE, SMALL } from "material-ui/utils/withWidth";
 
-import { IValidateResultComponent } from "../validationItems";
 import NavDrawer from "./NavDrawer";
 
 interface IMasterProps {
-	items: IValidateResultComponent[] | null;
+	items: Array<{ id: string; title: string; length: number; }> | null;
 }
 
 interface IMasterState {

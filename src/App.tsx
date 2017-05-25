@@ -36,12 +36,23 @@ class App extends React.Component<{}, { data: IJSONPCallback | null }> {
 	public render() {
 		return (
 			<HashRouter>
-				<Master items={this.state.data && validationItems.filter((item) => item.id in this.state.data!.result)}>
+				<Master
+					items={this.state.data &&
+						validationItems
+							.filter((item) => item.id in this.state.data!.result)
+							.map((item) => ({
+								id: item.id,
+								length: Object.keys(this.state.data!.result[item.id])
+									.reduce((prev, key) => prev + this.state.data!.result[item.id][key].length, 0),
+								title: item.title,
+							}))
+					}
+				>
 					<Switch>
 						<Route exact path="/" component={Home} />
 						{validationItems.map((ItemComponent) => (
 							<Route path={`/result/${ItemComponent.id}`} component={() => (
-								<ItemComponent result={this.state.data && this.state.data.result[ItemComponent.id]} />
+								<ItemComponent result={this.state.data && (this.state.data.result[ItemComponent.id] || {})} />
 							)} key={ItemComponent.id} />
 						))}
 					</Switch>
