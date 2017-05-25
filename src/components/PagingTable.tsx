@@ -72,7 +72,15 @@ class PagingTable<T> extends React.Component<IPagingTableProps<T>, IPagingTableS
 						style={{
 							fontSize: "inherit",
 							marginRight: 4,
+							position: "relative",
+							top: -4,
 							verticalAlign: "middle",
+						}}
+						underlineStyle={{
+							borderTop: "none",
+						}}
+						iconStyle={{
+							fill: "inherit",
 						}}
 					>
 						{[10, 20, 50, 100].map((n) => (
@@ -124,6 +132,7 @@ class PagingTable<T> extends React.Component<IPagingTableProps<T>, IPagingTableS
 			} as React.CSSProperties,
 			pager: {
 				color: "rgba(0, 0, 0, .54)",
+				fill: "rgba(0, 0, 0, .54)",
 				fontSize: 12,
 				height: 48,
 				padding: "4px 2px",
