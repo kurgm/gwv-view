@@ -15,7 +15,9 @@ class DupComponent extends React.Component<{ result: { [type: string]: IValue[];
 			<ValidateResult
 				description={
 					<p>
-						筆画・部品の重複を検出します。同じグリフが別の名前で登録されているものについては<a href="https://kurgm.github.io/gw_duplicates/">GlyphWiki の重複するグリフ</a>をご覧ください。
+						筆画・部品の重複を検出します。同じグリフが別の名前で登録されているものについては
+						<a href="https://kurgm.github.io/gw_duplicates/">GlyphWiki の重複するグリフ</a>
+						をご覧ください。
 					</p>
 				}
 				getGroupTitle={this.getGroupTitle}

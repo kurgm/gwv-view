@@ -42,12 +42,16 @@ class NavDrawer extends React.Component<INavDrawerProps, {}> {
 							value={location.pathname}
 						>
 							{items.map((item) => (
-								<ListItem
-									primaryText={item.title}
-									secondaryText={`${item.length} 件`}
-									value={`/result/${item.id}`}
-									key={item.id}
-								/>
+								item.length
+									? (
+										<ListItem
+											primaryText={item.title}
+											secondaryText={`${item.length} 件`}
+											value={`/result/${item.id}`}
+											key={item.id}
+										/>
+									)
+									: null
 							))}
 						</SelectableList>
 					)

@@ -26,14 +26,18 @@ export class ValidateResult extends React.Component<IValidateResultProps<any>, {
 				{this.props.result
 					? (
 						Object.keys(this.props.result).map((type) => (
-							<PagingTable
-								key={type}
-								title={this.props.getGroupTitle(type)}
-								thead={
-									<thead>{this.props.getTableHeaderRow(type)}</thead>
-								}
-								RowRenderer={this.props.getRowRenderer(type)}
-								items={this.props.result![type]} />
+							this.props.result![type].length
+								? (
+									<PagingTable
+										key={type}
+										title={this.props.getGroupTitle(type)}
+										thead={
+											<thead>{this.props.getTableHeaderRow(type)}</thead>
+										}
+										RowRenderer={this.props.getRowRenderer(type)}
+										items={this.props.result![type]} />
+								)
+								: null
 						))
 					)
 					: (
