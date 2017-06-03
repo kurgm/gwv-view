@@ -1,10 +1,10 @@
 import * as React from "react";
 
-import { Glyph, /*KageLine,*/ ValidateResult } from "../ValidateResult";
+import { Glyph, ValidateResult } from "../ValidateResult";
 
 import { SimpleColumnHeader, SimpleColumnRow } from "../PagingTable";
 
-type IValue = [string/*, TODO */];
+type IValue = string[];
 
 class KosekitokiComponent extends React.Component<{ result: { [type: string]: IValue[]; } | null; }, {}> {
 	public static id = "kosekitoki";
@@ -26,24 +26,35 @@ class KosekitokiComponent extends React.Component<{ result: { [type: string]: IV
 		);
 	}
 
-	private getGroupTitle(_type: string): string {
-		// TODO: implement this
-		throw new Error("Not implemented yet");
+	private getGroupTitle(type: string): string {
+		return ({
+			0: "エイリアスになっていません。",
+			1: "koseki-xxxxxxのエイリアスになっていません。",
+			2: "koseki-xxxxxxと異なるエイリアスです。",
+		} as { [type: string]: string; })[type];
 	}
-	private getTableHeaderRow(_type: string) {
+	private getTableHeaderRow(type: string) {
+		let columns;
+		switch (type) {
+			case "0":
+				columns = ["グリフ名"];
+				break;
+			case "1":
+				columns = ["グリフ名", "実体"];
+				break;
+			case "2":
+				columns = ["グリフ名", "実体", "koseki-xxxxxxの実体"];
+				break;
+		}
 		return (
-			<SimpleColumnHeader columns={[
-				"グリフ名",
-				// TODO
-			]} />
+			<SimpleColumnHeader columns={columns!} />
 		);
 	}
 	private getRowRenderer(_type: string) {
 		return (props: { item: IValue; }) => (
-			<SimpleColumnRow columns={[
-				<Glyph name={props.item[0]} />,
-				// TODO
-			]} />
+			<SimpleColumnRow columns={props.item.map((name, i) => (
+				<Glyph name={name} key={i} />
+			))} />
 		);
 	}
 }
