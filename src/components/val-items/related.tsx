@@ -1,10 +1,10 @@
 import * as React from "react";
 
-import { Glyph, /*KageLine,*/ ValidateResult } from "../ValidateResult";
+import { Glyph, ValidateResult } from "../ValidateResult";
 
 import { SimpleColumnHeader, SimpleColumnRow } from "../PagingTable";
 
-type IValue = [string/*, TODO */];
+type IValue = string[];
 
 class RelatedComponent extends React.Component<{ result: { [type: string]: IValue[]; } | null; }, {}> {
 	public static id = "related";
@@ -26,24 +26,41 @@ class RelatedComponent extends React.Component<{ result: { [type: string]: IValu
 		);
 	}
 
-	private getGroupTitle(_type: string): string {
-		// TODO: implement this
-		throw new Error("Not implemented yet");
+	private getGroupTitle(typeStr: string) {
+		const type = parseInt(typeStr, 10);
+		const header = type >= 10 ? "実体の" : "";
+		switch (type % 10 as 0 | 1 | 2) {
+			case 0:
+				return header + "関連字が間違っています。";
+			case 1:
+				return header + "関連字が設定されていません。";
+			case 2:
+				return "実体が存在しません。";
+		}
 	}
-	private getTableHeaderRow(_type: string) {
+	private getTableHeaderRow(typeStr: string) {
+		const type = parseInt(typeStr, 10);
+		let columns = type >= 10 ? ["グリフ名", "実体"] : ["グリフ名"];
+		switch (type % 10) {
+			case 0:
+				columns = columns.concat(["現在の関連字", "正しい関連字"]);
+				break;
+			case 1:
+				columns = columns.concat(["正しい関連字"]);
+				break;
+			case 2:
+				columns = columns.concat(["存在しない実体"]);
+				break;
+		}
 		return (
-			<SimpleColumnHeader columns={[
-				"グリフ名",
-				// TODO
-			]} />
+			<SimpleColumnHeader columns={columns} />
 		);
 	}
 	private getRowRenderer(_type: string) {
 		return (props: { item: IValue; }) => (
-			<SimpleColumnRow columns={[
-				<Glyph name={props.item[0]} />,
-				// TODO
-			]} />
+			<SimpleColumnRow columns={props.item.map((name, i) => (
+				<Glyph name={name} key={i} />
+			))} />
 		);
 	}
 }
