@@ -34,20 +34,18 @@ class KosekitokiComponent extends React.Component<{ result: { [type: string]: IV
 		} as { [type: string]: string; })[type];
 	}
 	private getTableHeaderRow(type: string) {
-		let columns;
-		switch (type) {
-			case "0":
-				columns = ["グリフ名"];
-				break;
-			case "1":
-				columns = ["グリフ名", "実体"];
-				break;
-			case "2":
-				columns = ["グリフ名", "実体", "koseki-xxxxxxの実体"];
-				break;
-		}
+		const columns = (() => {
+			switch (type as "0" | "1" | "2") {
+				case "0":
+					return ["グリフ名"];
+				case "1":
+					return ["グリフ名", "実体"];
+				case "2":
+					return ["グリフ名", "実体", "koseki-xxxxxxの実体"];
+			}
+		})();
 		return (
-			<SimpleColumnHeader columns={columns!} />
+			<SimpleColumnHeader columns={columns} />
 		);
 	}
 	private getRowRenderer(_type: string) {
