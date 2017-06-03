@@ -34,7 +34,7 @@ class MjComponent extends React.Component<{ result: { [type: string]: IValue[]; 
 		);
 	}
 
-	private getGroupTitle(type: string): string {
+	private getGroupTitle(type: string) {
 		return ({
 			0: "エイリアス先が間違っていると思います。",
 			1: "関連字が間違っていると思います。",

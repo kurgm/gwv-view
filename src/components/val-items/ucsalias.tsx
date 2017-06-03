@@ -4,7 +4,9 @@ import { Glyph, /*KageLine,*/ ValidateResult } from "../ValidateResult";
 
 import { SimpleColumnHeader, SimpleColumnRow } from "../PagingTable";
 
-type IValue = [string/*, TODO */];
+type IValueWithoutEntity = [string];
+type IValueWithEntity = [string, string];
+type IValue = IValueWithoutEntity | IValueWithEntity;
 
 class UcsaliasComponent extends React.Component<{ result: { [type: string]: IValue[]; } | null; }, {}> {
 	public static id = "ucsalias";
@@ -27,23 +29,43 @@ class UcsaliasComponent extends React.Component<{ result: { [type: string]: IVal
 		);
 	}
 
-	private getGroupTitle(_type: string): string {
-		// TODO: implement this
-		throw new Error("Not implemented yet");
+	private getGroupTitle(typeStr: string) {
+		const type = parseInt(typeStr, 10);
+		switch (type) {
+			case 0:
+				return "uxxxxがuyyyy-…以外やIDSグリフのエイリアスになっています。";
+			case 1:
+				return "UCSの複数欄指定のグリフがその無印グリフのエイリアスになっています。";
+			default: {
+				const varOrItaiji = type < 20 ? "var" : "itaiji";
+				if (type % 10 === 1) {
+					return `uxxxxがuxxxx-${varOrItaiji}-###のエイリアスになっています。`;
+				}
+				return `uxxxx-${varOrItaiji}-###がuxxxx(の実体)のエイリアスになっています。`;
+			}
+		}
 	}
 	private getTableHeaderRow(_type: string) {
 		return (
 			<SimpleColumnHeader columns={[
 				"グリフ名",
-				// TODO
+				"実体",
 			]} />
 		);
 	}
-	private getRowRenderer(_type: string) {
-		return (props: { item: IValue; }) => (
+	private getRowRenderer(type: string) {
+		if (type === "1") {
+			return (props: { item: IValueWithoutEntity; }) => (
+				<SimpleColumnRow columns={[
+					<Glyph name={props.item[0]} />,
+					<Glyph name={props.item[0].split("-")[0]} />,
+				]} />
+			);
+		}
+		return (props: { item: IValueWithEntity; }) => (
 			<SimpleColumnRow columns={[
 				<Glyph name={props.item[0]} />,
-				// TODO
+				<Glyph name={props.item[1]} />,
 			]} />
 		);
 	}
