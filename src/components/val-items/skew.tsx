@@ -1,10 +1,12 @@
 import * as React from "react";
 
-import { Glyph, /*KageLine,*/ ValidateResult } from "../ValidateResult";
+import { Glyph, KageLine, ValidateResult } from "../ValidateResult";
 
 import { SimpleColumnHeader, SimpleColumnRow } from "../PagingTable";
 
-type IValue = [string/*, TODO */];
+type IValueWithoutAngle = [string, KageLineData];  // glyph name, line data
+type IValueWithAngle = [string, KageLineData, number];  // glyph name, line data, skew angle
+type IValue = IValueWithoutAngle | IValueWithAngle;
 
 class SkewComponent extends React.Component<{ result: { [type: string]: IValue[]; } | null; }, {}> {
 	public static id = "skew";
@@ -26,23 +28,41 @@ class SkewComponent extends React.Component<{ result: { [type: string]: IValue[]
 		);
 	}
 
-	private getGroupTitle(_type: string): string {
-		// TODO: implement this
-		throw new Error("Not implemented yet");
+	private getGroupTitle(type: string) {
+		return ({
+			10: "横画が歪んでいます。",
+			11: "縦画が歪んでいます。",
+			30: "折れの後半が歪んでいます。",
+			31: "折れの前半が歪んでいます。",
+			40: "乙線の後半が歪んでいます。",
+			70: "縦払いの前半（直線部分）が横になっています。",
+			71: "縦払いの直線部分と曲線部分の間で折れ曲がっています。",
+			72: "縦払いの直線部分が歪んでいます。",
+		} as { [type: string]: string; })[type];
 	}
-	private getTableHeaderRow(_type: string) {
+	private getTableHeaderRow(type: string) {
 		return (
-			<SimpleColumnHeader columns={[
-				"グリフ名",
-				// TODO
-			]} />
+			<SimpleColumnHeader columns={
+				type === "70"
+					? ["グリフ名", "データ"]
+					: ["グリフ名", "角度", "データ"]
+			} />
 		);
 	}
-	private getRowRenderer(_type: string) {
-		return (props: { item: IValue; }) => (
+	private getRowRenderer(type: string) {
+		if (type === "70") {
+			return (props: { item: IValueWithoutAngle; }) => (
+				<SimpleColumnRow columns={[
+					<Glyph name={props.item[0]} />,
+					<KageLine data={props.item[1]} />,
+				]} />
+			);
+		}
+		return (props: { item: IValueWithAngle; }) => (
 			<SimpleColumnRow columns={[
 				<Glyph name={props.item[0]} />,
-				// TODO
+				`${props.item[2]}°`,
+				<KageLine data={props.item[1]} />,
 			]} />
 		);
 	}
