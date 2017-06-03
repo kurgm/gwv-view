@@ -1,10 +1,13 @@
 import * as React from "react";
 
-import { Glyph, /*KageLine,*/ ValidateResult } from "../ValidateResult";
+import { Glyph, ValidateResult } from "../ValidateResult";
 
 import { SimpleColumnHeader, SimpleColumnRow } from "../PagingTable";
 
-type IValue = [string/*, TODO */];
+type IValueIDS = [string, string];  // glyph name, parsed IDS structure
+type IValueCDP = [string, string, string]; // glyph name, CDP glyph name, alternative UCS glyph name
+type IValueNone = [string];
+type IValue = IValueIDS | IValueCDP | IValueNone;
 
 class NamingComponent extends React.Component<{ result: { [type: string]: IValue[]; } | null; }, {}> {
 	public static id = "naming";
@@ -36,23 +39,36 @@ class NamingComponent extends React.Component<{ result: { [type: string]: IValue
 		);
 	}
 
-	private getGroupTitle(_type: string): string {
-		// TODO: implement this
-		throw new Error("Not implemented yet");
+	private getGroupTitle(type: string) {
+		return ({
+			0: "規則に無いグリフ名です。",
+			1: "不正なIDSです。",
+			2: "許可されていないグリフ名です（欠番など）。",
+			3: "IDS文字名にUCSで符号化されたCDP外字が含まれています。",
+		} as { [type: string]: string; })[type];
 	}
-	private getTableHeaderRow(_type: string) {
+	private getTableHeaderRow(type: string) {
 		return (
-			<SimpleColumnHeader columns={[
-				"グリフ名",
-				// TODO
-			]} />
+			<SimpleColumnHeader columns={
+				type === "3"
+					? ["グリフ名", "CDP外字", "UCS"]
+					: ["グリフ名"]
+			} />
 		);
 	}
-	private getRowRenderer(_type: string) {
-		return (props: { item: IValue; }) => (
+	private getRowRenderer(type: string) {
+		if (type === "3") {
+			return (props: { item: IValueCDP; }) => (
+				<SimpleColumnRow columns={[
+					<Glyph name={props.item[0]} />,
+					<Glyph name={props.item[1]} />,
+					<Glyph name={props.item[2]} />,
+				]} />
+			);
+		}
+		return (props: { item: IValueIDS | IValueNone; }) => (
 			<SimpleColumnRow columns={[
 				<Glyph name={props.item[0]} />,
-				// TODO
 			]} />
 		);
 	}
