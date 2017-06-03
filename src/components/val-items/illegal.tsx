@@ -47,7 +47,7 @@ class IllegalComponent extends React.Component<{ result: { [type: string]: IValu
 	}
 	private getTableHeaderRow(_type: string) {
 		return (
-			<SimpleColumnHeader columns={["グリフ名", "行"]} />
+			<SimpleColumnHeader columns={["グリフ名", "データ"]} />
 		);
 	}
 	private getRowRenderer(_type: string) {
