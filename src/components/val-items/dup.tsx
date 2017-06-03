@@ -1,10 +1,12 @@
 import * as React from "react";
 
-import { Glyph, /*KageLine,*/ ValidateResult } from "../ValidateResult";
+import { Glyph, KageLine, ValidateResult } from "../ValidateResult";
 
 import { SimpleColumnHeader, SimpleColumnRow } from "../PagingTable";
 
-type IValue = [string/*, TODO */];
+type IValueWithoutLength = [string, KageLineData, KageLineData];
+type IValueWithLength = [string, KageLineData, KageLineData, number];
+type IValue = IValueWithoutLength | IValueWithLength;
 
 class DupComponent extends React.Component<{ result: { [type: string]: IValue[]; } | null; }, {}> {
 	public static id = "dup";
@@ -28,23 +30,41 @@ class DupComponent extends React.Component<{ result: { [type: string]: IValue[];
 		);
 	}
 
-	private getGroupTitle(_type: string): string {
-		// TODO: implement this
-		throw new Error("Not implemented yet");
+	private getGroupTitle(type: string) {
+		return ({
+			10: "横画が重複しています。",
+			11: "縦画が重複しています。",
+			2: "曲線が重複しています。",
+			3: "複曲線が重複しています。",
+			9: "部品位置が重複しています。",
+			99: "部品が重複しています。",
+		} as { [type: string]: string; })[type];
 	}
-	private getTableHeaderRow(_type: string) {
+	private getTableHeaderRow(type: string) {
+		const columns = ["グリフ名", "行1", "行2"];
+		if (type === "10" || type === "11") {
+			columns.push("重複");
+		}
 		return (
-			<SimpleColumnHeader columns={[
-				"グリフ名",
-				// TODO
-			]} />
+			<SimpleColumnHeader columns={columns} />
 		);
 	}
-	private getRowRenderer(_type: string) {
-		return (props: { item: IValue; }) => (
+	private getRowRenderer(type: string) {
+		if (type === "10" || type === "11") {
+			return (props: { item: IValueWithLength; }) => (
+				<SimpleColumnRow columns={[
+					<Glyph name={props.item[0]} />,
+					<KageLine data={props.item[1]} />,
+					<KageLine data={props.item[2]} />,
+					props.item[3],
+				]} />
+			);
+		}
+		return (props: { item: IValueWithoutLength; }) => (
 			<SimpleColumnRow columns={[
 				<Glyph name={props.item[0]} />,
-				// TODO
+				<KageLine data={props.item[1]} />,
+				<KageLine data={props.item[2]} />,
 			]} />
 		);
 	}
