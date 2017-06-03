@@ -1,10 +1,10 @@
 import * as React from "react";
 
-import { Glyph, /*KageLine,*/ ValidateResult } from "../ValidateResult";
+import { Glyph, KageLine, ValidateResult } from "../ValidateResult";
 
 import { SimpleColumnHeader, SimpleColumnRow } from "../PagingTable";
 
-type IValue = [string/*, TODO */];
+type IValue = [string, string, KageLineData];  // glyph name, stroke type (?:?:?), line data
 
 class IllegalComponent extends React.Component<{ result: { [type: string]: IValue[]; } | null; }, {}> {
 	public static id = "illegal";
@@ -26,23 +26,35 @@ class IllegalComponent extends React.Component<{ result: { [type: string]: IValu
 		);
 	}
 
-	private getGroupTitle(_type: string): string {
-		// TODO: implement this
-		throw new Error("Not implemented yet");
+	private getGroupTitle(type: string) {
+		return ({
+			0: "定義されていない筆画の種類です。",
+			1: "列数が不足しています。",
+			2: "列数が超過していて、0でない値です。",
+			3: "列数が超過していて、0が入っています。",
+			4: "不正な列数です。",
+			5: "不正なデータです。",
+			6: "ありえない形状の組み合わせです。",
+			7: "エイリアスの書式が不正です。8列でなければなりません。",
+			9: "部品位置が指定されているグリフです。",
+			10: "横画に縦画用の接続形状が使用されています。",
+			11: "縦画に接続(横)が使用されています。",
+			30: "折れの前半が横になっています。",
+			31: "折れの後半が縦になっています。",
+			40: "乙線の前半が横になっています。",
+			41: "乙線の後半が左向きです。",
+		} as { [type: string]: string; })[type];
 	}
 	private getTableHeaderRow(_type: string) {
 		return (
-			<SimpleColumnHeader columns={[
-				"グリフ名",
-				// TODO
-			]} />
+			<SimpleColumnHeader columns={["グリフ名", "行"]} />
 		);
 	}
 	private getRowRenderer(_type: string) {
 		return (props: { item: IValue; }) => (
 			<SimpleColumnRow columns={[
 				<Glyph name={props.item[0]} />,
-				// TODO
+				<KageLine data={props.item[2]} />,
 			]} />
 		);
 	}
