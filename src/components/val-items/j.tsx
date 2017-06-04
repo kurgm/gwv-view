@@ -1,10 +1,14 @@
 import * as React from "react";
 
-import { Glyph, /*KageLine,*/ ValidateResult } from "../ValidateResult";
+import { Glyph, ValidateResult } from "../ValidateResult";
 
 import { SimpleColumnHeader, SimpleColumnRow } from "../PagingTable";
 
-type IValue = [string/*, TODO */];
+type IValueNone = [string];
+type IValueSource = [string, string];
+type IValueJVBuhin = [string, string, string];
+type IValueJVJ = [string, "j" | "ja"];
+type IValue = IValueNone | IValueSource | IValueJVBuhin | IValueJVJ;
 
 class JComponent extends React.Component<{ result: { [type: string]: IValue[]; } | null; }, {}> {
 	public static id = "j";
@@ -26,25 +30,76 @@ class JComponent extends React.Component<{ result: { [type: string]: IValue[]; }
 		);
 	}
 
-	private getGroupTitle(_type: string): string {
-		// TODO: implement this
-		throw new Error("Not implemented yet");
+	private getGroupTitle(typeStr: string) {
+		const type = Number(typeStr);
+		if (type >= 30) {
+			const source = ["J", "K"][type - 30];
+			return `${source}ソースが存在するのに、uxxxx-${source.toLowerCase()}vが作成されています。"`;
+		}
+		return ({
+			0: "uxxxx-j, ja, jv（の実体）とその無印グリフ（の実体）が異なっています。",
+			1: "uxxxx-jvとuxxxx-j, jaが両方存在しています。",
+			2: "uxxxx(-jv) / extf-##### / irg2015-##### のグリフに仮想J字形に使わない字形の部品が使用されています。",
+			4: "指定された地域のソースは存在しません。",
+			5: "原規格分離漢字の取扱規則が適用される符号位置にはuxxxx-jvを作成できません。",
+		} as { [type: string]: string; })[typeStr];
 	}
-	private getTableHeaderRow(_type: string) {
+	private getTableHeaderRow(type: string) {
+		const columns = (() => {
+			switch (type as "0" | "1" | "2" | "4" | "5" | "30" | "31") {
+				case "0":
+				case "4":
+				case "5":
+					return ["グリフ名", "無印グリフ"];
+				case "1":
+					return ["グリフ名", "jまたはja"];
+				case "2":
+					return ["グリフ名", "使わない部品", "使う部品"];
+				case "30":
+				case "31":
+					return ["グリフ名", "無印グリフ", "ソース"];
+			}
+		})();
 		return (
-			<SimpleColumnHeader columns={[
-				"グリフ名",
-				// TODO
-			]} />
+			<SimpleColumnHeader columns={columns} />
 		);
 	}
-	private getRowRenderer(_type: string) {
-		return (props: { item: IValue; }) => (
-			<SimpleColumnRow columns={[
-				<Glyph name={props.item[0]} />,
-				// TODO
-			]} />
-		);
+	private getRowRenderer(type: string) {
+		switch (type as "0" | "1" | "2" | "4" | "5" | "30" | "31") {
+			case "0":
+			case "4":
+			case "5":
+				return (props: { item: IValueNone; }) => (
+					<SimpleColumnRow columns={[
+						<Glyph name={props.item[0]} />,
+						<Glyph name={props.item[0].split("-")[0]} />,
+					]} />
+				);
+			case "1":
+				return (props: { item: IValueJVJ; }) => (
+					<SimpleColumnRow columns={[
+						<Glyph name={props.item[0]} />,
+						<Glyph name={`${props.item[0]}-${props.item[1]}`} />,
+					]} />
+				);
+			case "2":
+				return (props: { item: IValueJVBuhin; }) => (
+					<SimpleColumnRow columns={[
+						<Glyph name={props.item[0]} />,
+						<Glyph name={props.item[1]} />,
+						<Glyph name={props.item[2]} />,
+					]} />
+				);
+			case "30":
+			case "31":
+				return (props: { item: IValueSource; }) => (
+					<SimpleColumnRow columns={[
+						<Glyph name={props.item[0]} />,
+						<Glyph name={props.item[0].split("-")[0]} />,
+						props.item[1],
+					]} />
+				);
+		}
 	}
 }
 
