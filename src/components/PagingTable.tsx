@@ -23,7 +23,7 @@ interface IPagingTableState {
 }
 
 class PagingTable<T> extends React.Component<IPagingTableProps<T>, IPagingTableState> {
-	public state = {
+	public state: Readonly<IPagingTableState> = {
 		itemsPerPage: 10,
 		page: 0,
 	};
