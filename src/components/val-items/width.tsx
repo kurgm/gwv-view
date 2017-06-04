@@ -1,10 +1,10 @@
 import * as React from "react";
 
-import { Glyph, /*KageLine,*/ ValidateResult } from "../ValidateResult";
+import { Glyph, ValidateResult } from "../ValidateResult";
 
 import { SimpleColumnHeader, SimpleColumnRow } from "../PagingTable";
 
-type IValue = [string/*, TODO */];
+type IValue = [string];
 
 class WidthComponent extends React.Component<{ result: { [type: string]: IValue[]; } | null; }, {}> {
 	public static id = "width";
@@ -27,15 +27,17 @@ class WidthComponent extends React.Component<{ result: { [type: string]: IValue[
 		);
 	}
 
-	private getGroupTitle(_type: string): string {
-		// TODO: implement this
-		throw new Error("Not implemented yet");
+	private getGroupTitle(type: string) {
+		return ({
+			0: "グループ:NonSpacingGlyphs-Halfwidthに含まれていますが全角です。",
+			1: "グループ:HalfwidthGlyphsに含まれていますが全角です。",
+			2: "半角ですがグループ:HalfwidthGlyphsに含まれていません。",
+		} as { [type: string]: string; })[type];
 	}
 	private getTableHeaderRow(_type: string) {
 		return (
 			<SimpleColumnHeader columns={[
 				"グリフ名",
-				// TODO
 			]} />
 		);
 	}
@@ -43,7 +45,6 @@ class WidthComponent extends React.Component<{ result: { [type: string]: IValue[
 		return (props: { item: IValue; }) => (
 			<SimpleColumnRow columns={[
 				<Glyph name={props.item[0]} />,
-				// TODO
 			]} />
 		);
 	}
