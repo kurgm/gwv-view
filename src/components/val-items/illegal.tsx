@@ -1,6 +1,8 @@
 import * as React from "react";
 
-import { Glyph, KageLine, ValidateResult } from "../ValidateResult";
+import Glyph from "../Glyph";
+import KageLine from "../KageLine";
+import ValidateResult from "../ValidateResult";
 
 import { SimpleColumnHeader, SimpleColumnRow } from "../PagingTable";
 

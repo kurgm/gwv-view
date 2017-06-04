@@ -1,6 +1,7 @@
 import * as React from "react";
 
-import { Glyph, ValidateResult } from "../ValidateResult";
+import Glyph from "../Glyph";
+import ValidateResult from "../ValidateResult";
 
 import { SimpleColumnHeader, SimpleColumnRow } from "../PagingTable";
 
