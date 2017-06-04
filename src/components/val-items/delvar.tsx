@@ -1,10 +1,10 @@
 import * as React from "react";
 
-import { Glyph, /*KageLine,*/ ValidateResult } from "../ValidateResult";
+import { Glyph, ValidateResult } from "../ValidateResult";
 
 import { SimpleColumnHeader, SimpleColumnRow } from "../PagingTable";
 
-type IValue = [string/*, TODO */];
+type IValue = [string, string];  // glyph name, base name
 
 class DelvarComponent extends React.Component<{ result: { [type: string]: IValue[]; } | null; }, {}> {
 	public static id = "delvar";
@@ -27,14 +27,13 @@ class DelvarComponent extends React.Component<{ result: { [type: string]: IValue
 	}
 
 	private getGroupTitle(_type: string): string {
-		// TODO: implement this
-		throw new Error("Not implemented yet");
+		return "派生元が存在しません。";
 	}
 	private getTableHeaderRow(_type: string) {
 		return (
 			<SimpleColumnHeader columns={[
 				"グリフ名",
-				// TODO
+				"派生元",
 			]} />
 		);
 	}
@@ -42,7 +41,7 @@ class DelvarComponent extends React.Component<{ result: { [type: string]: IValue
 		return (props: { item: IValue; }) => (
 			<SimpleColumnRow columns={[
 				<Glyph name={props.item[0]} />,
-				// TODO
+				<Glyph name={props.item[1]} />,
 			]} />
 		);
 	}
