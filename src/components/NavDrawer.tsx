@@ -57,6 +57,13 @@ class NavDrawer extends React.Component<INavDrawerProps, {}> {
 					)
 					: <div style={{ textAlign: "center", paddingTop: "8px" }}><CircularProgress /></div>
 				}
+				<Divider />
+				<SelectableList
+					onChange={onListChange}
+					value={location.pathname}
+				>
+					<ListItem primaryText="設定" value="/settings" />
+				</SelectableList>
 			</Drawer>
 		);
 	}
