@@ -1,11 +1,18 @@
 import * as React from "react";
 
+import { getSettings, ImageType } from "../settings";
+
 interface IGlyphProps {
 	name: string;
 }
 interface IGlyphState {
 	newpage: boolean;
 }
+
+const extensions = {
+	[ImageType.PNG50]: ".50px.png",
+	[ImageType.SVG]: ".svg",
+};
 
 class Glyph extends React.Component<IGlyphProps, IGlyphState> {
 	public state: Readonly<IGlyphState> = {
@@ -22,19 +29,22 @@ class Glyph extends React.Component<IGlyphProps, IGlyphState> {
 	}
 
 	public render() {
+		const { imageType } = getSettings();
 		return (
 			<a
 				href={`https://glyphwiki.org/wiki/${this.props.name}`}
 				className={`glyphLink${this.state.newpage ? " newpage" : ""}`}>
-				<img
-					src={`https://glyphwiki.org/glyph/${this.props.name}.50px.png`}
-					width="50"
-					height="50"
-					alt={this.props.name}
-					className="thumb"
-					onLoad={this.handleLoad}
-					ref={(instance) => { this.imageElement = instance; }}
-				/>
+				{imageType !== ImageType.NONE && (
+					<img
+						src={`https://glyphwiki.org/glyph/${this.props.name}${extensions[imageType]}`}
+						width="50"
+						height="50"
+						alt={this.props.name}
+						className="thumb"
+						onLoad={this.handleLoad}
+						ref={(instance) => { this.imageElement = instance; }}
+					/>
+				)}
 				{this.props.name}
 			</a>
 		);
@@ -42,7 +52,7 @@ class Glyph extends React.Component<IGlyphProps, IGlyphState> {
 
 	private handleLoad = () => {
 		// GlyphWiki returns 100x100 red X image for glyphs that do not exist
-		if (this.imageElement.naturalHeight !== 50) {
+		if (this.imageElement.naturalHeight === 100) {
 			this.setState({
 				newpage: true,
 			});
