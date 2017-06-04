@@ -5,6 +5,7 @@ import { HashRouter, Route, Switch } from "react-router-dom";
 import Master from "./components/Master";
 
 import Home from "./components/Home";
+import Settings from "./components/Settings";
 
 import validationItems from "./validationItems";
 
@@ -55,6 +56,7 @@ class App extends React.Component<{}, { data: IJSONPCallback | null }> {
 								<ItemComponent result={this.state.data && (this.state.data.result[ItemComponent.id] || {})} />
 							)} key={ItemComponent.id} />
 						))}
+						<Route path="/settings" component={Settings} />
 					</Switch>
 				</Master>
 			</HashRouter>
