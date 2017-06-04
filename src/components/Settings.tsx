@@ -62,7 +62,6 @@ class Settings extends React.Component<RouteComponentProps<any> & WithWidthProps
 				title="画像の形式"
 				actions={[
 					<FlatButton
-						key={0}
 						label="キャンセル"
 						primary={true}
 						onTouchTap={this.handleClose}
@@ -72,6 +71,7 @@ class Settings extends React.Component<RouteComponentProps<any> & WithWidthProps
 				open={this.state.openDialog === 0}
 				onRequestClose={this.handleClose}
 				autoScrollBodyContent={true}
+				key={0}
 			>
 				<RadioButtonGroup
 					name="imageType"
@@ -99,9 +99,9 @@ class Settings extends React.Component<RouteComponentProps<any> & WithWidthProps
 		if (this.props.width === SMALL) {
 			return (
 				<div>
-					{lists.map((l, i) => [
-						i ? <Divider /> : null,
+					{lists.map((l) => [
 						l,
+						<Divider />,
 					])}
 					{dialogs}
 				</div>
