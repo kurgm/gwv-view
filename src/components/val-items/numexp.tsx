@@ -1,10 +1,10 @@
 import * as React from "react";
 
-import { Glyph, /*KageLine,*/ ValidateResult } from "../ValidateResult";
+import { Glyph, KageLine, ValidateResult } from "../ValidateResult";
 
 import { SimpleColumnHeader, SimpleColumnRow } from "../PagingTable";
 
-type IValue = [string/*, TODO */];
+type IValue = [string, KageLineData];
 
 class NumexpComponent extends React.Component<{ result: { [type: string]: IValue[]; } | null; }, {}> {
 	public static id = "numexp";
@@ -26,15 +26,19 @@ class NumexpComponent extends React.Component<{ result: { [type: string]: IValue
 		);
 	}
 
-	private getGroupTitle(_type: string): string {
-		// TODO: implement this
-		throw new Error("Not implemented yet");
+	private getGroupTitle(type: string) {
+		return ({
+			0: "空行があります。",
+			1: "不正な文字があります。",
+			2: "10進数の整数として解釈できない値があります。",
+			3: "標準的でない数値の表記をしている値があります。",
+		} as { [type: string]: string; })[type];
 	}
 	private getTableHeaderRow(_type: string) {
 		return (
 			<SimpleColumnHeader columns={[
 				"グリフ名",
-				// TODO
+				"データ",
 			]} />
 		);
 	}
@@ -42,7 +46,7 @@ class NumexpComponent extends React.Component<{ result: { [type: string]: IValue
 		return (props: { item: IValue; }) => (
 			<SimpleColumnRow columns={[
 				<Glyph name={props.item[0]} />,
-				// TODO
+				<KageLine data={props.item[1]} />,
 			]} />
 		);
 	}
