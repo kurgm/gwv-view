@@ -1,10 +1,10 @@
 import * as React from "react";
 
-import { Glyph, /*KageLine,*/ ValidateResult } from "../ValidateResult";
+import { Glyph, ValidateResult } from "../ValidateResult";
 
 import { SimpleColumnHeader, SimpleColumnRow } from "../PagingTable";
 
-type IValue = [string/*, TODO */];
+type IValue = [string, string];  // glyph name, buhin name
 
 class OrderComponent extends React.Component<{ result: { [type: string]: IValue[]; } | null; }, {}> {
 	public static id = "order";
@@ -26,15 +26,16 @@ class OrderComponent extends React.Component<{ result: { [type: string]: IValue[
 		);
 	}
 
-	private getGroupTitle(_type: string): string {
-		// TODO: implement this
-		throw new Error("Not implemented yet");
+	private getGroupTitle(typeStr: string): string {
+		const type = parseInt(typeStr, 10);
+		const position = [null, "左", "右", "上", "下", "囲い結合の外", "囲い結合の中"][type % 10];
+		return `${position}にくる部品が${type < 10 ? "最初" : "最後"}に引用されています。`;
 	}
 	private getTableHeaderRow(_type: string) {
 		return (
 			<SimpleColumnHeader columns={[
 				"グリフ名",
-				// TODO
+				"引用されている部品",
 			]} />
 		);
 	}
@@ -42,7 +43,7 @@ class OrderComponent extends React.Component<{ result: { [type: string]: IValue[
 		return (props: { item: IValue; }) => (
 			<SimpleColumnRow columns={[
 				<Glyph name={props.item[0]} />,
-				// TODO
+				<Glyph name={props.item[1]} />,
 			]} />
 		);
 	}
