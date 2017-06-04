@@ -26,7 +26,7 @@ class DelvarComponent extends React.Component<{ result: { [type: string]: IValue
 		);
 	}
 
-	private getGroupTitle(_type: string): string {
+	private getGroupTitle(_type: string) {
 		return "派生元が存在しません。";
 	}
 	private getTableHeaderRow(_type: string) {

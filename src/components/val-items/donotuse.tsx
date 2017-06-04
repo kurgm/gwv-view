@@ -26,7 +26,7 @@ class DonotuseComponent extends React.Component<{ result: { [type: string]: IVal
 		);
 	}
 
-	private getGroupTitle(_type: string): string {
+	private getGroupTitle(_type: string) {
 		return "最新版がdo-not-useを引用しているグリフを引用しています。";
 	}
 	private getTableHeaderRow(_type: string) {

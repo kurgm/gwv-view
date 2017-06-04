@@ -26,7 +26,7 @@ class OrderComponent extends React.Component<{ result: { [type: string]: IValue[
 		);
 	}
 
-	private getGroupTitle(typeStr: string): string {
+	private getGroupTitle(typeStr: string) {
 		const type = parseInt(typeStr, 10);
 		const position = [null, "左", "右", "上", "下", "囲い結合の外", "囲い結合の中"][type % 10];
 		return `${position}にくる部品が${type < 10 ? "最初" : "最後"}に引用されています。`;

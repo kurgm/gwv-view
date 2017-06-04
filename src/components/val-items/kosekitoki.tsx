@@ -26,7 +26,7 @@ class KosekitokiComponent extends React.Component<{ result: { [type: string]: IV
 		);
 	}
 
-	private getGroupTitle(type: string): string {
+	private getGroupTitle(type: string) {
 		return ({
 			0: "エイリアスになっていません。",
 			1: "koseki-xxxxxxのエイリアスになっていません。",
