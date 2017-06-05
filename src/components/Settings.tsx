@@ -21,7 +21,7 @@ interface ISettingsState {
 }
 
 class Settings extends React.Component<RouteComponentProps<any> & WithWidthProps, ISettingsState> {
-	private static nDialogs = 1;
+	private static nDialogs = 2;
 
 	public state: Readonly<ISettingsState> = {
 		openDialog: -1,
@@ -54,6 +54,11 @@ class Settings extends React.Component<RouteComponentProps<any> & WithWidthProps
 					primaryText="画像の形式"
 					secondaryText={imageTypeStrings[currentSettings.imageType]}
 					onTouchTap={this.openHandlers[0]}
+				/>
+				<ListItem
+					primaryText="ページあたりの行数"
+					secondaryText={currentSettings.itemsPerPage}
+					onTouchTap={this.openHandlers[1]}
 				/>
 			</List>,
 		];
@@ -95,6 +100,36 @@ class Settings extends React.Component<RouteComponentProps<any> & WithWidthProps
 					/>
 				</RadioButtonGroup>
 			</Dialog>,
+			<Dialog
+				title="ページあたりの行数"
+				actions={[
+					<FlatButton
+						label="キャンセル"
+						primary={true}
+						onTouchTap={this.handleClose}
+					/>,
+				]}
+				modal={false}
+				open={this.state.openDialog === 1}
+				onRequestClose={this.handleClose}
+				autoScrollBodyContent={true}
+				key={1}
+			>
+				<RadioButtonGroup
+					name="itemsPerPage"
+					valueSelected={currentSettings.itemsPerPage}
+					onChange={this.handleDialogConfirm}
+				>
+					{[10, 20, 50, 100].map((n) => (
+						<RadioButton
+							value={n}
+							label={`${n}`}
+							style={styles.radioButton}
+							key={n}
+						/>
+					))}
+				</RadioButtonGroup>
+			</Dialog>,
 		];
 		if (this.props.width === SMALL) {
 			return (
@@ -131,6 +166,12 @@ class Settings extends React.Component<RouteComponentProps<any> & WithWidthProps
 			case 0: {
 				settings.updateSettings({
 					imageType: selected,
+				});
+				break;
+			}
+			case 1: {
+				settings.updateSettings({
+					itemsPerPage: selected,
 				});
 				break;
 			}
