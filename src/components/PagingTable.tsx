@@ -1,5 +1,7 @@
 import * as React from "react";
 
+import { getSettings } from "../settings";
+
 import { TouchTapEvent } from "material-ui";
 import { Card, CardActions, CardMedia, CardTitle } from "material-ui/Card";
 import DropDownMenu from "material-ui/DropDownMenu";
@@ -24,7 +26,7 @@ interface IPagingTableState {
 
 class PagingTable<T> extends React.Component<IPagingTableProps<T>, IPagingTableState> {
 	public state: Readonly<IPagingTableState> = {
-		itemsPerPage: 10,
+		itemsPerPage: getSettings().itemsPerPage,
 		page: 0,
 	};
 
