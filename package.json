@@ -4,6 +4,7 @@
   "description": "Viewer of results of GlyphWiki data validator",
   "scripts": {
     "build": "webpack --progress",
+    "build:dist": "webpack -p --progress",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
