@@ -18,7 +18,7 @@ class Glyph extends React.Component<IGlyphProps, IGlyphState> {
 	public state: Readonly<IGlyphState> = {
 		newpage: false,
 	};
-	private imageElement: HTMLImageElement;
+	private imageElement: HTMLImageElement | null;
 
 	public componentWillReceiveProps(nextProps: Readonly<IGlyphProps>) {
 		if (this.props.name !== nextProps.name) {
@@ -52,7 +52,7 @@ class Glyph extends React.Component<IGlyphProps, IGlyphState> {
 
 	private handleLoad = () => {
 		// GlyphWiki returns 100x100 red X image for glyphs that do not exist
-		if (this.imageElement.naturalHeight === 100) {
+		if (this.imageElement && this.imageElement.naturalHeight === 100) {
 			this.setState({
 				newpage: true,
 			});
