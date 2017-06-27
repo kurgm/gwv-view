@@ -32,10 +32,15 @@ export function setSettings(newSettings: ISettings) {
 	currentSettings = newSettings;
 }
 
-export function updateSettings(settings: Partial<ISettings>) {
-	const newSettings: ISettings = {
-		...currentSettings,
-		...settings,
-	};
+// export function updateSettings(settings: Partial<ISettings>) {
+// 	const newSettings: ISettings = {
+// 		...currentSettings,
+// 		...settings,
+// 	};
+export function updateSettings<K extends keyof ISettings>(settings: Pick<ISettings, K>) {
+	const newSettings: ISettings = {...currentSettings};
+	(Object.keys(settings) as K[]).forEach((k) => {
+		newSettings[k] = settings[k];
+	});
 	setSettings(newSettings);
 }
