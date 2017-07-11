@@ -26,11 +26,11 @@
     "react-tap-event-plugin": "^2.0.1"
   },
   "devDependencies": {
-    "@types/material-ui": "^0.17.14",
+    "@types/material-ui": "^0.17.15",
     "@types/prop-types": "^15.5.1",
-    "@types/react": "^15.0.35",
+    "@types/react": "^15.0.36",
     "@types/react-dom": "^15.5.1",
-    "@types/react-router-dom": "^4.0.5",
+    "@types/react-router-dom": "^4.0.6",
     "@types/react-tap-event-plugin": "0.0.30",
     "awesome-typescript-loader": "^3.2.1",
     "raw-loader": "^0.5.1",
