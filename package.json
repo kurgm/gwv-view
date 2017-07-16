@@ -5,6 +5,7 @@
   "scripts": {
     "build": "webpack --progress",
     "build:dist": "webpack -p --progress",
+    "lint": "tslint --project .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
