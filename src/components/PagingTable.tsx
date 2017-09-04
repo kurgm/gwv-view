@@ -100,7 +100,7 @@ class PagingTable<T> extends React.Component<IPagingTableProps<T>, IPagingTableS
 					</span>
 					<IconButton
 						style={styles.pagerButton}
-						onTouchTap={this.handleBackButton}
+						onClick={this.handleBackButton}
 						disabled={this.state.page <= 0}
 						iconStyle={styles.pagerButtonIcon}
 					>
@@ -108,7 +108,7 @@ class PagingTable<T> extends React.Component<IPagingTableProps<T>, IPagingTableS
 					</IconButton>
 					<IconButton
 						style={styles.pagerButton}
-						onTouchTap={this.handleNextButton}
+						onClick={this.handleNextButton}
 						disabled={this.state.page >= maxPage}
 						iconStyle={styles.pagerButtonIcon}
 					>

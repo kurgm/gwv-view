@@ -53,12 +53,12 @@ class Settings extends React.Component<RouteComponentProps<any> & WithWidthProps
 				<ListItem
 					primaryText="画像の形式"
 					secondaryText={imageTypeStrings[currentSettings.imageType]}
-					onTouchTap={this.openHandlers[0]}
+					onClick={this.openHandlers[0]}
 				/>
 				<ListItem
 					primaryText="ページあたりの行数"
 					secondaryText={currentSettings.itemsPerPage}
-					onTouchTap={this.openHandlers[1]}
+					onClick={this.openHandlers[1]}
 				/>
 			</List>,
 		];
@@ -69,7 +69,7 @@ class Settings extends React.Component<RouteComponentProps<any> & WithWidthProps
 					<FlatButton
 						label="キャンセル"
 						primary={true}
-						onTouchTap={this.handleClose}
+						onClick={this.handleClose}
 					/>,
 				]}
 				modal={false}
@@ -106,7 +106,7 @@ class Settings extends React.Component<RouteComponentProps<any> & WithWidthProps
 					<FlatButton
 						label="キャンセル"
 						primary={true}
-						onTouchTap={this.handleClose}
+						onClick={this.handleClose}
 					/>,
 				]}
 				modal={false}
