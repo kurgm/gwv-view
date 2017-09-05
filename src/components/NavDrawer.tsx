@@ -2,18 +2,17 @@ import * as React from "react";
 
 import { Location } from "history";
 
-import { TouchTapEvent } from "material-ui";
-import CircularProgress from "material-ui/CircularProgress";
 import Divider from "material-ui/Divider";
-import Drawer from "material-ui/Drawer";
-import { List, ListItem, makeSelectable } from "material-ui/List";
+import Drawer, { DrawerProps } from "material-ui/Drawer";
+import { ListItemText } from "material-ui/List";
+import CircularProgress from "material-ui/Progress/CircularProgress";
 
-const SelectableList = makeSelectable(List);
+import SelectableList, { SelectableListItem } from "./SelectableList";
 
-interface INavDrawerProps extends __MaterialUI.DrawerProps {
+interface INavDrawerProps extends DrawerProps {
 	location: Location;
 	items: Array<{ id: string; title: string; length: number; }> | null;
-	onListChange: (e: TouchTapEvent, value: any) => void;
+	onListChange: (e: React.MouseEvent<any>, value: any) => void;
 }
 
 class NavDrawer extends React.Component<INavDrawerProps, {}> {
@@ -29,27 +28,32 @@ class NavDrawer extends React.Component<INavDrawerProps, {}> {
 			<Drawer {...rest}>
 				<Divider />
 				<SelectableList
-					onChange={onListChange}
+					onChangeSelectable={onListChange}
 					value={location.pathname}
 				>
-					<ListItem primaryText="ホーム" value="/" />
+					<SelectableListItem selectValue="/">
+						<ListItemText primary="ホーム" />
+					</SelectableListItem>
 				</SelectableList>
 				<Divider />
 				{items
 					? (
 						<SelectableList
-							onChange={onListChange}
+							onChangeSelectable={onListChange}
 							value={location.pathname}
 						>
 							{items.map((item) => (
 								item.length
 									? (
-										<ListItem
-											primaryText={item.title}
-											secondaryText={`${item.length} 件`}
-											value={`/result/${item.id}`}
+										<SelectableListItem
+											selectValue={`/result/${item.id}`}
 											key={item.id}
-										/>
+										>
+											<ListItemText
+												primary={item.title}
+												secondary={`${item.length} 件`}
+											/>
+										</SelectableListItem>
 									)
 									: null
 							))}
@@ -59,10 +63,12 @@ class NavDrawer extends React.Component<INavDrawerProps, {}> {
 				}
 				<Divider />
 				<SelectableList
-					onChange={onListChange}
+					onChangeSelectable={onListChange}
 					value={location.pathname}
 				>
-					<ListItem primaryText="設定" value="/settings" />
+					<SelectableListItem selectValue="/settings">
+						<ListItemText primary="設定" />
+					</SelectableListItem>
 				</SelectableList>
 			</Drawer>
 		);

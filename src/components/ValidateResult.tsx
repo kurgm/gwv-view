@@ -1,8 +1,8 @@
 import * as React from "react";
 
-import spacing from "material-ui/styles/spacing";
+// import spacing from "material-ui/styles/spacing";
 
-import CircularProgress from "material-ui/CircularProgress";
+import CircularProgress from "material-ui/Progress/CircularProgress";
 
 import PagingTable from "./PagingTable";
 
@@ -53,7 +53,7 @@ export class ValidateResult extends React.Component<IValidateResultProps<any>, {
 	private getStyles() {
 		return {
 			content: {
-				margin: spacing.desktopGutter,
+				// margin: spacing.desktopGutter,
 			} as React.CSSProperties,
 		};
 	}

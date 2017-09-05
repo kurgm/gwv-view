@@ -2,7 +2,7 @@ import * as React from "react";
 
 import * as ReactMarkdown from "react-markdown";
 
-import spacing from "material-ui/styles/spacing";
+// import spacing from "material-ui/styles/spacing";
 
 import * as HomeDoc from "./Home.md";
 
@@ -19,7 +19,7 @@ class Home extends React.Component<any, {}> {
 	private getStyles() {
 		return {
 			content: {
-				margin: spacing.desktopGutter,
+				// margin: spacing.desktopGutter,
 			} as React.CSSProperties,
 		};
 	}

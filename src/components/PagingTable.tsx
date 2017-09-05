@@ -2,14 +2,16 @@ import * as React from "react";
 
 import { getSettings } from "../settings";
 
-import { TouchTapEvent } from "material-ui";
-import { Card, CardActions, CardMedia, CardTitle } from "material-ui/Card";
-import DropDownMenu from "material-ui/DropDownMenu";
+import Card, { CardActions, CardContent } from "material-ui/Card";
 import IconButton from "material-ui/IconButton";
-import MenuItem from "material-ui/MenuItem";
+import Menu, { MenuItem } from "material-ui/Menu"; // should be SelectField
+import Typography from "material-ui/Typography";
 
-import HardwareKeyboardArrowLeft from "material-ui/svg-icons/hardware/keyboard-arrow-left";
-import HardwareKeyboardArrowRight from "material-ui/svg-icons/hardware/keyboard-arrow-right";
+import Collapse from "material-ui/transitions/Collapse";
+
+import ExpandMoreIcon from "material-ui-icons/ExpandMore";
+import KeyboardArrowLeft from "material-ui/svg-icons/keyboard-arrow-left";
+import KeyboardArrowRight from "material-ui/svg-icons/keyboard-arrow-right";
 
 interface IPagingTableProps<T> {
 	title: string;
@@ -20,13 +22,17 @@ interface IPagingTableProps<T> {
 }
 
 interface IPagingTableState {
+	expanded: boolean;
 	itemsPerPage: number;
+	itemsPerPageMenuOpen: boolean;
 	page: number;
 }
 
 class PagingTable<T> extends React.Component<IPagingTableProps<T>, IPagingTableState> {
 	public state: Readonly<IPagingTableState> = {
+		expanded: false,
 		itemsPerPage: getSettings().itemsPerPage,
+		itemsPerPageMenuOpen: false,
 		page: 0,
 	};
 
@@ -40,81 +46,100 @@ class PagingTable<T> extends React.Component<IPagingTableProps<T>, IPagingTableS
 		const styles = this.getStyles();
 		return (
 			<Card style={styles.card}>
-				<CardTitle
-					actAsExpander
-					showExpandableButton
-					title={`${this.props.title}（${this.props.items.length} 件）`}
+				<CardContent
+					onClick={this.handleExpandClick}
 					style={styles.cardTitle}
-					titleStyle={styles.cardTitleTitle}
-				/>
-				<CardMedia expandable>
-					{/* TODO: search bar */}
-					<table className="data">
-						{this.props.thead}
-						<tbody>
-							{this.props.items.slice(start, end).map((item, idx) => (
-								<this.props.RowRenderer item={item} key={idx} />
-							))}
-						</tbody>
-						{this.props.tfoot}
-					</table>
-				</CardMedia>
-				<CardActions expandable style={styles.pager}>
-					<span style={{
-						margin: 0,
-					}}>
-						ページあたりの行数:
-					</span>
-					<DropDownMenu
-						value={this.state.itemsPerPage}
-						onChange={this.handleDropDownMenuChange}
-						labelStyle={{
-							color: "inherit",
-						}}
-						style={{
-							fontSize: "inherit",
-							marginRight: 4,
-							position: "relative",
-							top: -4,
-							verticalAlign: "middle",
-						}}
-						underlineStyle={{
-							borderTop: "none",
-						}}
-						iconStyle={{
-							fill: "inherit",
-						}}
+				>
+					<Typography
+						type="headline"
+						component="h2"
+						style={styles.cardTitleTitle}
 					>
-						{[10, 20, 50, 100].map((n) => (
-							<MenuItem
-								value={n}
-								primaryText={n}
-								key={n}
-							/>
-						))}
-					</DropDownMenu>
-					<span style={{
-						margin: "0 20px 0 0",
-					}}>
-						{start + 1}-{end} / {numItems}
-					</span>
-					<IconButton
-						style={styles.pagerButton}
-						onClick={this.handleBackButton}
-						disabled={this.state.page <= 0}
-						iconStyle={styles.pagerButtonIcon}
-					>
-						<HardwareKeyboardArrowLeft />
+						{`${this.props.title}（${this.props.items.length} 件）`}
+					</Typography>
+					<IconButton>
+						{/* TODO: expand less */}
+						<ExpandMoreIcon />
 					</IconButton>
-					<IconButton
-						style={styles.pagerButton}
-						onClick={this.handleNextButton}
-						disabled={this.state.page >= maxPage}
-						iconStyle={styles.pagerButtonIcon}
-					>
-						<HardwareKeyboardArrowRight />
-					</IconButton>
-				</CardActions>
+				</CardContent>
+				<Collapse in={this.state.expanded}>
+					<div>
+						<CardContent>
+							{/* TODO: search bar */}
+							<table className="data">
+								{this.props.thead}
+								<tbody>
+									{this.props.items.slice(start, end).map((item, idx) => (
+										<this.props.RowRenderer item={item} key={idx} />
+									))}
+								</tbody>
+								{this.props.tfoot}
+							</table>
+						</CardContent>
+						<CardActions style={styles.pager}>
+							<span style={{
+								margin: 0,
+							}}>
+								ページあたりの行数:
+							</span>
+							<span onClick={this.handleItemsPerPageMenuOpen}>
+								{/* FIXME */}
+								{this.state.itemsPerPage}
+							</span>
+							<Menu
+								onRequestClose={this.handleItemsPerPageMenuChange}
+								open={this.state.itemsPerPageMenuOpen}
+							// labelStyle={{
+							// 	color: "inherit",
+							// }}
+							// style={{
+							// 	fontSize: "inherit",
+							// 	marginRight: 4,
+							// 	position: "relative",
+							// 	top: -4,
+							// 	verticalAlign: "middle",
+							// }}
+							// underlineStyle={{
+							// 	borderTop: "none",
+							// }}
+							// iconStyle={{
+							// 	fill: "inherit",
+							// }}
+							>
+								{[10, 20, 50, 100].map((n) => (
+									<MenuItem
+										selected={n === this.state.itemsPerPage}
+										key={n}
+										onClick={(_e: React.MouseEvent<any>) => this.handleItemsPerPageMenuItemClick(n)}
+									>
+										{n}
+									</MenuItem>
+								))}
+							</Menu>
+							<span style={{
+								margin: "0 20px 0 0",
+							}}>
+								{start + 1}-{end} / {numItems}
+							</span>
+							<IconButton
+								style={styles.pagerButton}
+								onClick={this.handleBackButton}
+								disabled={this.state.page <= 0}
+								// iconStyle={styles.pagerButtonIcon}
+							>
+								<KeyboardArrowLeft />
+							</IconButton>
+							<IconButton
+								style={styles.pagerButton}
+								onClick={this.handleNextButton}
+								disabled={this.state.page >= maxPage}
+								// iconStyle={styles.pagerButtonIcon}
+							>
+								<KeyboardArrowRight />
+							</IconButton>
+						</CardActions>
+					</div>
+				</Collapse>
 			</Card>
 		);
 	}
@@ -125,6 +150,7 @@ class PagingTable<T> extends React.Component<IPagingTableProps<T>, IPagingTableS
 				margin: 8,
 			} as React.CSSProperties,
 			cardTitle: {
+				cursor: "pointer",
 				padding: "16px 14px 16px 24px",
 			} as React.CSSProperties,
 			cardTitleTitle: {
@@ -151,20 +177,38 @@ class PagingTable<T> extends React.Component<IPagingTableProps<T>, IPagingTableS
 		};
 	}
 
-	private handleDropDownMenuChange = (_e: TouchTapEvent, _index: number, menuItemValue: any) => {
+	private handleItemsPerPageMenuOpen = (_e: any) => {
+		this.setState({
+			itemsPerPageMenuOpen: true,
+		});
+	}
+
+	private handleItemsPerPageMenuChange = (_e: any) => {
+		this.setState({
+			itemsPerPageMenuOpen: false,
+		});
+	}
+	private handleItemsPerPageMenuItemClick = (menuItemValue: any) => {
 		this.setState({
 			itemsPerPage: menuItemValue,
+			itemsPerPageMenuOpen: false,
 			page: Math.floor(this.state.page * this.state.itemsPerPage / menuItemValue),
 		});
 	}
-	private handleBackButton = (_e: TouchTapEvent) => {
+	private handleBackButton = (_e: any) => {
 		this.setState({
 			page: this.state.page - 1,
 		});
 	}
-	private handleNextButton = (_e: TouchTapEvent) => {
+	private handleNextButton = (_e: any) => {
 		this.setState({
 			page: this.state.page + 1,
+		});
+	}
+
+	private handleExpandClick = (_e: any) => {
+		this.setState({
+			expanded: !this.state.expanded,
 		});
 	}
 }
