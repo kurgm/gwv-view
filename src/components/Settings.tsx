@@ -112,6 +112,7 @@ class Settings extends React.Component<RouteComponentProps<any>/* & WithWidthPro
 		return {
 			content: {
 				// margin: spacing.desktopGutter,
+				margin: 24, // TODO avoid magic number
 			} as React.CSSProperties,
 			radioButton: {
 				marginTop: 16,

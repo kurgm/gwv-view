@@ -10,6 +10,7 @@ import CircularProgress from "material-ui/Progress/CircularProgress";
 import SelectableList, { SelectableListItem } from "./SelectableList";
 
 interface INavDrawerProps extends DrawerProps {
+	containerStyle?: React.CSSProperties;
 	location: Location;
 	items: Array<{ id: string; title: string; length: number; }> | null;
 	onListChange: (e: React.MouseEvent<any>, value: any) => void;
@@ -22,54 +23,57 @@ class NavDrawer extends React.Component<INavDrawerProps, {}> {
 			items,
 			onListChange,
 			children,
+			containerStyle,
 			...rest,
 		} = this.props;
 		return (
 			<Drawer {...rest}>
-				<Divider />
-				<SelectableList
-					onChangeSelectable={onListChange}
-					value={location.pathname}
-				>
-					<SelectableListItem selectValue="/">
-						<ListItemText primary="ホーム" />
-					</SelectableListItem>
-				</SelectableList>
-				<Divider />
-				{items
-					? (
-						<SelectableList
-							onChangeSelectable={onListChange}
-							value={location.pathname}
-						>
-							{items.map((item) => (
-								item.length
-									? (
-										<SelectableListItem
-											selectValue={`/result/${item.id}`}
-											key={item.id}
-										>
-											<ListItemText
-												primary={item.title}
-												secondary={`${item.length} 件`}
-											/>
-										</SelectableListItem>
-									)
-									: null
-							))}
-						</SelectableList>
-					)
-					: <div style={{ textAlign: "center", paddingTop: "8px" }}><CircularProgress /></div>
-				}
-				<Divider />
-				<SelectableList
-					onChangeSelectable={onListChange}
-					value={location.pathname}
-				>
-					<SelectableListItem selectValue="/settings">
-						<ListItemText primary="設定" />
-					</SelectableListItem>
-				</SelectableList>
+				<div style={containerStyle}>
+					<Divider />
+					<SelectableList
+						onChangeSelectable={onListChange}
+						value={location.pathname}
+					>
+						<SelectableListItem selectValue="/">
+							<ListItemText primary="ホーム" />
+						</SelectableListItem>
+					</SelectableList>
+					<Divider />
+					{items
+						? (
+							<SelectableList
+								onChangeSelectable={onListChange}
+								value={location.pathname}
+							>
+								{items.map((item) => (
+									item.length
+										? (
+											<SelectableListItem
+												selectValue={`/result/${item.id}`}
+												key={item.id}
+											>
+												<ListItemText
+													primary={item.title}
+													secondary={`${item.length} 件`}
+												/>
+											</SelectableListItem>
+										)
+										: null
+								))}
+							</SelectableList>
+						)
+						: <div style={{ textAlign: "center", paddingTop: "8px" }}><CircularProgress /></div>
+					}
+					<Divider />
+					<SelectableList
+						onChangeSelectable={onListChange}
+						value={location.pathname}
+					>
+						<SelectableListItem selectValue="/settings">
+							<ListItemText primary="設定" />
+						</SelectableListItem>
+					</SelectableList>
+				</div>
 			</Drawer>
 		);
 	}

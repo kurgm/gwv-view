@@ -60,7 +60,7 @@ class Master extends React.Component<IMasterProps /*& WithWidthProps*/, IMasterS
 		return (
 			<MuiThemeProvider theme={theme}>
 				<div>
-					<AppBar style={styles.appBar}>
+					<AppBar>
 						<ToolBar>
 							{!docked &&
 								<IconButton
@@ -82,12 +82,9 @@ class Master extends React.Component<IMasterProps /*& WithWidthProps*/, IMasterS
 						type={docked ? "persistent" : "temporary"}
 						onRequestClose={this.handleNavDrawerRequestClose}
 						open={navDrawerOpen}
-					// containerStyle={styles.navDrawerContainer}
-					// zDepth={docked ? 0 : 2}
+						containerStyle={styles.navDrawerContainer}
 					/>
-					<div
-					// style={styles.root}
-					>
+					<div style={styles.root}>
 						{this.props.children}
 					</div>
 				</div>
@@ -104,16 +101,14 @@ class Master extends React.Component<IMasterProps /*& WithWidthProps*/, IMasterS
 		// 	muiTheme.appBar!.padding = 24;
 		// }
 		return {
-			appBar: {
-				position: "fixed",
-				top: 0,
+			navDrawerContainer: {
+				// paddingTop: muiTheme.appBar!.height!,
+				paddingTop: 64, // TODO avoid magic number
 			} as React.CSSProperties,
-			// navDrawerContainer: {
-			// 	paddingTop: muiTheme.appBar!.height!,
-			// } as React.CSSProperties,
-			// root: {
-			// 	paddingTop: theme.appBar!.height!,
-			// } as React.CSSProperties,
+			root: {
+				// paddingTop: theme.appBar!.height!,
+				paddingTop: 64, // TODO avoid magic number
+			} as React.CSSProperties,
 		};
 	}
 	private handleLeftIconButtonTouchTap = () => {

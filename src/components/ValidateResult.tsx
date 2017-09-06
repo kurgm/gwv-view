@@ -54,6 +54,7 @@ export class ValidateResult extends React.Component<IValidateResultProps<any>, {
 		return {
 			content: {
 				// margin: spacing.desktopGutter,
+				margin: 24, // TODO avoid magic number
 			} as React.CSSProperties,
 		};
 	}

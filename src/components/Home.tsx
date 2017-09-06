@@ -20,6 +20,7 @@ class Home extends React.Component<any, {}> {
 		return {
 			content: {
 				// margin: spacing.desktopGutter,
+				margin: 24, // TODO avoid magic number
 			} as React.CSSProperties,
 		};
 	}
