@@ -92,6 +92,6 @@ export default class SelectableList<T> extends React.Component<ISelectableListPr
 export class SelectableListItem<T> extends React.Component<ISelectableListItemProps<T>> {
 	public render() {
 		const { selectValue, ...rest } = this.props;
-		return <ListItem {...rest} />;
+		return <ListItem button {...rest} />;
 	}
 }

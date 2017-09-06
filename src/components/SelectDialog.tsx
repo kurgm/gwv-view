@@ -41,7 +41,7 @@ class SelectDialog extends React.Component<ISelectDialogProps, ISelectDialogStat
 				<DialogTitle>{dialogTitle}</DialogTitle>
 				<DialogContent>
 					<RadioGroup
-						value={this.props.options[this.state.selectedIndex]}
+						value={"" + this.state.selectedIndex}
 						onChange={this.handleChange}
 					>
 						{this.props.options.map((option, index) => (

@@ -7,13 +7,14 @@ import { RouterChildContext } from "react-router-dom";
 
 import AppBar from "material-ui/AppBar";
 import IconButton from "material-ui/IconButton";
-import MenuIcon from "material-ui/Menu";
 import ToolBar from "material-ui/ToolBar";
 import Typography from "material-ui/Typography";
 
 import { indigo } from "material-ui/colors";
 import { createMuiTheme, MuiThemeProvider } from "material-ui/styles";
 // import withWidth, { IProps as WithWidthProps, LARGE, SMALL } from "material-ui/utils/withWidth";
+
+import MenuIcon from "material-ui-icons/Menu";
 
 import NavDrawer from "./NavDrawer";
 
@@ -62,11 +63,14 @@ class Master extends React.Component<IMasterProps /*& WithWidthProps*/, IMasterS
 					<AppBar style={styles.appBar}>
 						<ToolBar>
 							{!docked &&
-								<IconButton onClick={this.handleLeftIconButtonTouchTap}>
+								<IconButton
+									onClick={this.handleLeftIconButtonTouchTap}
+									color="contrast"
+								>
 									<MenuIcon />
 								</IconButton>
 							}
-							<Typography>
+							<Typography type="title" color="inherit">
 								{title}
 							</Typography>
 						</ToolBar>

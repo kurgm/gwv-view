@@ -51,13 +51,13 @@ class Settings extends React.Component<RouteComponentProps<any>/* & WithWidthPro
 		const lists = [
 			<List>
 				<ListSubheader>全般</ListSubheader>
-				<ListItem onClick={this.openHandlers[0]}>
+				<ListItem button onClick={this.openHandlers[0]}>
 					<ListItemText
 						primary="画像の形式"
 						secondary={imageTypeStrings[currentSettings.imageType]}
 					/>
 				</ListItem>
-				<ListItem onClick={this.openHandlers[1]}>
+				<ListItem button onClick={this.openHandlers[1]}>
 					<ListItemText
 						primary="ページあたりの行数"
 						secondary={currentSettings.itemsPerPage}

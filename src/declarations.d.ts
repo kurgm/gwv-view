@@ -51,6 +51,14 @@ declare module "material-ui-icons/ExpandMore" {
 	export default ExpandMoreIcon;
 }
 
+declare module "material-ui-icons/Menu" {
+	import SvgIcon, { SvgIconProps } from "material-ui/SvgIcon";
+	let Menu: React.SFC<SvgIconProps> & {
+		muiName: "SvgIcon";
+	};
+	export default Menu;
+}
+
 // https://github.com/callemall/material-ui/pull/8026
 declare module "material-ui/Radio/RadioGroup" {
 	import { Omit, StyledComponent } from "material-ui";

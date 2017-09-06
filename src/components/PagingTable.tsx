@@ -68,11 +68,13 @@ class PagingTable<T> extends React.Component<IPagingTableProps<T>, IPagingTableS
 							{/* TODO: search bar */}
 							<table className="data">
 								{this.props.thead}
-								<tbody>
-									{this.props.items.slice(start, end).map((item, idx) => (
-										<this.props.RowRenderer item={item} key={idx} />
-									))}
-								</tbody>
+								{this.state.expanded &&
+									<tbody>
+										{this.props.items.slice(start, end).map((item, idx) => (
+											<this.props.RowRenderer item={item} key={idx} />
+										))}
+									</tbody>
+								}
 								{this.props.tfoot}
 							</table>
 						</CardContent>
@@ -125,7 +127,7 @@ class PagingTable<T> extends React.Component<IPagingTableProps<T>, IPagingTableS
 								style={styles.pagerButton}
 								onClick={this.handleBackButton}
 								disabled={this.state.page <= 0}
-								// iconStyle={styles.pagerButtonIcon}
+							// iconStyle={styles.pagerButtonIcon}
 							>
 								<KeyboardArrowLeft />
 							</IconButton>
@@ -133,7 +135,7 @@ class PagingTable<T> extends React.Component<IPagingTableProps<T>, IPagingTableS
 								style={styles.pagerButton}
 								onClick={this.handleNextButton}
 								disabled={this.state.page >= maxPage}
-								// iconStyle={styles.pagerButtonIcon}
+							// iconStyle={styles.pagerButtonIcon}
 							>
 								<KeyboardArrowRight />
 							</IconButton>
