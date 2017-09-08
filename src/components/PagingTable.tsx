@@ -13,6 +13,39 @@ import ExpandMoreIcon from "material-ui-icons/ExpandMore";
 import KeyboardArrowLeft from "material-ui/svg-icons/keyboard-arrow-left";
 import KeyboardArrowRight from "material-ui/svg-icons/keyboard-arrow-right";
 
+import withStyles from "material-ui/styles/withStyles";
+
+const styles = {
+	card: {
+		margin: 8,
+	} as React.CSSProperties,
+	cardTitle: {
+		cursor: "pointer",
+		padding: "16px 14px 16px 24px",
+	} as React.CSSProperties,
+	cardTitleTitle: {
+		fontSize: 20,
+		lineHeight: "32px",
+		paddingRight: 48,
+	} as React.CSSProperties,
+	pager: {
+		color: "rgba(0, 0, 0, .54)",
+		fill: "rgba(0, 0, 0, .54)",
+		fontSize: 12,
+		height: 48,
+		padding: "4px 2px",
+		textAlign: "right",
+	} as React.CSSProperties,
+	pagerButton: {
+		marginRight: 0,
+		verticalAlign: "middle",
+	} as React.CSSProperties,
+	pagerButtonIcon: {
+		color: "rgba(0, 0, 0, .54)",
+		fill: "rgba(0, 0, 0, .54)",
+	} as React.CSSProperties,
+};
+
 interface IPagingTableProps<T> {
 	title: string;
 	thead?: React.ReactNode;
@@ -28,7 +61,7 @@ interface IPagingTableState {
 	page: number;
 }
 
-class PagingTable<T> extends React.Component<IPagingTableProps<T>, IPagingTableState> {
+class PagingTable<T> extends React.Component<IPagingTableProps<T> & IClassesProps<typeof styles>, IPagingTableState> {
 	public state: Readonly<IPagingTableState> = {
 		expanded: false,
 		itemsPerPage: getSettings().itemsPerPage,
@@ -43,17 +76,16 @@ class PagingTable<T> extends React.Component<IPagingTableProps<T>, IPagingTableS
 		const end = Math.min(numItems, itemsPerPage * (page + 1));
 		const maxPage = Math.ceil(numItems / itemsPerPage) - 1;
 
-		const styles = this.getStyles();
 		return (
-			<Card style={styles.card}>
+			<Card className={this.props.classes.card}>
 				<CardContent
 					onClick={this.handleExpandClick}
-					style={styles.cardTitle}
+					className={this.props.classes.cardTitle}
 				>
 					<Typography
 						type="headline"
 						component="h2"
-						style={styles.cardTitleTitle}
+						className={this.props.classes.cardTitleTitle}
 					>
 						{`${this.props.title}（${this.props.items.length} 件）`}
 					</Typography>
@@ -78,7 +110,7 @@ class PagingTable<T> extends React.Component<IPagingTableProps<T>, IPagingTableS
 								{this.props.tfoot}
 							</table>
 						</CardContent>
-						<CardActions style={styles.pager}>
+						<CardActions className={this.props.classes.pager}>
 							<span style={{
 								margin: 0,
 							}}>
@@ -124,59 +156,24 @@ class PagingTable<T> extends React.Component<IPagingTableProps<T>, IPagingTableS
 								{start + 1}-{end} / {numItems}
 							</span>
 							<IconButton
-								style={styles.pagerButton}
+								className={this.props.classes.pagerButton}
 								onClick={this.handleBackButton}
 								disabled={this.state.page <= 0}
-							// iconStyle={styles.pagerButtonIcon}
 							>
-								<KeyboardArrowLeft />
+								<KeyboardArrowLeft className={this.props.classes.pagerButtonIcon} />
 							</IconButton>
 							<IconButton
-								style={styles.pagerButton}
+								className={this.props.classes.pagerButton}
 								onClick={this.handleNextButton}
 								disabled={this.state.page >= maxPage}
-							// iconStyle={styles.pagerButtonIcon}
 							>
-								<KeyboardArrowRight />
+								<KeyboardArrowRight className={this.props.classes.pagerButtonIcon} />
 							</IconButton>
 						</CardActions>
 					</div>
 				</Collapse>
 			</Card>
 		);
-	}
-
-	private getStyles() {
-		return {
-			card: {
-				margin: 8,
-			} as React.CSSProperties,
-			cardTitle: {
-				cursor: "pointer",
-				padding: "16px 14px 16px 24px",
-			} as React.CSSProperties,
-			cardTitleTitle: {
-				fontSize: 20,
-				lineHeight: "32px",
-				paddingRight: 48,
-			} as React.CSSProperties,
-			pager: {
-				color: "rgba(0, 0, 0, .54)",
-				fill: "rgba(0, 0, 0, .54)",
-				fontSize: 12,
-				height: 48,
-				padding: "4px 2px",
-				textAlign: "right",
-			} as React.CSSProperties,
-			pagerButton: {
-				marginRight: 0,
-				verticalAlign: "middle",
-			} as React.CSSProperties,
-			pagerButtonIcon: {
-				color: "rgba(0, 0, 0, .54)",
-				fill: "rgba(0, 0, 0, .54)",
-			} as React.CSSProperties,
-		};
 	}
 
 	private handleItemsPerPageMenuOpen = (_e: any) => {
@@ -235,4 +232,4 @@ export const SimpleColumnRow = (params: { columns: React.ReactNode[] }) => (
 	</tr>
 );
 
-export default PagingTable;
+export default withStyles<IPagingTableProps<any>>(styles)(PagingTable);

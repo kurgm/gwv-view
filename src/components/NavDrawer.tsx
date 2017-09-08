@@ -10,7 +10,7 @@ import CircularProgress from "material-ui/Progress/CircularProgress";
 import SelectableList, { SelectableListItem } from "./SelectableList";
 
 interface INavDrawerProps extends DrawerProps {
-	containerStyle?: React.CSSProperties;
+	containerClassName?: string;
 	location: Location;
 	items: Array<{ id: string; title: string; length: number; }> | null;
 	onListChange: (e: React.MouseEvent<any>, value: any) => void;
@@ -23,12 +23,12 @@ class NavDrawer extends React.Component<INavDrawerProps, {}> {
 			items,
 			onListChange,
 			children,
-			containerStyle,
+			containerClassName,
 			...rest,
 		} = this.props;
 		return (
 			<Drawer {...rest}>
-				<div style={containerStyle}>
+				<div className={containerClassName}>
 					<Divider />
 					<SelectableList
 						onChangeSelectable={onListChange}

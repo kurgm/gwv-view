@@ -2,28 +2,27 @@ import * as React from "react";
 
 import * as ReactMarkdown from "react-markdown";
 
+import withStyles from "material-ui/styles/withStyles";
+
 // import spacing from "material-ui/styles/spacing";
 
 import * as HomeDoc from "./Home.md";
 
-class Home extends React.Component<any, {}> {
+const styles = {
+	content: {
+		// margin: spacing.desktopGutter,
+		margin: 24, // TODO avoid magic number
+	} as React.CSSProperties,
+};
+
+class Home extends React.Component<IClassesProps<typeof styles>, {}> {
 	public render() {
-		const styles = this.getStyles();
 		return (
-			<div style={styles.content}>
+			<div className={this.props.classes.content}>
 				<ReactMarkdown source={HomeDoc} />
 			</div>
 		);
 	}
-
-	private getStyles() {
-		return {
-			content: {
-				// margin: spacing.desktopGutter,
-				margin: 24, // TODO avoid magic number
-			} as React.CSSProperties,
-		};
-	}
 }
 
-export default Home;
+export default withStyles(styles)(Home);

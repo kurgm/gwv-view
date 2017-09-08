@@ -4,7 +4,16 @@ import * as React from "react";
 
 import CircularProgress from "material-ui/Progress/CircularProgress";
 
+import withStyles from "material-ui/styles/withStyles";
+
 import PagingTable from "./PagingTable";
+
+const styles = {
+	content: {
+		// margin: spacing.desktopGutter,
+		margin: 24, // TODO avoid magic number
+	} as React.CSSProperties,
+};
 
 export interface IValidateResultProps<T> {
 	description: React.ReactChild;
@@ -14,14 +23,13 @@ export interface IValidateResultProps<T> {
 	getRowRenderer(type: string): React.SFC<{ item: T; }>;
 }
 
-export class ValidateResult extends React.Component<IValidateResultProps<any>, {}> {
+export class ValidateResult extends React.Component<IValidateResultProps<any> & IClassesProps<typeof styles>, {}> {
 	public shouldComponentUpdate(nextProps: Readonly<IValidateResultProps<any>>) {
 		return this.props.result !== nextProps.result;
 	}
 	public render() {
-		const styles = this.getStyles();
 		return (
-			<div style={styles.content}>
+			<div className={this.props.classes.content}>
 				{this.props.description}
 				{this.props.result
 					? (
@@ -50,14 +58,6 @@ export class ValidateResult extends React.Component<IValidateResultProps<any>, {
 		);
 	}
 
-	private getStyles() {
-		return {
-			content: {
-				// margin: spacing.desktopGutter,
-				margin: 24, // TODO avoid magic number
-			} as React.CSSProperties,
-		};
-	}
 }
 
-export default ValidateResult;
+export default withStyles<IValidateResultProps<any>>(styles)(ValidateResult);

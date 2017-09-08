@@ -11,7 +11,7 @@ import ToolBar from "material-ui/ToolBar";
 import Typography from "material-ui/Typography";
 
 import { indigo } from "material-ui/colors";
-import { createMuiTheme, MuiThemeProvider } from "material-ui/styles";
+import { createMuiTheme, MuiThemeProvider, withStyles } from "material-ui/styles";
 // import withWidth, { IProps as WithWidthProps, LARGE, SMALL } from "material-ui/utils/withWidth";
 
 import MenuIcon from "material-ui-icons/Menu";
@@ -32,7 +32,25 @@ const theme = createMuiTheme({
 	},
 });
 
-class Master extends React.Component<IMasterProps /*& WithWidthProps*/, IMasterState> {
+// if (this.props.width === SMALL) {
+// 	muiTheme.appBar!.height = 56;
+// 	muiTheme.appBar!.padding = 16;
+// } else {
+// 	muiTheme.appBar!.height = 64;
+// 	muiTheme.appBar!.padding = 24;
+// }
+const styles = {
+	navDrawerContainer: {
+		// paddingTop: muiTheme.appBar!.height!,
+		paddingTop: 64, // TODO avoid magic number
+	},
+	root: {
+		// paddingTop: theme.appBar!.height!,
+		paddingTop: 64, // TODO avoid magic number
+	},
+};
+
+class Master extends React.Component<IMasterProps & IClassesProps<typeof styles>/*& WithWidthProps*/, IMasterState> {
 
 	public static contextTypes = {
 		router: PropTypes.object,
@@ -45,7 +63,6 @@ class Master extends React.Component<IMasterProps /*& WithWidthProps*/, IMasterS
 
 	public render() {
 		const title = "GlyphWiki dump 検証";
-		const styles = this.getStyle();
 
 		const { navDrawerOpen } = this.state;
 		const docked = false;
@@ -82,9 +99,9 @@ class Master extends React.Component<IMasterProps /*& WithWidthProps*/, IMasterS
 						type={docked ? "persistent" : "temporary"}
 						onRequestClose={this.handleNavDrawerRequestClose}
 						open={navDrawerOpen}
-						containerStyle={styles.navDrawerContainer}
+						containerClassName={this.props.classes.navDrawerContainer}
 					/>
-					<div style={styles.root}>
+					<div className={this.props.classes.root}>
 						{this.props.children}
 					</div>
 				</div>
@@ -92,25 +109,6 @@ class Master extends React.Component<IMasterProps /*& WithWidthProps*/, IMasterS
 		);
 	}
 
-	private getStyle() {
-		// if (this.props.width === SMALL) {
-		// 	muiTheme.appBar!.height = 56;
-		// 	muiTheme.appBar!.padding = 16;
-		// } else {
-		// 	muiTheme.appBar!.height = 64;
-		// 	muiTheme.appBar!.padding = 24;
-		// }
-		return {
-			navDrawerContainer: {
-				// paddingTop: muiTheme.appBar!.height!,
-				paddingTop: 64, // TODO avoid magic number
-			} as React.CSSProperties,
-			root: {
-				// paddingTop: theme.appBar!.height!,
-				paddingTop: 64, // TODO avoid magic number
-			} as React.CSSProperties,
-		};
-	}
 	private handleLeftIconButtonTouchTap = () => {
 		this.setState({
 			navDrawerOpen: !this.state.navDrawerOpen,
@@ -129,4 +127,4 @@ class Master extends React.Component<IMasterProps /*& WithWidthProps*/, IMasterS
 	}
 }
 
-export default Master;
+export default withStyles<IMasterProps>(styles)(Master);

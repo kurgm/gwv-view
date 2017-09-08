@@ -25,6 +25,8 @@ interface IJSONPCallback {
 	lastModified: number;
 }
 
+interface IClassesProps<S> { classes: {[K in keyof S]: string; }; }
+
 
 // FIXME: temporarily...
 declare module "material-ui/svg-icons/keyboard-arrow-left" {

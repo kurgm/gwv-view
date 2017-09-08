@@ -9,6 +9,8 @@ import List, { ListItem, ListItemText, ListSubheader } from "material-ui/List";
 import Paper from "material-ui/Paper";
 // import Typography from "material-ui/Typography"
 
+import withStyles from "material-ui/styles/withStyles";
+
 // import withWidth, { IProps as WithWidthProps, SMALL } from "material-ui/utils/withWidth";
 
 import SelectDialog from "./SelectDialog";
@@ -19,9 +21,18 @@ interface ISettingsState {
 	openDialog: number;
 }
 
+const styles = {
+	content: {
+		// margin: spacing.desktopGutter,
+		margin: 24, // TODO avoid magic number
+	},
+};
+
 const itemsPerPageOptions = [10, 20, 50, 100];
 
-class Settings extends React.Component<RouteComponentProps<any>/* & WithWidthProps*/, ISettingsState> {
+class Settings extends React.Component<
+	RouteComponentProps<any> & IClassesProps<typeof styles>/* & WithWidthProps*/,
+	ISettingsState> {
 	private static nDialogs = 2;
 
 	public state: Readonly<ISettingsState> = {
@@ -40,8 +51,6 @@ class Settings extends React.Component<RouteComponentProps<any>/* & WithWidthPro
 	})();
 
 	public render() {
-		const styles = this.getStyles();
-
 		const currentSettings = settings.getSettings();
 		const imageTypeStrings = {
 			[settings.ImageType.NONE]: "表示しない",
@@ -101,23 +110,11 @@ class Settings extends React.Component<RouteComponentProps<any>/* & WithWidthPro
 		// 	);
 		// }
 		return (
-			<div style={styles.content}>
+			<div className={this.props.classes.content}>
 				{lists.map((l, i) => <Paper key={i}>{l}</Paper>)}
 				{dialogs}
 			</div>
 		);
-	}
-
-	private getStyles() {
-		return {
-			content: {
-				// margin: spacing.desktopGutter,
-				margin: 24, // TODO avoid magic number
-			} as React.CSSProperties,
-			radioButton: {
-				marginTop: 16,
-			} as React.CSSProperties,
-		};
 	}
 
 	private handleDialogConfirm = (_e: React.FormEvent<{}>, selectedIndex: number) => {
@@ -145,4 +142,4 @@ class Settings extends React.Component<RouteComponentProps<any>/* & WithWidthPro
 	}
 }
 
-export default Settings;
+export default withStyles(styles)(Settings);
