@@ -25,7 +25,9 @@ interface IJSONPCallback {
 	lastModified: number;
 }
 
-interface IClassesProps<S> { classes: {[K in keyof S]: string; }; }
+interface IClassesProps<S extends { [name: string]: React.CSSProperties; }> {
+	classes: {[K in keyof S]: string; };
+}
 
 
 // FIXME: temporarily...

@@ -28,16 +28,17 @@ const styles = {
 		lineHeight: "32px",
 		paddingRight: 48,
 	} as React.CSSProperties,
+	flexGrow: {
+		flex: "1 1 auto",
+	} as React.CSSProperties,
 	pager: {
 		color: "rgba(0, 0, 0, .54)",
 		fill: "rgba(0, 0, 0, .54)",
 		fontSize: 12,
-		height: 48,
-		padding: "4px 2px",
-		textAlign: "right",
+		padding: 2,
 	} as React.CSSProperties,
 	pagerButton: {
-		marginRight: 0,
+		margin: 0,
 		verticalAlign: "middle",
 	} as React.CSSProperties,
 	pagerButtonIcon: {
@@ -57,6 +58,7 @@ interface IPagingTableProps<T> {
 interface IPagingTableState {
 	expanded: boolean;
 	itemsPerPage: number;
+	itemsPerPageMenuAnchorEl?: HTMLElement;
 	itemsPerPageMenuOpen: boolean;
 	page: number;
 }
@@ -96,21 +98,22 @@ class PagingTable<T> extends React.Component<IPagingTableProps<T> & IClassesProp
 				</CardContent>
 				<Collapse in={this.state.expanded}>
 					<div>
-						<CardContent>
-							{/* TODO: search bar */}
-							<table className="data">
-								{this.props.thead}
-								{this.state.expanded &&
-									<tbody>
-										{this.props.items.slice(start, end).map((item, idx) => (
-											<this.props.RowRenderer item={item} key={idx} />
-										))}
-									</tbody>
-								}
-								{this.props.tfoot}
-							</table>
-						</CardContent>
+						{/* <CardContent> */}
+						{/* TODO: search bar */}
+						<table className="data">
+							{this.props.thead}
+							{this.state.expanded &&
+								<tbody>
+									{this.props.items.slice(start, end).map((item, idx) => (
+										<this.props.RowRenderer item={item} key={idx} />
+									))}
+								</tbody>
+							}
+							{this.props.tfoot}
+						</table>
+						{/* </CardContent> */}
 						<CardActions className={this.props.classes.pager}>
+							<div className={this.props.classes.flexGrow} />
 							<span style={{
 								margin: 0,
 							}}>
@@ -123,6 +126,7 @@ class PagingTable<T> extends React.Component<IPagingTableProps<T> & IClassesProp
 							<Menu
 								onRequestClose={this.handleItemsPerPageMenuChange}
 								open={this.state.itemsPerPageMenuOpen}
+								anchorEl={this.state.itemsPerPageMenuAnchorEl!}
 							// labelStyle={{
 							// 	color: "inherit",
 							// }}
@@ -176,8 +180,9 @@ class PagingTable<T> extends React.Component<IPagingTableProps<T> & IClassesProp
 		);
 	}
 
-	private handleItemsPerPageMenuOpen = (_e: any) => {
+	private handleItemsPerPageMenuOpen = (evt: React.MouseEvent<HTMLElement>) => {
 		this.setState({
+			itemsPerPageMenuAnchorEl: evt.currentTarget,
 			itemsPerPageMenuOpen: true,
 		});
 	}
