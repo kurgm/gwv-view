@@ -4,7 +4,9 @@ import { getSettings } from "../settings";
 
 import Card, { CardActions, CardContent } from "material-ui/Card";
 import IconButton from "material-ui/IconButton";
-import Menu, { MenuItem } from "material-ui/Menu"; // should be SelectField
+import Input from "material-ui/Input";
+import { MenuItem } from "material-ui/Menu";
+import Select from "material-ui/Select";
 import Typography from "material-ui/Typography";
 
 import Collapse from "material-ui/transitions/Collapse";
@@ -58,8 +60,6 @@ interface IPagingTableProps<T> {
 interface IPagingTableState {
 	expanded: boolean;
 	itemsPerPage: number;
-	itemsPerPageMenuAnchorEl?: HTMLElement;
-	itemsPerPageMenuOpen: boolean;
 	page: number;
 }
 
@@ -67,7 +67,6 @@ class PagingTable<T> extends React.Component<IPagingTableProps<T> & IClassesProp
 	public state: Readonly<IPagingTableState> = {
 		expanded: false,
 		itemsPerPage: getSettings().itemsPerPage,
-		itemsPerPageMenuOpen: false,
 		page: 0,
 	};
 
@@ -119,14 +118,12 @@ class PagingTable<T> extends React.Component<IPagingTableProps<T> & IClassesProp
 							}}>
 								ページあたりの行数:
 							</span>
-							<span onClick={this.handleItemsPerPageMenuOpen}>
-								{/* FIXME */}
-								{this.state.itemsPerPage}
-							</span>
-							<Menu
-								onRequestClose={this.handleItemsPerPageMenuChange}
-								open={this.state.itemsPerPageMenuOpen}
-								anchorEl={this.state.itemsPerPageMenuAnchorEl!}
+							<Select
+								value={this.state.itemsPerPage}
+								onChange={this.handleItemsPerPageChange}
+								input={<Input />}
+							>
+							{/*
 							// labelStyle={{
 							// 	color: "inherit",
 							// }}
@@ -142,18 +139,16 @@ class PagingTable<T> extends React.Component<IPagingTableProps<T> & IClassesProp
 							// }}
 							// iconStyle={{
 							// 	fill: "inherit",
-							// }}
-							>
+							// }}*/}
 								{[10, 20, 50, 100].map((n) => (
 									<MenuItem
-										selected={n === this.state.itemsPerPage}
 										key={n}
-										onClick={(_e: React.MouseEvent<any>) => this.handleItemsPerPageMenuItemClick(n)}
+										value={n}
 									>
 										{n}
 									</MenuItem>
 								))}
-							</Menu>
+							</Select>
 							<span style={{
 								margin: "0 20px 0 0",
 							}}>
@@ -180,22 +175,10 @@ class PagingTable<T> extends React.Component<IPagingTableProps<T> & IClassesProp
 		);
 	}
 
-	private handleItemsPerPageMenuOpen = (evt: React.MouseEvent<HTMLElement>) => {
-		this.setState({
-			itemsPerPageMenuAnchorEl: evt.currentTarget,
-			itemsPerPageMenuOpen: true,
-		});
-	}
-
-	private handleItemsPerPageMenuChange = (_e: any) => {
-		this.setState({
-			itemsPerPageMenuOpen: false,
-		});
-	}
-	private handleItemsPerPageMenuItemClick = (menuItemValue: any) => {
+	private handleItemsPerPageChange = (e: React.FormEvent<any>) => {
+		const menuItemValue = +(e.target as HTMLSelectElement).value;
 		this.setState({
 			itemsPerPage: menuItemValue,
-			itemsPerPageMenuOpen: false,
 			page: Math.floor(this.state.page * this.state.itemsPerPage / menuItemValue),
 		});
 	}
