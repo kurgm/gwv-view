@@ -47,6 +47,15 @@ const styles = {
 		color: "rgba(0, 0, 0, .54)",
 		fill: "rgba(0, 0, 0, .54)",
 	} as React.CSSProperties,
+	pagerSelect: {
+		margin: 0,
+		textAlign: "right",
+	} as React.CSSProperties,
+	pagerSelectInput: {
+		color: "rgba(0, 0, 0, .54)",
+		paddingRight: 24,
+		width: 48,
+	} as React.CSSProperties,
 };
 
 interface IPagingTableProps<T> {
@@ -97,7 +106,6 @@ class PagingTable<T> extends React.Component<IPagingTableProps<T> & IClassesProp
 				</CardContent>
 				<Collapse in={this.state.expanded}>
 					<div>
-						{/* <CardContent> */}
 						{/* TODO: search bar */}
 						<table className="data">
 							{this.props.thead}
@@ -110,7 +118,6 @@ class PagingTable<T> extends React.Component<IPagingTableProps<T> & IClassesProp
 							}
 							{this.props.tfoot}
 						</table>
-						{/* </CardContent> */}
 						<CardActions className={this.props.classes.pager}>
 							<div className={this.props.classes.flexGrow} />
 							<span style={{
@@ -121,25 +128,16 @@ class PagingTable<T> extends React.Component<IPagingTableProps<T> & IClassesProp
 							<Select
 								value={this.state.itemsPerPage}
 								onChange={this.handleItemsPerPageChange}
-								input={<Input />}
+								input={
+									<Input
+										inputProps={{
+											className: this.props.classes.pagerSelectInput,
+										}}
+									/>
+								}
+								className={this.props.classes.pagerSelect}
+								disableUnderline
 							>
-							{/*
-							// labelStyle={{
-							// 	color: "inherit",
-							// }}
-							// style={{
-							// 	fontSize: "inherit",
-							// 	marginRight: 4,
-							// 	position: "relative",
-							// 	top: -4,
-							// 	verticalAlign: "middle",
-							// }}
-							// underlineStyle={{
-							// 	borderTop: "none",
-							// }}
-							// iconStyle={{
-							// 	fill: "inherit",
-							// }}*/}
 								{[10, 20, 50, 100].map((n) => (
 									<MenuItem
 										key={n}
@@ -150,7 +148,7 @@ class PagingTable<T> extends React.Component<IPagingTableProps<T> & IClassesProp
 								))}
 							</Select>
 							<span style={{
-								margin: "0 20px 0 0",
+								margin: "0 20px 0 32px",
 							}}>
 								{start + 1}-{end} / {numItems}
 							</span>
