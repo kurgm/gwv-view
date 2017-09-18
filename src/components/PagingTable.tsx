@@ -10,8 +10,8 @@ import Typography from "material-ui/Typography";
 import Collapse from "material-ui/transitions/Collapse";
 
 import ExpandMoreIcon from "material-ui-icons/ExpandMore";
-import KeyboardArrowLeft from "material-ui/svg-icons/keyboard-arrow-left";
-import KeyboardArrowRight from "material-ui/svg-icons/keyboard-arrow-right";
+import KeyboardArrowLeft from "material-ui-icons/KeyboardArrowLeft";
+import KeyboardArrowRight from "material-ui-icons/KeyboardArrowRight";
 
 import withStyles from "material-ui/styles/withStyles";
 

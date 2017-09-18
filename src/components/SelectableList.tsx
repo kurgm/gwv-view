@@ -58,7 +58,7 @@ export default class SelectableList<T> extends React.Component<ISelectableListPr
 
 			return React.cloneElement<ISelectableListItemProps<T>, Partial<ISelectableListItemProps<T>>>(child, {
 				// key: this.keyIndex,
-				onClick: (event: React.MouseEvent<HTMLLIElement>) => {
+				onClick: (event: React.MouseEvent<any>) => {
 					this.handleItemClick(event, child);
 					if (child.props.onClick) {
 						(child.props.onClick as React.EventHandler<React.MouseEvent<any>>)(event);
