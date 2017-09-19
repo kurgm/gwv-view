@@ -41,6 +41,10 @@ const theme = createMuiTheme({
 // }
 const drawerWidth = 240;
 
+const appBarHeight = 56;
+const appBarHeightLarge = 64;
+const appBarHeightSmall = 48;
+
 const styles = {
 	appBar: {
 		transition: theme.transitions.create(["margin", "width"], {
@@ -55,21 +59,40 @@ const styles = {
 			easing: theme.transitions.easing.easeOut,
 		}),
 		width: `calc(100% - ${drawerWidth}px)`,
+	},
+	drawerHeader: {
+		alignItems: "center",
+		display: "flex",
+		justifyContent: "flex-end",
+		minHeight: appBarHeight,
+		padding: "0 8px",
+		[`${theme.breakpoints.up("xs")} and (orientation: landscape)`]: {
+			minHeight: appBarHeightSmall,
+		},
+		[theme.breakpoints.up("sm")]: {
+			minHeight: appBarHeightLarge,
+		},
 	} as React.CSSProperties,
 	drawerPaper: {
 		width: drawerWidth,
 	},
-	navDrawerContainer: {
-		// paddingTop: muiTheme.appBar!.height!,
-		paddingTop: 64, // TODO avoid magic number
-	},
+	menuButton: {
+		marginLeft: -12,
+		marginRight: 20,
+	} as React.CSSProperties,
 	root: {
 		// paddingTop: theme.appBar!.height!,
-		paddingTop: 64, // TODO avoid magic number
+		paddingTop: appBarHeight,
 		transition: theme.transitions.create("margin", {
 			duration: theme.transitions.duration.leavingScreen,
 			easing: theme.transitions.easing.sharp,
 		}),
+		[`${theme.breakpoints.up("xs")} and (orientation: landscape)`]: {
+			paddingTop: appBarHeightSmall,
+		},
+		[theme.breakpoints.up("sm")]: {
+			paddingTop: appBarHeightLarge,
+		},
 	},
 	rootShift: {
 		marginLeft: drawerWidth,
@@ -108,10 +131,11 @@ class Master extends React.Component<IMasterProps & IClassesProps<typeof styles>
 						className={`${this.props.classes.appBar} ${persistent && navDrawerOpen ? this.props.classes.appBarShift : ""}`}
 					>
 						<Toolbar>
-							{!persistent &&
+							{!(persistent && navDrawerOpen) &&
 								<IconButton
-									onClick={this.handleLeftIconButtonTouchTap}
+									onClick={this.handleLeftIconButtonClick}
 									color="contrast"
+									className={this.props.classes.menuButton}
 								>
 									<MenuIcon />
 								</IconButton>
@@ -128,8 +152,8 @@ class Master extends React.Component<IMasterProps & IClassesProps<typeof styles>
 						type={persistent ? "persistent" : "temporary"}
 						onRequestClose={this.handleNavDrawerRequestClose}
 						open={navDrawerOpen}
-						containerClassName={this.props.classes.navDrawerContainer}
 						classes={{
+							header: this.props.classes.drawerHeader,
 							paper: this.props.classes.drawerPaper,
 						}}
 					/>
@@ -143,7 +167,7 @@ class Master extends React.Component<IMasterProps & IClassesProps<typeof styles>
 		);
 	}
 
-	private handleLeftIconButtonTouchTap = () => {
+	private handleLeftIconButtonClick = () => {
 		this.setState({
 			navDrawerOpen: !this.state.navDrawerOpen,
 		});
@@ -155,9 +179,11 @@ class Master extends React.Component<IMasterProps & IClassesProps<typeof styles>
 	}
 	private handleNavDrawerListChange = (_e: any, value: any): void => {
 		this.context.router.history.push(value);
-		this.setState({
-			navDrawerOpen: false,
-		});
+		if (!isWidthUp("md", this.props.width)) {
+			this.setState({
+				navDrawerOpen: false,
+			});
+		}
 	}
 }
 

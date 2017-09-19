@@ -4,33 +4,58 @@ import { Location } from "history";
 
 import Divider from "material-ui/Divider";
 import Drawer, { DrawerProps } from "material-ui/Drawer";
+import IconButton from "material-ui/IconButton";
 import { ListItemText } from "material-ui/List";
 import CircularProgress from "material-ui/Progress/CircularProgress";
 
+import ChevronLeftIcon from "material-ui-icons/ChevronLeft";
+
 import { StyledComponentProps } from "material-ui";
+import withStyles from "material-ui/styles/withStyles";
 
 import SelectableList, { SelectableListItem } from "./SelectableList";
 
+const styles = {
+	header: {},
+	loading: {
+		paddingTop: "8px",
+		textAlign: "center",
+	},
+	paper: {},
+};
+
 interface INavDrawerProps extends DrawerProps {
-	containerClassName?: string;
 	location: Location;
 	items: Array<{ id: string; title: string; length: number; }> | null;
 	onListChange: (e: React.MouseEvent<any>, value: any) => void;
 }
 
-class NavDrawer extends React.Component<INavDrawerProps & StyledComponentProps<any>, {}> {
+class NavDrawer extends React.Component<
+	INavDrawerProps & IClassesProps<typeof styles> & StyledComponentProps<any>, {}> {
 	public render() {
 		const {
 			location,
 			items,
 			onListChange,
 			children,
-			containerClassName,
+			classes: {
+				header: headerClassName,
+				loading: loadingClassName,
+				...classes,
+			},
 			...rest,
 		} = this.props;
+		const persistent = this.props.type === "persistent";
 		return (
-			<Drawer {...rest}>
-				<div className={containerClassName}>
+			<Drawer classes={classes} {...rest}>
+				<div>
+					<div className={headerClassName}>
+						{persistent && (
+							<IconButton onClick={this.props.onRequestClose}>
+								<ChevronLeftIcon />
+							</IconButton>
+						)}
+					</div>
 					<Divider />
 					<SelectableList
 						onChangeSelectable={onListChange}
@@ -64,7 +89,7 @@ class NavDrawer extends React.Component<INavDrawerProps & StyledComponentProps<a
 								))}
 							</SelectableList>
 						)
-						: <div style={{ textAlign: "center", paddingTop: "8px" }}><CircularProgress /></div>
+						: <div className={loadingClassName}><CircularProgress /></div>
 					}
 					<Divider />
 					<SelectableList
@@ -81,4 +106,4 @@ class NavDrawer extends React.Component<INavDrawerProps & StyledComponentProps<a
 	}
 }
 
-export default NavDrawer;
+export default withStyles(styles)(NavDrawer);
