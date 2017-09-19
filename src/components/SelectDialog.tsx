@@ -35,7 +35,7 @@ class SelectDialog extends React.Component<ISelectDialogProps, ISelectDialogStat
 	}
 
 	public render() {
-		const { selectedIndex, onRequestClose, dialogTitle, ...rest } = this.props;
+		const { selectedIndex, onConfirmValue, options, dialogTitle, ...rest } = this.props;
 		return (
 			<Dialog {...rest}>
 				<DialogTitle>{dialogTitle}</DialogTitle>
