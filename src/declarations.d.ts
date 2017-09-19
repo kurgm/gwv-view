@@ -28,25 +28,3 @@ interface IJSONPCallback {
 interface IClassesProps<S extends { [name: string]: React.CSSProperties; }> {
 	classes: {[K in keyof S]: string; };
 }
-
-// temporarily...
-// https://github.com/callemall/material-ui/pull/8214
-declare module "material-ui/Select/Select" {
-	import { StyledComponent, Omit } from 'material-ui';
-	import { InputProps } from "material-ui/Input";
-
-	export type SelectProps = {
-		input?: React.ReactNode;
-		native?: boolean;
-		multiple?: boolean;
-		MenuProps?: Object;
-		renderValue?: Function;
-		value?: Array<string | number> | string | number;
-	} & Partial<Omit<InputProps, "value">>;
-	export default class Select extends StyledComponent<SelectProps> {}
-}
-
-declare module "material-ui/Select" {
-	export { default } from 'material-ui/Select/Select';
-	export * from 'material-ui/Select/Select';
-}
