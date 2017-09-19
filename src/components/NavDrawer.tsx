@@ -7,6 +7,8 @@ import Drawer, { DrawerProps } from "material-ui/Drawer";
 import { ListItemText } from "material-ui/List";
 import CircularProgress from "material-ui/Progress/CircularProgress";
 
+import { StyledComponentProps } from "material-ui";
+
 import SelectableList, { SelectableListItem } from "./SelectableList";
 
 interface INavDrawerProps extends DrawerProps {
@@ -16,7 +18,7 @@ interface INavDrawerProps extends DrawerProps {
 	onListChange: (e: React.MouseEvent<any>, value: any) => void;
 }
 
-class NavDrawer extends React.Component<INavDrawerProps, {}> {
+class NavDrawer extends React.Component<INavDrawerProps & StyledComponentProps<any>, {}> {
 	public render() {
 		const {
 			location,

@@ -39,7 +39,26 @@ const theme = createMuiTheme({
 // 	muiTheme.appBar!.height = 64;
 // 	muiTheme.appBar!.padding = 24;
 // }
+const drawerWidth = 240;
+
 const styles = {
+	appBar: {
+		transition: theme.transitions.create(["margin", "width"], {
+			duration: theme.transitions.duration.leavingScreen,
+			easing: theme.transitions.easing.sharp,
+		}),
+	},
+	appBarShift: {
+		marginLeft: drawerWidth,
+		transition: theme.transitions.create(["margin", "width"], {
+			duration: theme.transitions.duration.enteringScreen,
+			easing: theme.transitions.easing.easeOut,
+		}),
+		width: `calc(100% - ${drawerWidth}px)`,
+	} as React.CSSProperties,
+	drawerPaper: {
+		width: drawerWidth,
+	},
 	navDrawerContainer: {
 		// paddingTop: muiTheme.appBar!.height!,
 		paddingTop: 64, // TODO avoid magic number
@@ -47,6 +66,17 @@ const styles = {
 	root: {
 		// paddingTop: theme.appBar!.height!,
 		paddingTop: 64, // TODO avoid magic number
+		transition: theme.transitions.create("margin", {
+			duration: theme.transitions.duration.leavingScreen,
+			easing: theme.transitions.easing.sharp,
+		}),
+	},
+	rootShift: {
+		marginLeft: drawerWidth,
+		transition: theme.transitions.create("margin", {
+			duration: theme.transitions.duration.enteringScreen,
+			easing: theme.transitions.easing.easeOut,
+		}),
 	},
 };
 
@@ -64,20 +94,21 @@ class Master extends React.Component<IMasterProps & IClassesProps<typeof styles>
 	public render() {
 		const title = "GlyphWiki dump 検証";
 
-		let { navDrawerOpen } = this.state;
-		let docked = false;
+		const { navDrawerOpen } = this.state;
+		let persistent = false;
 		if (isWidthUp("md", this.props.width)) {
-			navDrawerOpen = true;
-			docked = true;
+			persistent = true;
 		}
 
 		const location: Location = this.context.router.route.location;
 		return (
 			<MuiThemeProvider theme={theme}>
 				<div>
-					<AppBar>
+					<AppBar
+						className={`${this.props.classes.appBar} ${persistent && navDrawerOpen ? this.props.classes.appBarShift : ""}`}
+					>
 						<Toolbar>
-							{!docked &&
+							{!persistent &&
 								<IconButton
 									onClick={this.handleLeftIconButtonTouchTap}
 									color="contrast"
@@ -94,12 +125,17 @@ class Master extends React.Component<IMasterProps & IClassesProps<typeof styles>
 						location={location}
 						items={this.props.items}
 						onListChange={this.handleNavDrawerListChange}
-						type={docked ? "persistent" : "temporary"}
+						type={persistent ? "persistent" : "temporary"}
 						onRequestClose={this.handleNavDrawerRequestClose}
 						open={navDrawerOpen}
 						containerClassName={this.props.classes.navDrawerContainer}
+						classes={{
+							paper: this.props.classes.drawerPaper,
+						}}
 					/>
-					<div className={this.props.classes.root}>
+					<div
+						className={`${this.props.classes.root} ${persistent && navDrawerOpen ? this.props.classes.rootShift : ""}`}
+					>
 						{this.props.children}
 					</div>
 				</div>
