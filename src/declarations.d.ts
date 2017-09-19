@@ -3,15 +3,31 @@ declare module "*.md" {
 	export = content;
 }
 
-// // Overwrite incorrect definitions
-// declare module "material-ui/utils/withWidth" {
-// 	interface IProps {
-// 		width: number;
-// 	}
-// 	// It should be type subtraction, but TypeScript doesn't support it yet
-// 	export default function withWidth<P>(options?: Options):
-// 		(component: React.ComponentClass<P & IProps>) => React.ComponentClass<P>;
-// }
+// Overwrite incorrect definitions
+declare module "material-ui/utils/withWidth" {
+	import { Breakpoint } from "material-ui/styles/createBreakpoints";
+	export interface WithWidthOptions {
+		resizeInterval: number;
+	}
+
+	export interface WithWidthProps {
+		width: Breakpoint;
+	}
+
+	/**
+	 * By default, returns true if screen width is the same or greater than the given breakpoint.
+	 */
+	export const isWidthUp: (breakpoint: Breakpoint, screenWidth: Breakpoint, inclusive?: boolean) => boolean;
+
+	/**
+	 * By default, returns true if screen width is the same or less than the given breakpoint.
+	 */
+	export const isWidthDown: (breakpoint: Breakpoint, screenWidth: Breakpoint, inclusive?: boolean) => boolean;
+
+	// It should be type subtraction, but TypeScript doesn't support it yet
+	export default function withWidth<P = {}>(options?: WithWidthOptions):
+		(component: React.ComponentClass<P & WithWidthProps>) => React.ComponentClass<P>;
+}
 
 type KageLineData = [number, string];
 

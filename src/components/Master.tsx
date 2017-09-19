@@ -12,7 +12,7 @@ import Typography from "material-ui/Typography";
 
 import { indigo } from "material-ui/colors";
 import { createMuiTheme, MuiThemeProvider, withStyles } from "material-ui/styles";
-// import withWidth, { IProps as WithWidthProps, LARGE, SMALL } from "material-ui/utils/withWidth";
+import withWidth, { isWidthUp, WithWidthProps } from "material-ui/utils/withWidth";
 
 import MenuIcon from "material-ui-icons/Menu";
 
@@ -50,7 +50,7 @@ const styles = {
 	},
 };
 
-class Master extends React.Component<IMasterProps & IClassesProps<typeof styles>/*& WithWidthProps*/, IMasterState> {
+class Master extends React.Component<IMasterProps & IClassesProps<typeof styles> & WithWidthProps, IMasterState> {
 
 	public static contextTypes = {
 		router: PropTypes.object,
@@ -64,14 +64,12 @@ class Master extends React.Component<IMasterProps & IClassesProps<typeof styles>
 	public render() {
 		const title = "GlyphWiki dump 検証";
 
-		const { navDrawerOpen } = this.state;
-		const docked = false;
-		// if (this.props.width === LARGE) {
-		// 	navDrawerOpen = true;
-		// 	docked = true;
-		// 	styles.root.paddingLeft = styles.appBarTitle.paddingLeft = muiTheme.drawer!.width!;
-		// 	styles.navDrawerContainer.borderRight = "1px solid rgba(0,0,0,.14)";
-		// }
+		let { navDrawerOpen } = this.state;
+		let docked = false;
+		if (isWidthUp("md", this.props.width)) {
+			navDrawerOpen = true;
+			docked = true;
+		}
 
 		const location: Location = this.context.router.route.location;
 		return (
@@ -127,4 +125,4 @@ class Master extends React.Component<IMasterProps & IClassesProps<typeof styles>
 	}
 }
 
-export default withStyles<IMasterProps>(styles)(Master);
+export default withWidth<IMasterProps>()(withStyles(styles)(Master));
