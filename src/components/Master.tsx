@@ -7,7 +7,7 @@ import { RouterChildContext } from "react-router-dom";
 
 import AppBar from "material-ui/AppBar";
 import IconButton from "material-ui/IconButton";
-import ToolBar from "material-ui/ToolBar";
+import Toolbar from "material-ui/Toolbar";
 import Typography from "material-ui/Typography";
 
 import { indigo } from "material-ui/colors";
@@ -76,7 +76,7 @@ class Master extends React.Component<IMasterProps & IClassesProps<typeof styles>
 			<MuiThemeProvider theme={theme}>
 				<div>
 					<AppBar>
-						<ToolBar>
+						<Toolbar>
 							{!docked &&
 								<IconButton
 									onClick={this.handleLeftIconButtonTouchTap}
@@ -88,7 +88,7 @@ class Master extends React.Component<IMasterProps & IClassesProps<typeof styles>
 							<Typography type="title" color="inherit">
 								{title}
 							</Typography>
-						</ToolBar>
+						</Toolbar>
 					</AppBar>
 					<NavDrawer
 						location={location}
