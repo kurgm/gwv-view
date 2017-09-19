@@ -43,10 +43,6 @@ const styles = {
 		margin: 0,
 		verticalAlign: "middle",
 	} as React.CSSProperties,
-	pagerButtonIcon: {
-		color: "rgba(0, 0, 0, .54)",
-		fill: "rgba(0, 0, 0, .54)",
-	} as React.CSSProperties,
 	pagerSelect: {
 		margin: 0,
 		textAlign: "right",
@@ -157,14 +153,14 @@ class PagingTable<T> extends React.Component<IPagingTableProps<T> & IClassesProp
 								onClick={this.handleBackButton}
 								disabled={this.state.page <= 0}
 							>
-								<KeyboardArrowLeft className={this.props.classes.pagerButtonIcon} />
+								<KeyboardArrowLeft />
 							</IconButton>
 							<IconButton
 								className={this.props.classes.pagerButton}
 								onClick={this.handleNextButton}
 								disabled={this.state.page >= maxPage}
 							>
-								<KeyboardArrowRight className={this.props.classes.pagerButtonIcon} />
+								<KeyboardArrowRight />
 							</IconButton>
 						</CardActions>
 					</div>
