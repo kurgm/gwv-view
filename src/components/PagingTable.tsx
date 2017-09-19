@@ -28,7 +28,6 @@ const styles = {
 	cardTitleTitle: {
 		fontSize: 20,
 		lineHeight: "32px",
-		paddingRight: 48,
 	} as React.CSSProperties,
 	flexGrow: {
 		flex: "1 1 auto",
@@ -88,17 +87,20 @@ class PagingTable<T> extends React.Component<IPagingTableProps<T> & IClassesProp
 					onClick={this.handleExpandClick}
 					className={this.props.classes.cardTitle}
 				>
-					<Typography
-						type="headline"
-						component="h2"
-						className={this.props.classes.cardTitleTitle}
-					>
-						{`${this.props.title}（${this.props.items.length} 件）`}
-					</Typography>
-					<IconButton>
-						{/* TODO: expand less */}
-						<ExpandMoreIcon />
-					</IconButton>
+					<div style={{ display: "flex" }}>
+						<Typography
+							type="headline"
+							component="h2"
+							className={this.props.classes.cardTitleTitle}
+						>
+							{`${this.props.title}（${this.props.items.length} 件）`}
+						</Typography>
+						<div className={this.props.classes.flexGrow} />
+						<IconButton style={{ margin: "-8px 0" }}>
+							{/* TODO: expand less */}
+							<ExpandMoreIcon />
+						</IconButton>
+					</div>
 				</CardContent>
 				<Collapse in={this.state.expanded}>
 					<div>

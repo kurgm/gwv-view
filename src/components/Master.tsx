@@ -140,7 +140,7 @@ class Master extends React.Component<IMasterProps & IClassesProps<typeof styles>
 									<MenuIcon />
 								</IconButton>
 							}
-							<Typography type="title" color="inherit">
+							<Typography type="title" color="inherit" noWrap>
 								{title}
 							</Typography>
 						</Toolbar>
