@@ -9,6 +9,7 @@ import List, { ListItem, ListItemText, ListSubheader } from "material-ui/List";
 import Paper from "material-ui/Paper";
 // import Typography from "material-ui/Typography"
 
+import { StyledComponentProps } from "material-ui";
 import withStyles from "material-ui/styles/withStyles";
 
 // import withWidth, { IProps as WithWidthProps, SMALL } from "material-ui/utils/withWidth";
@@ -31,7 +32,7 @@ const styles = {
 const itemsPerPageOptions = [10, 20, 50, 100];
 
 class Settings extends React.Component<
-	RouteComponentProps<any> & IClassesProps<typeof styles>/* & WithWidthProps*/,
+	RouteComponentProps<any> & StyledComponentProps<keyof typeof styles>/* & WithWidthProps*/,
 	ISettingsState> {
 	private static nDialogs = 2;
 
@@ -110,7 +111,7 @@ class Settings extends React.Component<
 		// 	);
 		// }
 		return (
-			<div className={this.props.classes.content}>
+			<div className={this.props.classes!.content}>
 				{lists.map((l, i) => <Paper key={i}>{l}</Paper>)}
 				{dialogs}
 			</div>

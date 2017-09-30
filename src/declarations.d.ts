@@ -40,7 +40,3 @@ interface IJSONPCallback {
 	result: { [id: string]: { [type: string]: any[]; }; };
 	lastModified: number;
 }
-
-interface IClassesProps<S extends { [name: string]: React.CSSProperties; }> {
-	classes: {[K in keyof S]: string; };
-}

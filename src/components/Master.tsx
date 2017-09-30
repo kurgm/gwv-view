@@ -10,6 +10,7 @@ import IconButton from "material-ui/IconButton";
 import Toolbar from "material-ui/Toolbar";
 import Typography from "material-ui/Typography";
 
+import { StyledComponentProps } from "material-ui";
 import { indigo } from "material-ui/colors";
 import { createMuiTheme, MuiThemeProvider, withStyles } from "material-ui/styles";
 import withWidth, { isWidthUp, WithWidthProps } from "material-ui/utils/withWidth";
@@ -103,7 +104,8 @@ const styles = {
 	},
 };
 
-class Master extends React.Component<IMasterProps & IClassesProps<typeof styles> & WithWidthProps, IMasterState> {
+class Master extends React.Component<
+	IMasterProps & StyledComponentProps<keyof typeof styles> & WithWidthProps, IMasterState> {
 
 	public static contextTypes = {
 		router: PropTypes.object,
@@ -128,14 +130,14 @@ class Master extends React.Component<IMasterProps & IClassesProps<typeof styles>
 			<MuiThemeProvider theme={theme}>
 				<div>
 					<AppBar
-						className={`${this.props.classes.appBar} ${persistent && navDrawerOpen ? this.props.classes.appBarShift : ""}`}
+						className={`${this.props.classes!.appBar} ${persistent && navDrawerOpen ? this.props.classes!.appBarShift : ""}`}
 					>
 						<Toolbar>
 							{!(persistent && navDrawerOpen) &&
 								<IconButton
 									onClick={this.handleLeftIconButtonClick}
 									color="contrast"
-									className={this.props.classes.menuButton}
+									className={this.props.classes!.menuButton}
 								>
 									<MenuIcon />
 								</IconButton>
@@ -153,12 +155,12 @@ class Master extends React.Component<IMasterProps & IClassesProps<typeof styles>
 						onRequestClose={this.handleNavDrawerRequestClose}
 						open={navDrawerOpen}
 						classes={{
-							header: this.props.classes.drawerHeader,
-							paper: this.props.classes.drawerPaper,
+							header: this.props.classes!.drawerHeader,
+							paper: this.props.classes!.drawerPaper,
 						}}
 					/>
 					<div
-						className={`${this.props.classes.root} ${persistent && navDrawerOpen ? this.props.classes.rootShift : ""}`}
+						className={`${this.props.classes!.root} ${persistent && navDrawerOpen ? this.props.classes!.rootShift : ""}`}
 					>
 						{this.props.children}
 					</div>

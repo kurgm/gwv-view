@@ -2,6 +2,7 @@ import * as React from "react";
 
 import * as ReactMarkdown from "react-markdown";
 
+import { StyledComponentProps } from "material-ui";
 import withStyles from "material-ui/styles/withStyles";
 
 // import spacing from "material-ui/styles/spacing";
@@ -15,10 +16,10 @@ const styles = {
 	} as React.CSSProperties,
 };
 
-class Home extends React.Component<IClassesProps<typeof styles>, {}> {
+class Home extends React.Component<StyledComponentProps<keyof typeof styles>, {}> {
 	public render() {
 		return (
-			<div className={this.props.classes.content}>
+			<div className={this.props.classes!.content}>
 				<ReactMarkdown source={HomeDoc} />
 			</div>
 		);
