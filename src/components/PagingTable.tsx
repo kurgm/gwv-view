@@ -13,6 +13,7 @@ import Typography from "material-ui/Typography";
 
 import Collapse from "material-ui/transitions/Collapse";
 
+import ExpandLessIcon from "material-ui-icons/ExpandLess";
 import ExpandMoreIcon from "material-ui-icons/ExpandMore";
 import KeyboardArrowLeft from "material-ui-icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "material-ui-icons/KeyboardArrowRight";
@@ -101,8 +102,10 @@ class PagingTable<T> extends React.Component<
 						</Typography>
 						<div className={this.props.classes!.flexGrow} />
 						<IconButton style={{ margin: "-8px 0" }}>
-							{/* TODO: expand less */}
-							<ExpandMoreIcon />
+							{this.state.expanded
+								? <ExpandLessIcon />
+								: <ExpandMoreIcon />
+							}
 						</IconButton>
 					</div>
 				</CardContent>
