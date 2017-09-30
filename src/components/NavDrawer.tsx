@@ -31,23 +31,24 @@ interface INavDrawerProps extends DrawerProps {
 }
 
 class NavDrawer extends React.Component<
-	INavDrawerProps & IClassesProps<typeof styles> & StyledComponentProps<any>, {}> {
+	INavDrawerProps & StyledComponentProps<keyof typeof styles | string>, {}> {
 	public render() {
 		const {
 			location,
 			items,
 			onListChange,
 			children,
-			classes: {
-				header: headerClassName,
-				loading: loadingClassName,
-				...classes,
-			},
+			classes,
 			...rest,
 		} = this.props;
+		const {
+			header: headerClassName,
+			loading: loadingClassName,
+			...restClasses,
+		} = classes!;
 		const persistent = this.props.type === "persistent";
 		return (
-			<Drawer classes={classes} {...rest}>
+			<Drawer classes={restClasses} {...rest}>
 				<div>
 					<div className={headerClassName}>
 						{persistent && (

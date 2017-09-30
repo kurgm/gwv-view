@@ -15,6 +15,7 @@ import ExpandMoreIcon from "material-ui-icons/ExpandMore";
 import KeyboardArrowLeft from "material-ui-icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "material-ui-icons/KeyboardArrowRight";
 
+import { StyledComponentProps } from "material-ui";
 import withStyles from "material-ui/styles/withStyles";
 
 const styles = {
@@ -67,7 +68,8 @@ interface IPagingTableState {
 	page: number;
 }
 
-class PagingTable<T> extends React.Component<IPagingTableProps<T> & IClassesProps<typeof styles>, IPagingTableState> {
+class PagingTable<T> extends React.Component<
+	IPagingTableProps<T> & StyledComponentProps<keyof typeof styles>, IPagingTableState> {
 	public state: Readonly<IPagingTableState> = {
 		expanded: false,
 		itemsPerPage: getSettings().itemsPerPage,
@@ -82,20 +84,20 @@ class PagingTable<T> extends React.Component<IPagingTableProps<T> & IClassesProp
 		const maxPage = Math.ceil(numItems / itemsPerPage) - 1;
 
 		return (
-			<Card className={this.props.classes.card}>
+			<Card className={this.props.classes!.card}>
 				<CardContent
 					onClick={this.handleExpandClick}
-					className={this.props.classes.cardTitle}
+					className={this.props.classes!.cardTitle}
 				>
 					<div style={{ display: "flex" }}>
 						<Typography
 							type="headline"
 							component="h2"
-							className={this.props.classes.cardTitleTitle}
+							className={this.props.classes!.cardTitleTitle}
 						>
 							{`${this.props.title}（${this.props.items.length} 件）`}
 						</Typography>
-						<div className={this.props.classes.flexGrow} />
+						<div className={this.props.classes!.flexGrow} />
 						<IconButton style={{ margin: "-8px 0" }}>
 							{/* TODO: expand less */}
 							<ExpandMoreIcon />
@@ -116,8 +118,8 @@ class PagingTable<T> extends React.Component<IPagingTableProps<T> & IClassesProp
 							}
 							{this.props.tfoot}
 						</table>
-						<CardActions className={this.props.classes.pager}>
-							<div className={this.props.classes.flexGrow} />
+						<CardActions className={this.props.classes!.pager}>
+							<div className={this.props.classes!.flexGrow} />
 							<span style={{
 								margin: 0,
 							}}>
@@ -129,11 +131,11 @@ class PagingTable<T> extends React.Component<IPagingTableProps<T> & IClassesProp
 								input={
 									<Input
 										inputProps={{
-											className: this.props.classes.pagerSelectInput,
+											className: this.props.classes!.pagerSelectInput,
 										}}
 									/>
 								}
-								className={this.props.classes.pagerSelect}
+								className={this.props.classes!.pagerSelect}
 								disableUnderline
 							>
 								{[10, 20, 50, 100].map((n) => (
@@ -151,14 +153,14 @@ class PagingTable<T> extends React.Component<IPagingTableProps<T> & IClassesProp
 								{start + 1}-{end} / {numItems}
 							</span>
 							<IconButton
-								className={this.props.classes.pagerButton}
+								className={this.props.classes!.pagerButton}
 								onClick={this.handleBackButton}
 								disabled={this.state.page <= 0}
 							>
 								<KeyboardArrowLeft />
 							</IconButton>
 							<IconButton
-								className={this.props.classes.pagerButton}
+								className={this.props.classes!.pagerButton}
 								onClick={this.handleNextButton}
 								disabled={this.state.page >= maxPage}
 							>
@@ -216,4 +218,4 @@ export const SimpleColumnRow = (params: { columns: React.ReactNode[] }) => (
 	</tr>
 );
 
-export default withStyles<IPagingTableProps<any>>(styles)(PagingTable);
+export default withStyles(styles)(PagingTable);
