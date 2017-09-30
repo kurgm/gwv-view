@@ -5,7 +5,7 @@ import { Location } from "history";
 import Divider from "material-ui/Divider";
 import Drawer, { DrawerProps } from "material-ui/Drawer";
 import IconButton from "material-ui/IconButton";
-import { ListItemText } from "material-ui/List";
+import ListItemText from "material-ui/List/ListItemText";
 import CircularProgress from "material-ui/Progress/CircularProgress";
 
 import ChevronLeftIcon from "material-ui-icons/ChevronLeft";

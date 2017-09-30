@@ -5,7 +5,10 @@ import { RouteComponentProps } from "react-router";
 // import spacing from "material-ui/styles/spacing";
 
 // import Divider from "material-ui/Divider";
-import List, { ListItem, ListItemText, ListSubheader } from "material-ui/List";
+import List from "material-ui/List/List";
+import ListItem from "material-ui/List/ListItem";
+import ListItemText from "material-ui/List/ListItemText";
+import ListSubheader from "material-ui/List/ListSubheader";
 import Paper from "material-ui/Paper";
 // import Typography from "material-ui/Typography"
 

@@ -1,9 +1,13 @@
 import * as React from "react";
 
 import Button from "material-ui/Button";
-import Dialog, { DialogActions, DialogContent, DialogProps, DialogTitle } from "material-ui/Dialog";
-import { FormControlLabel } from "material-ui/Form";
-import Radio, { RadioGroup } from "material-ui/Radio";
+import Dialog, {DialogProps} from "material-ui/Dialog/Dialog";
+import DialogActions from "material-ui/Dialog/DialogActions";
+import DialogContent from "material-ui/Dialog/DialogContent";
+import DialogTitle from "material-ui/Dialog/DialogTitle";
+import FormControlLabel from "material-ui/Form/FormControlLabel";
+import Radio from "material-ui/Radio/Radio";
+import RadioGroup from "material-ui/Radio/RadioGroup";
 
 interface ISelectDialogProps extends DialogProps {
 	dialogTitle: React.ReactNode;

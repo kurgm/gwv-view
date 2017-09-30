@@ -2,10 +2,12 @@ import * as React from "react";
 
 import { getSettings } from "../settings";
 
-import Card, { CardActions, CardContent } from "material-ui/Card";
+import Card from "material-ui/Card/Card";
+import CardActions from "material-ui/Card/CardActions";
+import CardContent from "material-ui/Card/CardContent";
 import IconButton from "material-ui/IconButton";
 import Input from "material-ui/Input";
-import { MenuItem } from "material-ui/Menu";
+import MenuItem from "material-ui/Menu/MenuItem";
 import Select from "material-ui/Select";
 import Typography from "material-ui/Typography";
 

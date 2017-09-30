@@ -1,6 +1,7 @@
 import * as React from "react";
 
-import List, { ListItem, ListItemProps, ListProps } from "material-ui/List";
+import List, {ListProps} from "material-ui/List/List";
+import ListItem, {ListItemProps} from "material-ui/List/ListItem";
 
 export interface ISelectableListItemProps<T> extends ListItemProps {
 	selectValue: T;

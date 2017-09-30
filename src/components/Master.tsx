@@ -11,8 +11,10 @@ import Toolbar from "material-ui/Toolbar";
 import Typography from "material-ui/Typography";
 
 import { StyledComponentProps } from "material-ui";
-import { indigo } from "material-ui/colors";
-import { createMuiTheme, MuiThemeProvider, withStyles } from "material-ui/styles";
+import indigo from "material-ui/colors/indigo";
+import createMuiTheme from "material-ui/styles/createMuiTheme";
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import withStyles from "material-ui/styles/withStyles";
 import withWidth, { isWidthUp, WithWidthProps } from "material-ui/utils/withWidth";
 
 import MenuIcon from "material-ui-icons/Menu";
