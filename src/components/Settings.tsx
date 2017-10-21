@@ -12,8 +12,7 @@ import ListSubheader from "material-ui/List/ListSubheader";
 import Paper from "material-ui/Paper";
 // import Typography from "material-ui/Typography"
 
-import { StyledComponentProps } from "material-ui";
-import withStyles from "material-ui/styles/withStyles";
+import withStyles, { WithStyles } from "material-ui/styles/withStyles";
 
 // import withWidth, { IProps as WithWidthProps, SMALL } from "material-ui/utils/withWidth";
 
@@ -35,7 +34,7 @@ const styles = {
 const itemsPerPageOptions = [10, 20, 50, 100];
 
 class Settings extends React.Component<
-	RouteComponentProps<any> & StyledComponentProps<keyof typeof styles>/* & WithWidthProps*/,
+	RouteComponentProps<any> & WithStyles<keyof typeof styles>/* & WithWidthProps*/,
 	ISettingsState> {
 	private static nDialogs = 2;
 

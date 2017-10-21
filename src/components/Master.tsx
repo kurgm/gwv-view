@@ -10,11 +10,10 @@ import IconButton from "material-ui/IconButton";
 import Toolbar from "material-ui/Toolbar";
 import Typography from "material-ui/Typography";
 
-import { StyledComponentProps } from "material-ui";
 import indigo from "material-ui/colors/indigo";
 import createMuiTheme from "material-ui/styles/createMuiTheme";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import withStyles from "material-ui/styles/withStyles";
+import withStyles, { WithStyles } from "material-ui/styles/withStyles";
 import withWidth, { isWidthUp, WithWidthProps } from "material-ui/utils/withWidth";
 
 import MenuIcon from "material-ui-icons/Menu";
@@ -107,7 +106,7 @@ const styles = {
 };
 
 class Master extends React.Component<
-	IMasterProps & StyledComponentProps<keyof typeof styles> & WithWidthProps, IMasterState> {
+	IMasterProps & WithStyles<keyof typeof styles> & WithWidthProps, IMasterState> {
 
 	public static contextTypes = {
 		router: PropTypes.object,

@@ -19,23 +19,23 @@
   },
   "homepage": "https://github.com/kurgm/gwv-view#readme",
   "dependencies": {
-    "material-ui": "^1.0.0-beta.12",
-    "material-ui-icons": "^1.0.0-beta.10",
-    "react": "^15.6.2",
-    "react-dom": "^15.6.2",
+    "material-ui": "^1.0.0-beta.17",
+    "material-ui-icons": "^1.0.0-beta.17",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
     "react-markdown": "^2.5.0",
     "react-router-dom": "^4.2.2"
   },
   "devDependencies": {
     "@types/prop-types": "^15.5.2",
-    "@types/react": "^15.6.4",
-    "@types/react-dom": "^15.5.5",
+    "@types/react": "^16.0.16",
+    "@types/react-dom": "^16.0.2",
     "@types/react-router-dom": "^4.0.8",
     "awesome-typescript-loader": "^3.2.3",
     "raw-loader": "^0.5.1",
     "source-map-loader": "^0.2.2",
-    "tslint": "^5.7.0",
+    "tslint": "^5.8.0",
     "typescript": "^2.5.3",
-    "webpack": "^3.6.0"
+    "webpack": "^3.8.1"
   }
 }

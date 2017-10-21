@@ -4,8 +4,7 @@ import * as React from "react";
 
 import CircularProgress from "material-ui/Progress/CircularProgress";
 
-import { StyledComponentProps } from "material-ui";
-import withStyles from "material-ui/styles/withStyles";
+import withStyles, { WithStyles } from "material-ui/styles/withStyles";
 
 import PagingTable from "./PagingTable";
 
@@ -25,9 +24,9 @@ export interface IValidateResultProps<T> {
 }
 
 export class ValidateResult extends React.Component<
-	IValidateResultProps<any> & StyledComponentProps<keyof typeof styles>, {}> {
+	IValidateResultProps<any> & WithStyles<keyof typeof styles>, {}> {
 	public shouldComponentUpdate(
-		nextProps: Readonly<IValidateResultProps<any> & StyledComponentProps<keyof typeof styles>>) {
+		nextProps: Readonly<IValidateResultProps<any> & WithStyles<keyof typeof styles>>) {
 		return this.props.result !== nextProps.result;
 	}
 	public render() {

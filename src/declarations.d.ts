@@ -26,7 +26,7 @@ declare module "material-ui/utils/withWidth" {
 
 	// It should be type subtraction, but TypeScript doesn't support it yet
 	export default function withWidth<P = {}>(options?: WithWidthOptions):
-		(component: React.ComponentClass<P & WithWidthProps>) => React.ComponentClass<P>;
+		(component: React.ComponentType<P & WithWidthProps>) => React.ComponentClass<P>;
 }
 
 type KageLineData = [number, string];

@@ -10,8 +10,7 @@ import CircularProgress from "material-ui/Progress/CircularProgress";
 
 import ChevronLeftIcon from "material-ui-icons/ChevronLeft";
 
-import { StyledComponentProps } from "material-ui";
-import withStyles from "material-ui/styles/withStyles";
+import withStyles, { WithStyles } from "material-ui/styles/withStyles";
 
 import SelectableList, { SelectableListItem } from "./SelectableList";
 
@@ -31,7 +30,7 @@ interface INavDrawerProps extends DrawerProps {
 }
 
 class NavDrawer extends React.Component<
-	INavDrawerProps & StyledComponentProps<keyof typeof styles | string>, {}> {
+	INavDrawerProps & WithStyles<keyof typeof styles>, {}> {
 	public render() {
 		const {
 			location,

@@ -18,8 +18,7 @@ import ExpandMoreIcon from "material-ui-icons/ExpandMore";
 import KeyboardArrowLeft from "material-ui-icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "material-ui-icons/KeyboardArrowRight";
 
-import { StyledComponentProps } from "material-ui";
-import withStyles from "material-ui/styles/withStyles";
+import withStyles, { WithStyles } from "material-ui/styles/withStyles";
 
 const styles = {
 	card: {
@@ -72,7 +71,7 @@ interface IPagingTableState {
 }
 
 class PagingTable<T> extends React.Component<
-	IPagingTableProps<T> & StyledComponentProps<keyof typeof styles>, IPagingTableState> {
+	IPagingTableProps<T> & WithStyles<keyof typeof styles>, IPagingTableState> {
 	public state: Readonly<IPagingTableState> = {
 		expanded: false,
 		itemsPerPage: getSettings().itemsPerPage,
