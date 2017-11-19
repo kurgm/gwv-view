@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import Button from "material-ui/Button";
+import Button from "material-ui/Button/Button";
 import Dialog, {DialogProps} from "material-ui/Dialog/Dialog";
 import DialogActions from "material-ui/Dialog/DialogActions";
 import DialogContent from "material-ui/Dialog/DialogContent";
@@ -13,7 +13,7 @@ interface ISelectDialogProps extends DialogProps {
 	dialogTitle: React.ReactNode;
 	options: string[];
 	selectedIndex: number;
-	onConfirmValue(event: React.MouseEvent<any>, index: number): void;
+	onConfirmValue(event: React.SyntheticEvent<any>, index: number): void;
 }
 interface ISelectDialogState {
 	selectedIndex: number;
@@ -76,7 +76,7 @@ class SelectDialog extends React.Component<ISelectDialogProps, ISelectDialogStat
 	// protected handleOk = () => {
 	// 	this.props.onConfirmValue(this.state.value!);
 	// }
-	protected handleChange = (event: React.MouseEvent<any>, value: string) => {
+	protected handleChange = (event: React.ChangeEvent<any>, value: string) => {
 		this.setState({
 			selectedIndex: +value,
 		});

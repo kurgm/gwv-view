@@ -190,4 +190,4 @@ class Master extends React.Component<
 	}
 }
 
-export default withWidth<IMasterProps>()(withStyles(styles)(Master));
+export default withWidth()<IMasterProps>(withStyles(styles)(Master));

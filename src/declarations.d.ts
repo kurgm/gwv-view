@@ -4,6 +4,8 @@ declare module "*.md" {
 }
 
 // Overwrite incorrect definitions
+
+// https://github.com/callemall/material-ui/pull/9125
 declare module "material-ui/utils/withWidth" {
 	import { Breakpoint } from "material-ui/styles/createBreakpoints";
 	export interface WithWidthOptions {
@@ -24,9 +26,11 @@ declare module "material-ui/utils/withWidth" {
 	 */
 	export const isWidthDown: (breakpoint: Breakpoint, screenWidth: Breakpoint, inclusive?: boolean) => boolean;
 
-	// It should be type subtraction, but TypeScript doesn't support it yet
-	export default function withWidth<P = {}>(options?: WithWidthOptions):
-		(component: React.ComponentType<P & WithWidthProps>) => React.ComponentClass<P>;
+	export default function withWidth(
+		options?: WithWidthOptions
+	): <P>(
+			component: React.ComponentType<P & WithWidthProps>
+		) => React.ComponentClass<P & Partial<WithWidthProps>>;
 }
 
 type KageLineData = [number, string];

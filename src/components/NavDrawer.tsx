@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { Location } from "history";
 
+import { StandardProps } from "material-ui";
 import Divider from "material-ui/Divider";
 import Drawer, { DrawerProps } from "material-ui/Drawer";
 import IconButton from "material-ui/IconButton";
@@ -23,14 +24,16 @@ const styles = {
 	paper: {},
 };
 
-interface INavDrawerProps extends DrawerProps {
+export type NavDrawerClassKey = keyof typeof styles;
+
+interface INavDrawerProps extends StandardProps<DrawerProps, NavDrawerClassKey> {
 	location: Location;
 	items: Array<{ id: string; title: string; length: number; }> | null;
 	onListChange: (e: React.MouseEvent<any>, value: any) => void;
 }
 
 class NavDrawer extends React.Component<
-	INavDrawerProps & WithStyles<keyof typeof styles>, {}> {
+	INavDrawerProps & WithStyles<NavDrawerClassKey>, {}> {
 	public render() {
 		const {
 			location,
