@@ -46,6 +46,7 @@ const styles = {
 		verticalAlign: "middle",
 	} as React.CSSProperties,
 	pagerSelect: {
+		fontSize: "inherit",
 		margin: 0,
 		textAlign: "right",
 	} as React.CSSProperties,
