@@ -54,7 +54,7 @@ class NavDrawer extends React.Component<
 				<div>
 					<div className={headerClassName}>
 						{persistent && (
-							<IconButton onClick={this.props.onRequestClose}>
+							<IconButton onClick={this.props.onClose}>
 								<ChevronLeftIcon />
 							</IconButton>
 						)}

@@ -81,7 +81,7 @@ class Settings extends React.Component<
 			<SelectDialog
 				dialogTitle="画像の形式"
 				open={this.state.openDialog === 0}
-				onRequestClose={this.handleClose}
+				onClose={this.handleClose}
 				key={0}
 				selectedIndex={currentSettings.imageType}
 				options={[
@@ -94,7 +94,7 @@ class Settings extends React.Component<
 			<SelectDialog
 				dialogTitle="ページあたりの行数"
 				open={this.state.openDialog === 1}
-				onRequestClose={this.handleClose}
+				onClose={this.handleClose}
 				key={1}
 				selectedIndex={itemsPerPageOptions.indexOf(currentSettings.itemsPerPage)}
 				options={itemsPerPageOptions.map((n) => `${n}`)}

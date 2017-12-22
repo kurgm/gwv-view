@@ -153,7 +153,7 @@ class Master extends React.Component<
 						items={this.props.items}
 						onListChange={this.handleNavDrawerListChange}
 						type={persistent ? "persistent" : "temporary"}
-						onRequestClose={this.handleNavDrawerRequestClose}
+						onClose={this.handleNavDrawerClose}
 						open={navDrawerOpen}
 						classes={{
 							header: this.props.classes!.drawerHeader,
@@ -175,7 +175,7 @@ class Master extends React.Component<
 			navDrawerOpen: !this.state.navDrawerOpen,
 		});
 	}
-	private handleNavDrawerRequestClose = (_e: any): void => {
+	private handleNavDrawerClose = (_e: any): void => {
 		this.setState({
 			navDrawerOpen: false,
 		});

@@ -69,8 +69,8 @@ class SelectDialog extends React.Component<ISelectDialogProps, ISelectDialogStat
 
 	protected handleCancel = (event: React.MouseEvent<any>) => {
 		this.props.onConfirmValue(event, this.props.selectedIndex);
-		if (this.props.onRequestClose) {
-			(this.props.onRequestClose as React.EventHandler<any>)(event);
+		if (this.props.onClose) {
+			(this.props.onClose as React.EventHandler<any>)(event);
 		}
 	}
 	// protected handleOk = () => {
