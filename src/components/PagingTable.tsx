@@ -3,20 +3,20 @@ import * as React from "react";
 import { getSettings } from "../settings";
 
 import Card from "material-ui/Card/Card";
-import CardActions from "material-ui/Card/CardActions";
 import CardContent from "material-ui/Card/CardContent";
 import IconButton from "material-ui/IconButton";
-import Input from "material-ui/Input";
-import MenuItem from "material-ui/Menu/MenuItem";
-import Select from "material-ui/Select";
+import Table from "material-ui/Table/Table";
+import TableBody from "material-ui/Table/TableBody";
+import TableCell from "material-ui/Table/TableCell";
+import TableFooter from "material-ui/Table/TableFooter";
+import TablePagination from "material-ui/Table/TablePagination";
+import TableRow from "material-ui/Table/TableRow";
 import Typography from "material-ui/Typography";
 
 import Collapse from "material-ui/transitions/Collapse";
 
 import ExpandLessIcon from "material-ui-icons/ExpandLess";
 import ExpandMoreIcon from "material-ui-icons/ExpandMore";
-import KeyboardArrowLeft from "material-ui-icons/KeyboardArrowLeft";
-import KeyboardArrowRight from "material-ui-icons/KeyboardArrowRight";
 
 import withStyles, { WithStyles } from "material-ui/styles/withStyles";
 
@@ -35,32 +35,11 @@ const styles = {
 	flexGrow: {
 		flex: "1 1 auto",
 	} as React.CSSProperties,
-	pager: {
-		color: "rgba(0, 0, 0, .54)",
-		fill: "rgba(0, 0, 0, .54)",
-		fontSize: 12,
-		padding: 2,
-	} as React.CSSProperties,
-	pagerButton: {
-		margin: 0,
-		verticalAlign: "middle",
-	} as React.CSSProperties,
-	pagerSelect: {
-		fontSize: "inherit",
-		margin: 0,
-		textAlign: "right",
-	} as React.CSSProperties,
-	pagerSelectInput: {
-		color: "rgba(0, 0, 0, .54)",
-		paddingRight: 24,
-		width: 48,
-	} as React.CSSProperties,
 };
 
 interface IPagingTableProps<T> {
 	title: string;
 	thead?: React.ReactNode;
-	tfoot?: React.ReactNode;
 	RowRenderer: React.SFC<{ item: T; }>;
 	items: T[];
 }
@@ -84,7 +63,6 @@ class PagingTable<T> extends React.Component<
 		const numItems = this.props.items.length;
 		const start = itemsPerPage * page;
 		const end = Math.min(numItems, itemsPerPage * (page + 1));
-		const maxPage = Math.ceil(numItems / itemsPerPage) - 1;
 
 		return (
 			<Card className={this.props.classes!.card}>
@@ -112,66 +90,30 @@ class PagingTable<T> extends React.Component<
 				<Collapse in={this.state.expanded}>
 					<div>
 						{/* TODO: search bar */}
-						<table className="data">
+						<Table>
 							{this.props.thead}
 							{this.state.expanded &&
-								<tbody>
+								<TableBody>
 									{this.props.items.slice(start, end).map((item, idx) => (
 										<this.props.RowRenderer item={item} key={idx} />
 									))}
-								</tbody>
+								</TableBody>
 							}
-							{this.props.tfoot}
-						</table>
-						<CardActions className={this.props.classes!.pager}>
-							<div className={this.props.classes!.flexGrow} />
-							<span style={{
-								margin: 0,
-							}}>
-								ページあたりの行数:
-							</span>
-							<Select
-								value={this.state.itemsPerPage}
-								onChange={this.handleItemsPerPageChange}
-								input={
-									<Input
-										inputProps={{
-											className: this.props.classes!.pagerSelectInput,
-										}}
+							<TableFooter>
+								<TableRow>
+									<TablePagination
+										labelRowsPerPage="ページあたりの行数:"
+										rowsPerPage={itemsPerPage}
+										rowsPerPageOptions={[10, 20, 50, 100]}
+										onChangeRowsPerPage={this.handleItemsPerPageChange}
+										labelDisplayedRows={({ from, to, count }) => `${from}-${to} / ${count}`}
+										count={numItems}
+										page={page}
+										onChangePage={this.handleChangePage}
 									/>
-								}
-								className={this.props.classes!.pagerSelect}
-								disableUnderline
-							>
-								{[10, 20, 50, 100].map((n) => (
-									<MenuItem
-										key={n}
-										value={n}
-									>
-										{n}
-									</MenuItem>
-								))}
-							</Select>
-							<span style={{
-								margin: "0 20px 0 32px",
-							}}>
-								{start + 1}-{end} / {numItems}
-							</span>
-							<IconButton
-								className={this.props.classes!.pagerButton}
-								onClick={this.handleBackButton}
-								disabled={this.state.page <= 0}
-							>
-								<KeyboardArrowLeft />
-							</IconButton>
-							<IconButton
-								className={this.props.classes!.pagerButton}
-								onClick={this.handleNextButton}
-								disabled={this.state.page >= maxPage}
-							>
-								<KeyboardArrowRight />
-							</IconButton>
-						</CardActions>
+								</TableRow>
+							</TableFooter>
+						</Table>
 					</div>
 				</Collapse>
 			</Card>
@@ -185,15 +127,8 @@ class PagingTable<T> extends React.Component<
 			page: Math.floor(this.state.page * this.state.itemsPerPage / menuItemValue),
 		});
 	}
-	private handleBackButton = (_e: any) => {
-		this.setState({
-			page: this.state.page - 1,
-		});
-	}
-	private handleNextButton = (_e: any) => {
-		this.setState({
-			page: this.state.page + 1,
-		});
+	private handleChangePage = (_e: any, page: number) => {
+		this.setState({ page });
 	}
 
 	private handleExpandClick = (_e: any) => {
@@ -204,23 +139,35 @@ class PagingTable<T> extends React.Component<
 }
 
 export const SimpleColumnHeader = (params: { columns: React.ReactNode[] }) => (
-	<tr>
+	<TableRow>
 		{params.columns.map((column, i) => (
-			<th key={`${i}`}>
+			<TableCell key={`${i}`}>
 				{column}
-			</th>
+			</TableCell>
 		))}
-	</tr>
+	</TableRow>
 );
 
-export const SimpleColumnRow = (params: { columns: React.ReactNode[] }) => (
-	<tr>
+interface ISimpleColumnRowProps {
+	columns: React.ReactNode[];
+}
+
+const simpleColumnRowStyles = {
+	cell: {
+		paddingBottom: 0,
+		paddingTop: 0,
+	} as React.CSSProperties,
+};
+
+export const SimpleColumnRow = withStyles(simpleColumnRowStyles)(
+	(params: ISimpleColumnRowProps & WithStyles<keyof typeof simpleColumnRowStyles>) => (
+	<TableRow hover>
 		{params.columns.map((column, i) => (
-			<td key={`${i}`}>
+			<TableCell key={`${i}`} className={params.classes.cell}>
 				{column}
-			</td>
+			</TableCell>
 		))}
-	</tr>
-);
+	</TableRow>
+));
 
 export default withStyles(styles)(PagingTable);

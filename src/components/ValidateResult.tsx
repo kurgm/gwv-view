@@ -3,6 +3,7 @@ import * as React from "react";
 // import spacing from "material-ui/styles/spacing";
 
 import CircularProgress from "material-ui/Progress/CircularProgress";
+import TableHead from "material-ui/Table/TableHead";
 
 import withStyles, { WithStyles } from "material-ui/styles/withStyles";
 
@@ -42,7 +43,9 @@ export class ValidateResult extends React.Component<
 										key={type}
 										title={this.props.getGroupTitle(type)}
 										thead={
-											<thead>{this.props.getTableHeaderRow(type)}</thead>
+											<TableHead>
+												{this.props.getTableHeaderRow(type)}
+											</TableHead>
 										}
 										RowRenderer={this.props.getRowRenderer(type)}
 										items={this.props.result![type]} />
