@@ -35,7 +35,7 @@ class JComponent extends React.Component<{ result: { [type: string]: IValue[]; }
 		const type = Number(typeStr);
 		if (type >= 30) {
 			const source = ["J", "K"][type - 30];
-			return `${source}ソースが存在するのに、uxxxx-${source.toLowerCase()}vが作成されています。"`;
+			return `${source}ソースが存在するのに、uxxxx-${source.toLowerCase()}vが作成されています。`;
 		}
 		return ({
 			0: "uxxxx-j, ja, jv（の実体）とその無印グリフ（の実体）が異なっています。",
