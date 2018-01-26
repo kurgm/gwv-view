@@ -137,7 +137,7 @@ class Master extends React.Component<
 							{!(persistent && navDrawerOpen) &&
 								<IconButton
 									onClick={this.handleLeftIconButtonClick}
-									color="contrast"
+									color="inherit"
 									className={this.props.classes!.menuButton}
 								>
 									<MenuIcon />
