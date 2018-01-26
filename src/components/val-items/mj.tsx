@@ -20,7 +20,7 @@ class MjComponent extends React.Component<{ result: { [type: string]: IValue[]; 
 				description={
 					<p>
 						<a href="http://mojikiban.ipa.go.jp/1311.html">MJ文字情報一覧表</a>
-						(Ver.005.01)と照合して、不適切と思われるエイリアス・関連字を検出します。MJ文字情報一覧表は
+						(Ver.005.02)と照合して、不適切と思われるエイリアス・関連字を検出します。MJ文字情報一覧表は
 						<a href="http://www.ipa.go.jp/">IPA</a>
 						の著作物であり、
 						<a href="https://creativecommons.org/licenses/by-sa/2.1/jp/">クリエイティブ・コモンズ 表示 – 継承 2.1 日本</a>

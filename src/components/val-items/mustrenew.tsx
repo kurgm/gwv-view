@@ -16,7 +16,8 @@ class MustrenewComponent extends React.Component<{ result: { [type: string]: IVa
 			<ValidateResult
 				description={
 					<p>
-						旧版を引用しているグリフを検出します。この項目専用のページもどうぞ。→<a href="mustrenew.html">GlyphWiki の Mustrenew みたいなやつ</a>
+						旧版を引用しているグリフを検出します。この項目専用のページもどうぞ。→
+						<a href="https://ku6goma.appspot.com/gwv/mustrenew.html">GlyphWiki の Mustrenew みたいなやつ</a>
 					</p>
 				}
 				getGroupTitle={this.getGroupTitle}
