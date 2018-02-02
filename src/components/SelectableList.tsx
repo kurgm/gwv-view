@@ -17,7 +17,7 @@ export interface ISelectableListProps<T> extends ListProps {
 }
 
 export default class SelectableList<T> extends React.Component<ISelectableListProps<T>> {
-	protected keyIndex: number;
+	protected keyIndex!: number;
 
 	public render() {
 		const {

@@ -111,7 +111,7 @@ class Master extends React.Component<
 	public static contextTypes = {
 		router: PropTypes.object,
 	};
-	public context: RouterChildContext<any>;
+	public context!: RouterChildContext<any>;
 
 	public state: Readonly<IMasterState> = {
 		navDrawerOpen: false,

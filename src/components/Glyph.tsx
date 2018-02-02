@@ -18,7 +18,7 @@ class Glyph extends React.Component<IGlyphProps, IGlyphState> {
 	public state: Readonly<IGlyphState> = {
 		newpage: false,
 	};
-	private imageElement: HTMLImageElement | null;
+	private imageElement!: HTMLImageElement | null;
 
 	public componentWillReceiveProps(nextProps: Readonly<IGlyphProps>) {
 		if (this.props.name !== nextProps.name) {
