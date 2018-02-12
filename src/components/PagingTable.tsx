@@ -72,7 +72,7 @@ class PagingTable<T> extends React.Component<
 				>
 					<div style={{ display: "flex" }}>
 						<Typography
-							type="headline"
+							variant="headline"
 							component="h2"
 							className={this.props.classes!.cardTitleTitle}
 						>

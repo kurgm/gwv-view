@@ -143,7 +143,7 @@ class Master extends React.Component<
 									<MenuIcon />
 								</IconButton>
 							}
-							<Typography type="title" color="inherit" noWrap>
+							<Typography variant="title" color="inherit" noWrap>
 								{title}
 							</Typography>
 						</Toolbar>
@@ -152,7 +152,7 @@ class Master extends React.Component<
 						location={location}
 						items={this.props.items}
 						onListChange={this.handleNavDrawerListChange}
-						type={persistent ? "persistent" : "temporary"}
+						variant={persistent ? "persistent" : "temporary"}
 						onClose={this.handleNavDrawerClose}
 						open={navDrawerOpen}
 						classes={{

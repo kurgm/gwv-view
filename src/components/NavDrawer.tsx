@@ -48,7 +48,7 @@ class NavDrawer extends React.Component<
 			loading: loadingClassName,
 			...restClasses,
 		} = classes!;
-		const persistent = this.props.type === "persistent";
+		const persistent = this.props.variant === "persistent";
 		return (
 			<Drawer classes={restClasses} {...rest}>
 				<div>
