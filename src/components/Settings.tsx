@@ -2,19 +2,15 @@ import * as React from "react";
 
 import { RouteComponentProps } from "react-router";
 
-// import spacing from "material-ui/styles/spacing";
-
-// import Divider from "material-ui/Divider";
+import Divider from "material-ui/Divider";
 import List from "material-ui/List/List";
 import ListItem from "material-ui/List/ListItem";
 import ListItemText from "material-ui/List/ListItemText";
 import ListSubheader from "material-ui/List/ListSubheader";
 import Paper from "material-ui/Paper";
-// import Typography from "material-ui/Typography"
 
 import withStyles, { WithStyles } from "material-ui/styles/withStyles";
-
-// import withWidth, { IProps as WithWidthProps, SMALL } from "material-ui/utils/withWidth";
+import withWidth, { isWidthDown, WithWidthProps } from "material-ui/utils/withWidth";
 
 import SelectDialog from "./SelectDialog";
 
@@ -26,7 +22,6 @@ interface ISettingsState {
 
 const styles = {
 	content: {
-		// margin: spacing.desktopGutter,
 		margin: 24, // TODO avoid magic number
 	},
 };
@@ -34,7 +29,7 @@ const styles = {
 const itemsPerPageOptions = [10, 20, 50, 100];
 
 class Settings extends React.Component<
-	RouteComponentProps<any> & WithStyles<keyof typeof styles>/* & WithWidthProps*/,
+	RouteComponentProps<any> & WithStyles<keyof typeof styles> & WithWidthProps,
 	ISettingsState> {
 	private static nDialogs = 2;
 
@@ -101,17 +96,19 @@ class Settings extends React.Component<
 				onConfirmValue={this.handleDialogConfirm}
 			/>,
 		];
-		// if (this.props.width === SMALL) {
-		// 	return (
-		// 		<div>
-		// 			{lists.map((l) => [
-		// 				l,
-		// 				<Divider />,
-		// 			])}
-		// 			{dialogs}
-		// 		</div>
-		// 	);
-		// }
+		if (isWidthDown("xs", this.props.width)) {
+			return (
+				<div>
+					{lists.map((l, i) => (
+						<div key={i}>
+							{l}
+							<Divider />
+						</div>
+					))}
+					{dialogs}
+				</div>
+			);
+		}
 		return (
 			<div className={this.props.classes.content}>
 				{lists.map((l, i) => <Paper key={i}>{l}</Paper>)}
@@ -145,4 +142,4 @@ class Settings extends React.Component<
 	}
 }
 
-export default withStyles(styles)(Settings);
+export default withWidth()(withStyles(styles)(Settings));
