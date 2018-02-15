@@ -12,7 +12,10 @@ import PagingTable from "./PagingTable";
 const styles = {
 	content: {
 		// margin: spacing.desktopGutter,
-		margin: 24, // TODO avoid magic number
+		margin: "24px 0", // TODO avoid magic number
+	} as React.CSSProperties,
+	descriptionWrapper: {
+		margin: "0 24px", // TODO avoid magic number
 	} as React.CSSProperties,
 };
 
@@ -32,8 +35,10 @@ export class ValidateResult extends React.Component<
 	}
 	public render() {
 		return (
-			<div className={this.props.classes!.content}>
-				{this.props.description}
+			<div className={this.props.classes.content}>
+				<div className={this.props.classes.descriptionWrapper}>
+					{this.props.description}
+				</div>
 				{this.props.result
 					? (
 						Object.keys(this.props.result).map((type) => (
