@@ -113,7 +113,7 @@ class Settings extends React.Component<
 		// 	);
 		// }
 		return (
-			<div className={this.props.classes!.content}>
+			<div className={this.props.classes.content}>
 				{lists.map((l, i) => <Paper key={i}>{l}</Paper>)}
 				{dialogs}
 			</div>

@@ -18,7 +18,7 @@ const styles = {
 class Home extends React.Component<WithStyles<keyof typeof styles>, {}> {
 	public render() {
 		return (
-			<div className={this.props.classes!.content}>
+			<div className={this.props.classes.content}>
 				<ReactMarkdown source={HomeDoc} />
 			</div>
 		);

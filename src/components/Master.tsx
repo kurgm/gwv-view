@@ -2,7 +2,6 @@ import * as React from "react";
 
 import * as PropTypes from "prop-types";
 
-import { Location } from "history";
 import { RouterChildContext } from "react-router-dom";
 
 import AppBar from "material-ui/AppBar";
@@ -34,13 +33,6 @@ const theme = createMuiTheme({
 	},
 });
 
-// if (this.props.width === SMALL) {
-// 	muiTheme.appBar!.height = 56;
-// 	muiTheme.appBar!.padding = 16;
-// } else {
-// 	muiTheme.appBar!.height = 64;
-// 	muiTheme.appBar!.padding = 24;
-// }
 const drawerWidth = 240;
 
 const appBarHeight = 56;
@@ -83,7 +75,6 @@ const styles = {
 		marginRight: 20,
 	} as React.CSSProperties,
 	root: {
-		// paddingTop: theme.appBar!.height!,
 		paddingTop: appBarHeight,
 		transition: theme.transitions.create("margin", {
 			duration: theme.transitions.duration.leavingScreen,
@@ -126,19 +117,19 @@ class Master extends React.Component<
 			persistent = true;
 		}
 
-		const location: Location = this.context.router.route.location;
+		const location = this.context.router.route.location;
 		return (
 			<MuiThemeProvider theme={theme}>
 				<div>
 					<AppBar
-						className={`${this.props.classes!.appBar} ${persistent && navDrawerOpen ? this.props.classes!.appBarShift : ""}`}
+						className={`${this.props.classes.appBar} ${persistent && navDrawerOpen ? this.props.classes.appBarShift : ""}`}
 					>
 						<Toolbar>
 							{!(persistent && navDrawerOpen) &&
 								<IconButton
 									onClick={this.handleLeftIconButtonClick}
 									color="inherit"
-									className={this.props.classes!.menuButton}
+									className={this.props.classes.menuButton}
 								>
 									<MenuIcon />
 								</IconButton>
@@ -156,12 +147,12 @@ class Master extends React.Component<
 						onClose={this.handleNavDrawerClose}
 						open={navDrawerOpen}
 						classes={{
-							header: this.props.classes!.drawerHeader,
-							paper: this.props.classes!.drawerPaper,
+							header: this.props.classes.drawerHeader,
+							paper: this.props.classes.drawerPaper,
 						}}
 					/>
 					<div
-						className={`${this.props.classes!.root} ${persistent && navDrawerOpen ? this.props.classes!.rootShift : ""}`}
+						className={`${this.props.classes.root} ${persistent && navDrawerOpen ? this.props.classes.rootShift : ""}`}
 					>
 						{this.props.children}
 					</div>
