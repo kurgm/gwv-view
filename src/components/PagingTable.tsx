@@ -65,20 +65,20 @@ class PagingTable<T> extends React.Component<
 		const end = Math.min(numItems, itemsPerPage * (page + 1));
 
 		return (
-			<Card className={this.props.classes!.card}>
+			<Card className={this.props.classes.card}>
 				<CardContent
 					onClick={this.handleExpandClick}
-					className={this.props.classes!.cardTitle}
+					className={this.props.classes.cardTitle}
 				>
 					<div style={{ display: "flex" }}>
 						<Typography
 							variant="headline"
 							component="h2"
-							className={this.props.classes!.cardTitleTitle}
+							className={this.props.classes.cardTitleTitle}
 						>
 							{`${this.props.title}（${this.props.items.length} 件）`}
 						</Typography>
-						<div className={this.props.classes!.flexGrow} />
+						<div className={this.props.classes.flexGrow} />
 						<IconButton style={{ margin: "-8px 0" }}>
 							{this.state.expanded
 								? <ExpandLessIcon />
@@ -88,7 +88,7 @@ class PagingTable<T> extends React.Component<
 					</div>
 				</CardContent>
 				<Collapse in={this.state.expanded}>
-					<div>
+					<div style={{ overflowX: "auto" }}>
 						{/* TODO: search bar */}
 						<Table>
 							{this.props.thead}
@@ -161,13 +161,13 @@ const simpleColumnRowStyles = {
 
 export const SimpleColumnRow = withStyles(simpleColumnRowStyles)(
 	(params: ISimpleColumnRowProps & WithStyles<keyof typeof simpleColumnRowStyles>) => (
-	<TableRow hover>
-		{params.columns.map((column, i) => (
-			<TableCell key={`${i}`} className={params.classes.cell}>
-				{column}
-			</TableCell>
-		))}
-	</TableRow>
-));
+		<TableRow hover>
+			{params.columns.map((column, i) => (
+				<TableCell key={`${i}`} className={params.classes.cell}>
+					{column}
+				</TableCell>
+			))}
+		</TableRow>
+	));
 
 export default withStyles(styles)(PagingTable);
