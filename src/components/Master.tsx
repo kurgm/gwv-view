@@ -1,9 +1,5 @@
 import * as React from "react";
 
-import * as PropTypes from "prop-types";
-
-import { RouterChildContext } from "react-router-dom";
-
 import AppBar from "material-ui/AppBar";
 import IconButton from "material-ui/IconButton";
 import Toolbar from "material-ui/Toolbar";
@@ -99,11 +95,6 @@ const styles = {
 class Master extends React.Component<
 	IMasterProps & WithStyles<keyof typeof styles> & WithWidthProps, IMasterState> {
 
-	public static contextTypes = {
-		router: PropTypes.object,
-	};
-	public context!: RouterChildContext<any>;
-
 	public state: Readonly<IMasterState> = {
 		navDrawerOpen: false,
 	};
@@ -117,7 +108,6 @@ class Master extends React.Component<
 			persistent = true;
 		}
 
-		const location = this.context.router.route.location;
 		return (
 			<MuiThemeProvider theme={theme}>
 				<div>
@@ -140,9 +130,7 @@ class Master extends React.Component<
 						</Toolbar>
 					</AppBar>
 					<NavDrawer
-						location={location}
 						items={this.props.items}
-						onListChange={this.handleNavDrawerListChange}
 						variant={persistent ? "persistent" : "temporary"}
 						onClose={this.handleNavDrawerClose}
 						open={navDrawerOpen}
@@ -170,14 +158,6 @@ class Master extends React.Component<
 		this.setState({
 			navDrawerOpen: false,
 		});
-	}
-	private handleNavDrawerListChange = (_e: any, value: any): void => {
-		this.context.router.history.push(value);
-		if (!isWidthUp("md", this.props.width)) {
-			this.setState({
-				navDrawerOpen: false,
-			});
-		}
 	}
 }
 

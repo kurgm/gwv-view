@@ -1,11 +1,10 @@
 import * as React from "react";
 
-import { Location } from "history";
-
 import { StandardProps } from "material-ui";
 import Divider from "material-ui/Divider";
 import Drawer, { DrawerProps } from "material-ui/Drawer";
 import IconButton from "material-ui/IconButton";
+import List from "material-ui/List/List";
 import ListItemText from "material-ui/List/ListItemText";
 import CircularProgress from "material-ui/Progress/CircularProgress";
 
@@ -13,7 +12,7 @@ import ChevronLeftIcon from "material-ui-icons/ChevronLeft";
 
 import withStyles, { WithStyles } from "material-ui/styles/withStyles";
 
-import SelectableList, { SelectableListItem } from "./SelectableList";
+import NavLinkListItem from "./NavLinkListItem";
 
 const styles = {
 	header: {},
@@ -27,18 +26,14 @@ const styles = {
 export type NavDrawerClassKey = keyof typeof styles;
 
 interface INavDrawerProps extends StandardProps<DrawerProps, NavDrawerClassKey> {
-	location: Location;
 	items: Array<{ id: string; title: string; length: number; }> | null;
-	onListChange: (e: React.MouseEvent<any>, value: any) => void;
 }
 
 class NavDrawer extends React.Component<
 	INavDrawerProps & WithStyles<NavDrawerClassKey>, {}> {
 	public render() {
 		const {
-			location,
 			items,
-			onListChange,
 			children,
 			classes,
 			...rest,
@@ -60,49 +55,40 @@ class NavDrawer extends React.Component<
 						)}
 					</div>
 					<Divider />
-					<SelectableList
-						onChangeSelectable={onListChange}
-						value={location.pathname}
-					>
-						<SelectableListItem selectValue="/">
+					<List>
+						<NavLinkListItem to="/" exact>
 							<ListItemText primary="ホーム" />
-						</SelectableListItem>
-					</SelectableList>
+						</NavLinkListItem>
+					</List>
 					<Divider />
 					{items
 						? (
-							<SelectableList
-								onChangeSelectable={onListChange}
-								value={location.pathname}
-							>
+							<List>
 								{items.map((item) => (
 									item.length
 										? (
-											<SelectableListItem
-												selectValue={`/result/${item.id}`}
+											<NavLinkListItem
+												to={`/result/${item.id}`}
 												key={item.id}
 											>
 												<ListItemText
 													primary={item.title}
 													secondary={`${item.length} 件`}
 												/>
-											</SelectableListItem>
+											</NavLinkListItem>
 										)
 										: null
 								))}
-							</SelectableList>
+							</List>
 						)
 						: <div className={loadingClassName}><CircularProgress /></div>
 					}
 					<Divider />
-					<SelectableList
-						onChangeSelectable={onListChange}
-						value={location.pathname}
-					>
-						<SelectableListItem selectValue="/settings">
+					<List>
+						<NavLinkListItem to="/settings">
 							<ListItemText primary="設定" />
-						</SelectableListItem>
-					</SelectableList>
+						</NavLinkListItem>
+					</List>
 				</div>
 			</Drawer>
 		);
