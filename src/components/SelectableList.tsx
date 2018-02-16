@@ -1,7 +1,15 @@
 import * as React from "react";
 
-import List, {ListProps} from "material-ui/List/List";
-import ListItem, {ListItemProps} from "material-ui/List/ListItem";
+import List, { ListProps } from "material-ui/List/List";
+import ListItem, { ListItemProps } from "material-ui/List/ListItem";
+
+import withStyles, { WithStyles } from "material-ui/styles/withStyles";
+
+const styles = {
+	selectedItem: {
+		backgroundColor: "rgba(0, 0, 0, 0.2)",
+	} as React.CSSProperties,
+};
 
 export interface ISelectableListItemProps<T> extends ListItemProps {
 	selectValue: T;
@@ -11,53 +19,47 @@ export interface ISelectableListProps<T> extends ListProps {
 	children: React.ReactElement<ISelectableListItemProps<T>>
 	| boolean | null | undefined
 	| Array<React.ReactElement<ISelectableListItemProps<T>> | boolean | null | undefined>;
-	selectedItemStyle?: React.CSSProperties;
 	value?: T;
 	onChangeSelectable?(e: React.MouseEvent<any>, value: T): void;
 }
 
-export default class SelectableList<T> extends React.Component<ISelectableListProps<T>> {
+class SelectableList<T> extends React.Component<ISelectableListProps<T> & WithStyles<keyof typeof styles>> {
 	protected keyIndex!: number;
 
 	public render() {
 		const {
 			children,
-			selectedItemStyle, value, onChangeSelectable,
+			value, onChangeSelectable,
+			classes,
 			...rest,
 		} = this.props;
 
-		this.keyIndex = 0;
-		const styles: React.CSSProperties = {};
+		const {
+			selectedItem: selectedItemClassName,
+			...restClasses,
+		} = classes;
 
-		if (!selectedItemStyle) {
-			styles.backgroundColor = "rgba(0, 0, 0, 0.2)"; // ????
-		}
+		this.keyIndex = 0;
 
 		return (
-			<List {...rest}>
+			<List {...rest} classes={restClasses}>
 				{React.Children.map(children, (child) => (
-					this.extendChild(child, styles, selectedItemStyle)
+					this.extendChild(child, selectedItemClassName)
 				))}
 			</List>
 		);
 	}
 
-	protected extendChild(
-		child: React.ReactChild,
-		styles: React.CSSProperties,
-		selectedItemStyle?: React.CSSProperties) {
+	protected extendChild(child: React.ReactChild, selectedItemClassName: string) {
 		if (child && this.isListItem(child)) {
 			const selected = this.isChildSelected(child, this.props);
-			let selectedChildrenStyles;
-			if (selected) {
-				selectedChildrenStyles = { ...styles, ...selectedItemStyle };
-			}
 
-			const mergedChildrenStyles = { ...child.props.style, ...selectedChildrenStyles };
+			const mergedChildrenStyles = child.props.style;
 
 			this.keyIndex += 1;
 
 			return React.cloneElement<ISelectableListItemProps<T>, Partial<ISelectableListItemProps<T>>>(child, {
+				className: `${child.props.className || ""} ${selected ? selectedItemClassName : ""}`,
 				// key: this.keyIndex,
 				onClick: (event: React.MouseEvent<any>) => {
 					this.handleItemClick(event, child);
@@ -96,3 +98,5 @@ export class SelectableListItem<T> extends React.Component<ISelectableListItemPr
 		return <ListItem button {...rest} />;
 	}
 }
+
+export default withStyles(styles)(SelectableList);
