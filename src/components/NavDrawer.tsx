@@ -27,6 +27,7 @@ export type NavDrawerClassKey = keyof typeof styles;
 
 interface INavDrawerProps extends StandardProps<DrawerProps, NavDrawerClassKey> {
 	items: Array<{ id: string; title: string; length: number; }> | null;
+	onNavLinkClicked: (e: React.MouseEvent<any>) => void;
 }
 
 class NavDrawer extends React.Component<
@@ -36,6 +37,7 @@ class NavDrawer extends React.Component<
 			items,
 			children,
 			classes,
+			onNavLinkClicked,
 			...rest,
 		} = this.props;
 		const {
@@ -56,7 +58,7 @@ class NavDrawer extends React.Component<
 					</div>
 					<Divider />
 					<List>
-						<NavLinkListItem to="/" exact>
+						<NavLinkListItem onClick={onNavLinkClicked} to="/" exact>
 							<ListItemText primary="ホーム" />
 						</NavLinkListItem>
 					</List>
@@ -68,6 +70,7 @@ class NavDrawer extends React.Component<
 									item.length
 										? (
 											<NavLinkListItem
+												onClick={onNavLinkClicked}
 												to={`/result/${item.id}`}
 												key={item.id}
 											>
@@ -85,7 +88,7 @@ class NavDrawer extends React.Component<
 					}
 					<Divider />
 					<List>
-						<NavLinkListItem to="/settings">
+						<NavLinkListItem onClick={onNavLinkClicked} to="/settings">
 							<ListItemText primary="設定" />
 						</NavLinkListItem>
 					</List>

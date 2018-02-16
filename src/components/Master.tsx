@@ -133,6 +133,7 @@ class Master extends React.Component<
 						items={this.props.items}
 						variant={persistent ? "persistent" : "temporary"}
 						onClose={this.handleNavDrawerClose}
+						onNavLinkClicked={this.handleNavLinkClick}
 						open={navDrawerOpen}
 						classes={{
 							header: this.props.classes.drawerHeader,
@@ -158,6 +159,13 @@ class Master extends React.Component<
 		this.setState({
 			navDrawerOpen: false,
 		});
+	}
+	private handleNavLinkClick = (_e: any): void => {
+		if (!isWidthUp("md", this.props.width)) {
+			this.setState({
+				navDrawerOpen: false,
+			});
+		}
 	}
 }
 
