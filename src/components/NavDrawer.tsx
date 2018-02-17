@@ -1,5 +1,7 @@
 import * as React from "react";
 
+import { RouteComponentProps, withRouter } from "react-router-dom";
+
 import { StandardProps } from "material-ui";
 import Divider from "material-ui/Divider";
 import Drawer, { DrawerProps } from "material-ui/Drawer";
@@ -31,13 +33,17 @@ interface INavDrawerProps extends StandardProps<DrawerProps, NavDrawerClassKey> 
 }
 
 class NavDrawer extends React.Component<
-	INavDrawerProps & WithStyles<NavDrawerClassKey>, {}> {
+	INavDrawerProps & RouteComponentProps<any> & WithStyles<NavDrawerClassKey>, {}> {
 	public render() {
 		const {
 			items,
 			children,
 			classes,
 			onNavLinkClicked,
+			match,
+			location,
+			history,
+			staticContext,
 			...rest,
 		} = this.props;
 		const {
@@ -45,6 +51,7 @@ class NavDrawer extends React.Component<
 			loading: loadingClassName,
 			...restClasses,
 		} = classes;
+		const { search } = location;
 		const persistent = this.props.variant === "persistent";
 		return (
 			<Drawer classes={restClasses} {...rest}>
@@ -58,7 +65,10 @@ class NavDrawer extends React.Component<
 					</div>
 					<Divider />
 					<List>
-						<NavLinkListItem onClick={onNavLinkClicked} to="/" exact>
+						<NavLinkListItem
+							onClick={onNavLinkClicked}
+							to={{ pathname: "/", search }}
+							exact>
 							<ListItemText primary="ホーム" />
 						</NavLinkListItem>
 					</List>
@@ -71,7 +81,7 @@ class NavDrawer extends React.Component<
 										? (
 											<NavLinkListItem
 												onClick={onNavLinkClicked}
-												to={`/result/${item.id}`}
+												to={{ pathname: `/result/${item.id}`, search }}
 												key={item.id}
 											>
 												<ListItemText
@@ -88,7 +98,10 @@ class NavDrawer extends React.Component<
 					}
 					<Divider />
 					<List>
-						<NavLinkListItem onClick={onNavLinkClicked} to="/settings">
+						<NavLinkListItem
+							onClick={onNavLinkClicked}
+							to={{ pathname: "/settings", search }}
+						>
 							<ListItemText primary="設定" />
 						</NavLinkListItem>
 					</List>
@@ -98,4 +111,4 @@ class NavDrawer extends React.Component<
 	}
 }
 
-export default withStyles(styles)(NavDrawer);
+export default withRouter(withStyles(styles)(NavDrawer));

@@ -2,63 +2,44 @@ import * as React from "react";
 
 import { HashRouter, Route, Switch } from "react-router-dom";
 
-import Master from "./components/Master";
-
+import DataProvider from "./components/DataProvider";
 import Home from "./components/Home";
+import Master from "./components/Master";
 import Settings from "./components/Settings";
 
 import validationItems from "./validationItems";
 
-class App extends React.Component<{}, { data: IJSONPCallback | null }> {
+class App extends React.Component<{}> {
 
-	public state = {
-		data: null as IJSONPCallback | null,
-	};
-
-	public componentDidMount() {
-		window.gwvCallback = (data: IJSONPCallback) => {
-			this.setState({ data });
-		};
-
-		let names = validationItems.map((item) => item.id).join(",");
-		for (const kv of location.search.slice(1).split("&")) {
-			if (kv.substring(0, 5) === "name=") {
-				names = kv.substring(5);
-				break;
-			}
-		}
-
-		const jsonUrl = "https://script.google.com/macros/s/AKfycbyZCl8KPrCHtzT8ywcE0tEgb7Yo8LfgldbkTz4O6eJ2i3v80pu-/exec";
-		const s = document.createElement("script");
-		s.setAttribute("type", "text/javascript");
-		s.setAttribute("src", `${jsonUrl}?callback=gwvCallback&name=${names}`);
-		document.getElementsByTagName("head")[0].appendChild(s);
-	}
 	public render() {
 		return (
 			<HashRouter>
-				<Master
-					items={this.state.data &&
-						validationItems
-							.filter((item) => item.id in this.state.data!.result)
-							.map((item) => ({
-								id: item.id,
-								length: Object.keys(this.state.data!.result[item.id])
-									.reduce((prev, key) => prev + this.state.data!.result[item.id][key].length, 0),
-								title: item.title,
-							}))
+				<DataProvider
+					view={(dataToShow) =>
+						<Master
+							items={dataToShow &&
+								validationItems
+									.filter((item) => item.id in dataToShow.result)
+									.map((item) => ({
+										id: item.id,
+										length: Object.keys(dataToShow.result[item.id])
+											.reduce((prev, key) => prev + dataToShow.result[item.id][key].length, 0),
+										title: item.title,
+									}))
+							}
+						>
+							<Switch>
+								<Route exact path="/" component={Home} />
+								{validationItems.map((ItemComponent) => (
+									<Route path={`/result/${ItemComponent.id}`} component={() => (
+										<ItemComponent result={dataToShow && (dataToShow.result[ItemComponent.id] || {})} />
+									)} key={ItemComponent.id} />
+								))}
+								<Route path="/settings" component={Settings} />
+							</Switch>
+						</Master>
 					}
-				>
-					<Switch>
-						<Route exact path="/" component={Home} />
-						{validationItems.map((ItemComponent) => (
-							<Route path={`/result/${ItemComponent.id}`} component={() => (
-								<ItemComponent result={this.state.data && (this.state.data.result[ItemComponent.id] || {})} />
-							)} key={ItemComponent.id} />
-						))}
-						<Route path="/settings" component={Settings} />
-					</Switch>
-				</Master>
+				/>
 			</HashRouter>
 		);
 	}

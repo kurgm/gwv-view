@@ -25,13 +25,13 @@ class NavLinkListItem extends React.Component<INavLinkListItemProps & WithStyles
 	public render() {
 		const { classes, ...rest } = this.props;
 		const { selectedItem, ...restClasses } = classes;
-		const rest2 = { ...rest, activeClassName: selectedItem };
+		const props = { ...rest, activeClassName: selectedItem };
 		return (
 			<ListItem
 				button
 				component={NavLink}
 				classes={restClasses}
-				{...rest2}
+				{...props}
 			/>
 		);
 	}

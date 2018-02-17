@@ -1,7 +1,5 @@
 import * as React from "react";
 
-import { RouteComponentProps } from "react-router";
-
 import Divider from "material-ui/Divider";
 import List from "material-ui/List/List";
 import ListItem from "material-ui/List/ListItem";
@@ -28,9 +26,7 @@ const styles = {
 
 const itemsPerPageOptions = [10, 20, 50, 100];
 
-class Settings extends React.Component<
-	RouteComponentProps<any> & WithStyles<keyof typeof styles> & WithWidthProps,
-	ISettingsState> {
+class Settings extends React.Component<WithStyles<keyof typeof styles> & WithWidthProps, ISettingsState> {
 	private static nDialogs = 2;
 
 	public state: Readonly<ISettingsState> = {
