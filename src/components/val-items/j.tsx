@@ -20,7 +20,7 @@ class JComponent extends React.Component<{ result: { [type: string]: IValue[]; }
 			<ValidateResult
 				description={
 					<p>
-						地域ソースが存在しない地域指定グリフ、Jソースが存在する-jvのグリフ、Kソースが存在する-kvのグリフ、仮想J字形に使わない字形の部品が使われているuxxxx(-jv), extf-, irg2015-のグリフを検出します。
+						地域ソースが存在しない地域指定グリフ、Jソースが存在する-jvのグリフ、Kソースが存在する-kvのグリフ、仮想J字形に使わない字形の部品が使われているuxxxx(-jv), irg2015-のグリフを検出します。
 					</p>
 				}
 				getGroupTitle={this.getGroupTitle}
@@ -40,7 +40,7 @@ class JComponent extends React.Component<{ result: { [type: string]: IValue[]; }
 		return ({
 			0: "uxxxx-j, ja, jv（の実体）とその無印グリフ（の実体）が異なっています。",
 			1: "uxxxx-jvとuxxxx-j, jaが両方存在しています。",
-			2: "uxxxx(-jv) / extf-##### / irg2015-##### のグリフに仮想J字形に使わない字形の部品が使用されています。",
+			2: "uxxxx(-jv) / irg2015-##### のグリフに仮想J字形に使わない字形の部品が使用されています。",
 			4: "指定された地域のソースは存在しません。",
 			5: "原規格分離漢字の取扱規則が適用される符号位置にはuxxxx-jvを作成できません。",
 		} as { [type: string]: string; })[typeStr];
