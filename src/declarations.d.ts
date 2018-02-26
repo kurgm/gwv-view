@@ -1,6 +1,6 @@
 declare module "*.md" {
-	const content: string;
-	export = content;
+	const _exports: React.StatelessComponent;
+	export = _exports;
 }
 
 // override incorrect typing
