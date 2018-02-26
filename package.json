@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Viewer of results of GlyphWiki data validator",
   "scripts": {
-    "build": "webpack --progress",
+    "build": "webpack -d --progress",
     "build:dist": "webpack -p --progress",
     "lint": "tslint --project .",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -37,6 +37,7 @@
     "source-map-loader": "^0.2.3",
     "tslint": "^5.9.1",
     "typescript": "^2.7.1",
-    "webpack": "^3.11.0"
+    "webpack": "^4.0.0",
+    "webpack-cli": "^2.0.9"
   }
 }
