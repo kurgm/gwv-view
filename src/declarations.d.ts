@@ -41,6 +41,46 @@ declare module "material-ui/List/ListItem" {
 
 }
 
+declare module "react-router-dom/BrowserRouter" {
+	export { BrowserRouter as default, BrowserRouterProps } from "react-router-dom";
+}
+declare module "react-router-dom/HashRouter" {
+	export { HashRouter as default, HashRouterProps } from "react-router-dom";
+}
+declare module "react-router-dom/Link" {
+	export { Link as default, LinkProps } from "react-router-dom";
+}
+declare module "react-router-dom/MemoryRouter" {
+	export { MemoryRouter as default } from "react-router-dom";
+}
+declare module "react-router-dom/NavLink" {
+	export { NavLink as default, NavLinkProps } from "react-router-dom";
+}
+declare module "react-router-dom/Prompt" {
+	export { Prompt as default } from "react-router-dom";
+}
+declare module "react-router-dom/Redirect" {
+	export { Redirect as default } from "react-router-dom";
+}
+declare module "react-router-dom/Route" {
+	export { Route as default, RouteComponentProps, RouteProps } from "react-router-dom";
+}
+declare module "react-router-dom/Router" {
+	export { Router as default, RouterChildContext } from "react-router-dom";
+}
+declare module "react-router-dom/StaticRouter" {
+	export { StaticRouter as default } from "react-router-dom";
+}
+declare module "react-router-dom/Switch" {
+	export { Switch as default } from "react-router-dom";
+}
+declare module "react-router-dom/matchPath" {
+	export { matchPath as default } from "react-router-dom";
+}
+declare module "react-router-dom/withRouter" {
+	export { withRouter as default, RouteComponentProps } from "react-router-dom";
+}
+
 type KageLineData = [number, string];
 
 // tslint:disable-next-line:interface-name

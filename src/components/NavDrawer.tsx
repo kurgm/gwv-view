@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { RouteComponentProps, withRouter } from "react-router-dom";
+import withRouter, { RouteComponentProps } from "react-router-dom/withRouter";
 
 import { StandardProps } from "material-ui";
 import Divider from "material-ui/Divider";

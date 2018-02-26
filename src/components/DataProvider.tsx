@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { RouteComponentProps, withRouter } from "react-router-dom";
+import withRouter, { RouteComponentProps } from "react-router-dom/withRouter";
 
 import searchData from "../searchData";
 import validationItems from "../validationItems";
