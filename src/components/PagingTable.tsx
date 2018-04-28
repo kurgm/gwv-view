@@ -15,26 +15,26 @@ import Typography from "material-ui/Typography";
 
 import Collapse from "material-ui/transitions/Collapse";
 
-import ExpandLessIcon from "material-ui-icons/ExpandLess";
-import ExpandMoreIcon from "material-ui-icons/ExpandMore";
+import ExpandLessIcon from "@material-ui/icons/ExpandLess";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 import withStyles, { WithStyles } from "material-ui/styles/withStyles";
 
 const styles = {
 	card: {
 		margin: 8,
-	} as React.CSSProperties,
+	},
 	cardTitle: {
 		cursor: "pointer",
 		padding: "16px 14px 16px 24px",
-	} as React.CSSProperties,
+	},
 	cardTitleTitle: {
 		fontSize: 20,
 		lineHeight: "32px",
-	} as React.CSSProperties,
+	},
 	flexGrow: {
 		flex: "1 1 auto",
-	} as React.CSSProperties,
+	},
 };
 
 interface IPagingTableProps<T> {
@@ -156,7 +156,7 @@ const simpleColumnRowStyles = {
 	cell: {
 		paddingBottom: 0,
 		paddingTop: 0,
-	} as React.CSSProperties,
+	},
 };
 
 export const SimpleColumnRow = withStyles(simpleColumnRowStyles)(

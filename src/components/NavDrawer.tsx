@@ -10,13 +10,15 @@ import List from "material-ui/List/List";
 import ListItemText from "material-ui/List/ListItemText";
 import CircularProgress from "material-ui/Progress/CircularProgress";
 
-import ChevronLeftIcon from "material-ui-icons/ChevronLeft";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 
-import withStyles, { WithStyles } from "material-ui/styles/withStyles";
+import withStyles, { StyleRules, WithStyles } from "material-ui/styles/withStyles";
 
 import NavLinkListItem from "./NavLinkListItem";
 
-const styles = {
+import { Omit } from "material-ui";
+
+const styles: StyleRules<"header" | "loading" | "paper"> = {
 	header: {},
 	loading: {
 		paddingTop: "8px",
@@ -27,7 +29,8 @@ const styles = {
 
 export type NavDrawerClassKey = keyof typeof styles;
 
-interface INavDrawerProps extends StandardProps<DrawerProps, NavDrawerClassKey> {
+interface INavDrawerProps extends
+	Omit<StandardProps<DrawerProps, NavDrawerClassKey>, "classes"> {
 	items: Array<{ id: string; title: string; length: number; }> | null;
 	onNavLinkClicked: (e: React.MouseEvent<any>) => void;
 }

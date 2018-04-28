@@ -10,7 +10,7 @@ const styles = {
 	content: {
 		// margin: spacing.desktopGutter,
 		margin: 24, // TODO avoid magic number
-	} as React.CSSProperties,
+	},
 };
 
 class Home extends React.Component<WithStyles<keyof typeof styles>, {}> {

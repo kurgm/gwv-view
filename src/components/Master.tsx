@@ -11,7 +11,7 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import withStyles, { WithStyles } from "material-ui/styles/withStyles";
 import withWidth, { isWidthUp, WithWidthProps } from "material-ui/utils/withWidth";
 
-import MenuIcon from "material-ui-icons/Menu";
+import MenuIcon from "@material-ui/icons/Menu";
 
 import NavDrawer from "./NavDrawer";
 
@@ -62,14 +62,14 @@ const styles = {
 		[theme.breakpoints.up("sm")]: {
 			minHeight: appBarHeightLarge,
 		},
-	} as React.CSSProperties,
+	},
 	drawerPaper: {
 		width: drawerWidth,
 	},
 	menuButton: {
 		marginLeft: -12,
 		marginRight: 20,
-	} as React.CSSProperties,
+	},
 	root: {
 		paddingTop: appBarHeight,
 		transition: theme.transitions.create("margin", {

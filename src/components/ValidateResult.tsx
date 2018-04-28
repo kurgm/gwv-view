@@ -13,10 +13,10 @@ const styles = {
 	content: {
 		// margin: spacing.desktopGutter,
 		margin: "24px 0", // TODO avoid magic number
-	} as React.CSSProperties,
+	},
 	descriptionWrapper: {
 		margin: "0 24px", // TODO avoid magic number
-	} as React.CSSProperties,
+	},
 };
 
 export interface IValidateResultProps<T> {

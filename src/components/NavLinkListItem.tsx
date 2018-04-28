@@ -12,13 +12,15 @@ const styles = {
 	selectedItem: {
 		"&:hover": {
 			backgroundColor: "rgba(0, 0, 0, 0.2)",
-		} as React.CSSProperties,
+		},
 		"backgroundColor": "rgba(0, 0, 0, 0.2)",
-	} as React.CSSProperties,
+	},
 };
 
 export interface INavLinkListItemProps
-	extends ListItemProps, Omit<NavLinkProps, keyof NavLinkProps & keyof ListItemProps> {
+	extends
+	Omit<ListItemProps, "classes">,
+	Omit<NavLinkProps, keyof NavLinkProps & keyof ListItemProps> {
 }
 
 class NavLinkListItem extends React.Component<INavLinkListItemProps & WithStyles<keyof typeof styles>> {
