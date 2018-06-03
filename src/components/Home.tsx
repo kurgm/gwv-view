@@ -1,8 +1,6 @@
 import * as React from "react";
 
-import withStyles, { WithStyles } from "material-ui/styles/withStyles";
-
-// import spacing from "material-ui/styles/spacing";
+import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
 
 import * as HomeDoc from "./Home.md";
 

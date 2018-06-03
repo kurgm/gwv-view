@@ -1,11 +1,9 @@
 import * as React from "react";
 
-// import spacing from "material-ui/styles/spacing";
+import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
+import TableHead from "@material-ui/core/TableHead/TableHead";
 
-import CircularProgress from "material-ui/Progress/CircularProgress";
-import TableHead from "material-ui/Table/TableHead";
-
-import withStyles, { WithStyles } from "material-ui/styles/withStyles";
+import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
 
 import PagingTable from "./PagingTable";
 

@@ -5,10 +5,10 @@ declare module "*.md" {
 
 // override incorrect typing
 
-declare module "material-ui/List/ListItem" {
+declare module "@material-ui/core/ListItem/ListItem" {
 	import * as React from 'react';
-	import { StandardProps } from 'material-ui';
-	import { ButtonBaseProps, ButtonBaseClassKey } from 'material-ui/ButtonBase';
+	import { StandardProps } from '@material-ui/core';
+	import { ButtonBaseProps } from '@material-ui/core/ButtonBase/ButtonBase';
 
 	export interface ListItemProps
 		extends StandardProps<
@@ -18,18 +18,22 @@ declare module "material-ui/List/ListItem" {
 		> {
 		button?: boolean;
 		component?: React.ReactType;
+		ContainerComponent?: React.ReactType<React.HTMLAttributes<HTMLDivElement>>;
+		ContainerProps?: React.HTMLAttributes<HTMLDivElement>;
 		dense?: boolean;
 		disabled?: boolean;
 		disableGutters?: boolean;
 		divider?: boolean;
+		focusVisibleClassName?: string;
 	}
 
 	export type ListItemClassKey =
-		| ButtonBaseClassKey
+		| 'root'
 		| 'container'
-		| 'keyboardFocused'
+		| 'focusVisible'
 		| 'default'
 		| 'dense'
+		| 'disabled'
 		| 'divider'
 		| 'gutters'
 		| 'button'
@@ -60,7 +64,7 @@ declare module "react-router-dom/Prompt" {
 	export { Prompt as default } from "react-router-dom";
 }
 declare module "react-router-dom/Redirect" {
-	export { Redirect as default } from "react-router-dom";
+	export { Redirect as default, RedirectProps } from "react-router-dom";
 }
 declare module "react-router-dom/Route" {
 	export { Route as default, RouteComponentProps, RouteProps } from "react-router-dom";

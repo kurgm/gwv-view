@@ -2,11 +2,11 @@ import * as React from "react";
 
 import NavLink, { NavLinkProps } from "react-router-dom/NavLink";
 
-import { Omit } from "material-ui";
+import { Omit } from "@material-ui/core";
 
-import ListItem, { ListItemProps } from "material-ui/List/ListItem";
+import ListItem, { ListItemProps } from "@material-ui/core/ListItem/ListItem";
 
-import withStyles, { WithStyles } from "material-ui/styles/withStyles";
+import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
 
 const styles = {
 	selectedItem: {

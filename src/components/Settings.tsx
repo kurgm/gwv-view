@@ -1,14 +1,14 @@
 import * as React from "react";
 
-import Divider from "material-ui/Divider";
-import List from "material-ui/List/List";
-import ListItem from "material-ui/List/ListItem";
-import ListItemText from "material-ui/List/ListItemText";
-import ListSubheader from "material-ui/List/ListSubheader";
-import Paper from "material-ui/Paper";
+import Divider from "@material-ui/core/Divider/Divider";
+import List from "@material-ui/core/List/List";
+import ListItem from "@material-ui/core/ListItem/ListItem";
+import ListItemText from "@material-ui/core/ListItemText/ListItemText";
+import ListSubheader from "@material-ui/core/ListSubheader/ListSubheader";
+import Paper from "@material-ui/core/Paper/Paper";
 
-import withStyles, { WithStyles } from "material-ui/styles/withStyles";
-import withWidth, { isWidthDown, WithWidthProps } from "material-ui/utils/withWidth";
+import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
+import withWidth, { isWidthDown, WithWidthProps } from "@material-ui/core/withWidth/withWidth";
 
 import SelectDialog from "./SelectDialog";
 

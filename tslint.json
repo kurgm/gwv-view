@@ -1,21 +1,32 @@
 {
-    "defaultSeverity": "error",
-    "extends": [
-        "tslint:recommended"
+  "defaultSeverity": "error",
+  "extends": [
+    "tslint:recommended"
+  ],
+  "jsRules": {},
+  "rules": {
+    "indent": [
+      true,
+      "tabs"
     ],
-    "jsRules": {},
-    "rules": {
-      "indent": [true, "tabs"],
-      "max-classes-per-file": false,
-      "no-bitwise": false,
-      "variable-name": {
-        "options": [
-          "ban-keywords",
-          "check-format",
-          "allow-leading-underscore",
-          "allow-pascal-case"
-        ]
-      }
+    "max-classes-per-file": false,
+    "no-bitwise": false,
+    "variable-name": {
+      "options": [
+        "ban-keywords",
+        "check-format",
+        "allow-leading-underscore",
+        "allow-pascal-case"
+      ]
     },
-    "rulesDirectory": []
+    "trailing-comma": [
+      true,
+      {
+        "multiline": "always",
+        "singleline": "never",
+        "esSpecCompliant": true
+      }
+    ]
+  },
+  "rulesDirectory": []
 }

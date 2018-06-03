@@ -2,23 +2,23 @@ import * as React from "react";
 
 import { getSettings } from "../settings";
 
-import Card from "material-ui/Card/Card";
-import CardContent from "material-ui/Card/CardContent";
-import IconButton from "material-ui/IconButton";
-import Table from "material-ui/Table/Table";
-import TableBody from "material-ui/Table/TableBody";
-import TableCell from "material-ui/Table/TableCell";
-import TableFooter from "material-ui/Table/TableFooter";
-import TablePagination from "material-ui/Table/TablePagination";
-import TableRow from "material-ui/Table/TableRow";
-import Typography from "material-ui/Typography";
+import Card from "@material-ui/core/Card/Card";
+import CardContent from "@material-ui/core/CardContent/CardContent";
+import IconButton from "@material-ui/core/IconButton/IconButton";
+import Table from "@material-ui/core/Table/Table";
+import TableBody from "@material-ui/core/TableBody/TableBody";
+import TableCell from "@material-ui/core/TableCell/TableCell";
+import TableFooter from "@material-ui/core/TableFooter/TableFooter";
+import TablePagination from "@material-ui/core/TablePagination/TablePagination";
+import TableRow from "@material-ui/core/TableRow/TableRow";
+import Typography from "@material-ui/core/Typography/Typography";
 
-import Collapse from "material-ui/transitions/Collapse";
+import Collapse from "@material-ui/core/Collapse/Collapse";
 
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
-import withStyles, { WithStyles } from "material-ui/styles/withStyles";
+import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
 
 const styles = {
 	card: {

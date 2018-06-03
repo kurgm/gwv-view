@@ -2,21 +2,21 @@ import * as React from "react";
 
 import withRouter, { RouteComponentProps } from "react-router-dom/withRouter";
 
-import { StandardProps } from "material-ui";
-import Divider from "material-ui/Divider";
-import Drawer, { DrawerProps } from "material-ui/Drawer";
-import IconButton from "material-ui/IconButton";
-import List from "material-ui/List/List";
-import ListItemText from "material-ui/List/ListItemText";
-import CircularProgress from "material-ui/Progress/CircularProgress";
+import { StandardProps } from "@material-ui/core";
+import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
+import Divider from "@material-ui/core/Divider/Divider";
+import Drawer, { DrawerProps } from "@material-ui/core/Drawer/Drawer";
+import IconButton from "@material-ui/core/IconButton/IconButton";
+import List from "@material-ui/core/List/List";
+import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 
-import withStyles, { StyleRules, WithStyles } from "material-ui/styles/withStyles";
+import withStyles, { StyleRules, WithStyles } from "@material-ui/core/styles/withStyles";
 
 import NavLinkListItem from "./NavLinkListItem";
 
-import { Omit } from "material-ui";
+import { Omit } from "@material-ui/core";
 
 const styles: StyleRules<"header" | "loading" | "paper"> = {
 	header: {},
@@ -47,12 +47,12 @@ class NavDrawer extends React.Component<
 			location,
 			history,
 			staticContext,
-			...rest,
+			...rest
 		} = this.props;
 		const {
 			header: headerClassName,
 			loading: loadingClassName,
-			...restClasses,
+			...restClasses
 		} = classes;
 		const { search } = location;
 		const persistent = this.props.variant === "persistent";
