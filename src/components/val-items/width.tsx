@@ -17,7 +17,7 @@ class WidthComponent extends React.Component<{ result: { [type: string]: IValue[
 				description={
 					<p>
 						<a href="https://glyphwiki.org/wiki/Group:HalfwidthGlyphs">グループ:HalfwidthGlyphs</a>
-						に含まれているかどうかとグリフが半角かどうかが一致しないものを検出します。
+						のサブグループのいずれかに含まれているかどうかとグリフが半角かどうかが一致しないものを検出します。
 					</p>
 				}
 				getGroupTitle={this.getGroupTitle}
@@ -31,8 +31,8 @@ class WidthComponent extends React.Component<{ result: { [type: string]: IValue[
 	private getGroupTitle(type: string) {
 		return ({
 			0: "グループ:NonSpacingGlyphs-Halfwidthに含まれていますが全角です。",
-			1: "グループ:HalfwidthGlyphsに含まれていますが全角です。",
-			2: "半角ですがグループ:HalfwidthGlyphsに含まれていません。",
+			1: "グループ:HalfwidthGlyphs-*に含まれていますが全角です。",
+			2: "半角ですがグループ:HalfwidthGlyphs-*に含まれていません。",
 		} as { [type: string]: string; })[type];
 	}
 	private getTableHeaderRow(_type: string) {
