@@ -8,7 +8,7 @@ import ListSubheader from "@material-ui/core/ListSubheader/ListSubheader";
 import Paper from "@material-ui/core/Paper/Paper";
 
 import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
-import withWidth, { isWidthDown, WithWidthProps } from "@material-ui/core/withWidth/withWidth";
+import withWidth, { isWidthDown, WithWidth } from "@material-ui/core/withWidth/withWidth";
 
 import SelectDialog from "./SelectDialog";
 
@@ -26,7 +26,7 @@ const styles = {
 
 const itemsPerPageOptions = [10, 20, 50, 100];
 
-class Settings extends React.Component<WithStyles<keyof typeof styles> & WithWidthProps, ISettingsState> {
+class Settings extends React.Component<WithStyles<keyof typeof styles> & WithWidth, ISettingsState> {
 	private static nDialogs = 2;
 
 	public state: Readonly<ISettingsState> = {

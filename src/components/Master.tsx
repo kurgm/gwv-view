@@ -9,7 +9,7 @@ import indigo from "@material-ui/core/colors/indigo";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
-import withWidth, { isWidthUp, WithWidthProps } from "@material-ui/core/withWidth/withWidth";
+import withWidth, { isWidthUp, WithWidth } from "@material-ui/core/withWidth/withWidth";
 
 import MenuIcon from "@material-ui/icons/Menu";
 
@@ -93,7 +93,7 @@ const styles = {
 };
 
 class Master extends React.Component<
-	IMasterProps & WithStyles<keyof typeof styles> & WithWidthProps, IMasterState> {
+	IMasterProps & WithStyles<keyof typeof styles> & WithWidth, IMasterState> {
 
 	public state: Readonly<IMasterState> = {
 		navDrawerOpen: false,

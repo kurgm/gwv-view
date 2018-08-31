@@ -26,7 +26,7 @@ module.exports = {
                 use: [{
                     loader: "babel-loader",
                     options: {
-                        presets: ["react"],
+                        presets: ["@babel/preset-react"],
                     },
                 }, {
                     loader: "markdown-jsx-loader",
