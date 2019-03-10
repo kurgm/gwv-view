@@ -27,6 +27,9 @@ const theme = createMuiTheme({
 	palette: {
 		primary: indigo,
 	},
+	typography: {
+		useNextVariants: true,
+	},
 });
 
 const drawerWidth = 240;
@@ -124,7 +127,7 @@ class Master extends React.Component<
 									<MenuIcon />
 								</IconButton>
 							}
-							<Typography variant="title" color="inherit" noWrap>
+							<Typography variant="h6" color="inherit" noWrap>
 								{title}
 							</Typography>
 						</Toolbar>

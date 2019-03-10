@@ -16,6 +16,7 @@ declare module "@material-ui/core/ListItem/ListItem" {
 		ListItemClassKey,
 		'component'
 		> {
+		alignItems?: 'flex-start' | 'center';
 		button?: boolean;
 		component?: React.ReactType;
 		ContainerComponent?: React.ReactType<React.HTMLAttributes<HTMLDivElement>>;
@@ -25,6 +26,7 @@ declare module "@material-ui/core/ListItem/ListItem" {
 		disableGutters?: boolean;
 		divider?: boolean;
 		focusVisibleClassName?: string;
+		selected?: boolean;
 	}
 
 	export type ListItemClassKey =
@@ -37,7 +39,8 @@ declare module "@material-ui/core/ListItem/ListItem" {
 		| 'divider'
 		| 'gutters'
 		| 'button'
-		| 'secondaryAction';
+		| 'secondaryAction'
+		| 'selected';
 
 	const ListItem: React.ComponentType<ListItemProps>;
 
