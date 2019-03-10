@@ -42,14 +42,18 @@ class JComponent extends React.Component<{ result: { [type: string]: IValue[]; }
 			1: "uxxxx-jvとuxxxx-j, jaが両方存在しています。",
 			2: "uxxxx(-jv) / irg2015-##### のグリフに仮想J字形に使わない字形の部品が使用されています。",
 			4: "指定された地域のソースは存在しません。",
+			40: "指定された地域のソースは存在しません。",
+			41: "指定された地域のソースは存在しません。（偏化変形）",
 			5: "原規格分離漢字の取扱規則が適用される符号位置にはuxxxx-jvを作成できません。",
 		} as { [type: string]: string; })[typeStr];
 	}
 	private getTableHeaderRow(type: string) {
 		const columns = (() => {
-			switch (type as "0" | "1" | "2" | "4" | "5" | "30" | "31") {
+			switch (type as "0" | "1" | "2" | "4" | "40" | "41" | "5" | "30" | "31") {
 				case "0":
 				case "4":
+				case "40":
+				case "41":
 				case "5":
 					return ["グリフ名", "無印グリフ"];
 				case "1":
@@ -66,9 +70,11 @@ class JComponent extends React.Component<{ result: { [type: string]: IValue[]; }
 		);
 	}
 	private getRowRenderer(type: string) {
-		switch (type as "0" | "1" | "2" | "4" | "5" | "30" | "31") {
+		switch (type as "0" | "1" | "2" | "4" | "40" | "41" | "5" | "30" | "31") {
 			case "0":
 			case "4":
+			case "40":
+			case "41":
 			case "5":
 				return (props: { item: IValueNone; }) => (
 					<SimpleColumnRow columns={[
