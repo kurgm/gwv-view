@@ -33,7 +33,7 @@ class JComponent extends React.Component<{ result: { [type: string]: IValue[]; }
 
 	private getGroupTitle(typeStr: string) {
 		const type = Number(typeStr);
-		if (type >= 30) {
+		if (30 <= type && type <= 39) {
 			const source = ["J", "K"][type - 30];
 			return `${source}ソースが存在するのに、uxxxx-${source.toLowerCase()}vが作成されています。`;
 		}
