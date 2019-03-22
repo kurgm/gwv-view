@@ -22,10 +22,10 @@ function findInObj(val: any, matcher: (value: string) => boolean): boolean {
 	}
 }
 
-function searchData(data: IJSONPCallback, query: string): IJSONPCallback {
+function searchData(data: IGWVJSON, query: string): IGWVJSON {
 	const matcher = getMatcher(query);
 	const { lastModified, result } = data;
-	const filteredResult: IJSONPCallback["result"] = {};
+	const filteredResult: IGWVJSON["result"] = {};
 	for (const key of Object.keys(result)) {
 		filteredResult[key] = {};
 		for (const type of Object.keys(result[key])) {

@@ -3,19 +3,18 @@ import * as React from "react";
 import withRouter, { RouteComponentProps } from "react-router-dom/withRouter";
 
 import searchData from "../searchData";
-import validationItems from "../validationItems";
 
 interface IDataProviderProps {
-	view: (data: IJSONPCallback | null) => React.ReactNode;
+	view: (data: IGWVJSON | null) => React.ReactNode;
 }
 
 interface ISearchResult {
 	query: string;
-	result: IJSONPCallback | null;
+	result: IGWVJSON | null;
 }
 
 interface IDataProviderState {
-	data: IJSONPCallback | null;
+	data: IGWVJSON | null;
 	search: ISearchResult | null;
 }
 
@@ -27,24 +26,18 @@ class DataProvider extends React.Component<IDataProviderProps & RouteComponentPr
 	} as IDataProviderState;
 
 	public componentDidMount() {
-		window.gwvCallback = (data: IJSONPCallback) => {
-			this.setState({ data });
-			this.triggerSearch(data, this.props.location.search);
-		};
-
-		let names = validationItems.map((item) => item.id).join(",");
-		for (const kv of location.search.slice(1).split("&")) {
-			if (kv.substring(0, 5) === "name=") {
-				names = kv.substring(5);
-				break;
+		const xhr = new XMLHttpRequest();
+		const jsonUrl = "https://gist.githubusercontent.com/kurgm/cef8cd1cc8de3484739839816a165e20/raw/gwv_result.json";
+		xhr.open("GET", jsonUrl);
+		xhr.addEventListener("load", () => {
+			if (xhr.readyState !== 4 || xhr.status !== 200) {
+				return;
 			}
-		}
-
-		const jsonUrl = "https://script.google.com/macros/s/AKfycbyZCl8KPrCHtzT8ywcE0tEgb7Yo8LfgldbkTz4O6eJ2i3v80pu-/exec";
-		const s = document.createElement("script");
-		s.setAttribute("type", "text/javascript");
-		s.setAttribute("src", `${jsonUrl}?callback=gwvCallback&name=${names}`);
-		document.getElementsByTagName("head")[0].appendChild(s);
+			this.setState({
+				data: JSON.parse(xhr.responseText) as IGWVJSON,
+			});
+		});
+		xhr.send();
 	}
 
 	public componentWillReceiveProps(nextProps: Readonly<IDataProviderProps & RouteComponentProps<any>>) {
@@ -61,7 +54,7 @@ class DataProvider extends React.Component<IDataProviderProps & RouteComponentPr
 		return this.props.view(dataToShow);
 	}
 
-	private triggerSearch(data: IJSONPCallback | null, queryString: string) {
+	private triggerSearch(data: IGWVJSON | null, queryString: string) {
 		const params = new URLSearchParams(queryString);
 		if (!params.has("search")) {
 			this.setState({

@@ -90,12 +90,7 @@ declare module "react-router-dom/withRouter" {
 
 type KageLineData = [number, string];
 
-// tslint:disable-next-line:interface-name
-interface Window {
-	gwvCallback: (data: IJSONPCallback) => void;
-}
-
-interface IJSONPCallback {
+interface IGWVJSON {
 	result: { [id: string]: { [type: string]: any[]; }; };
 	lastModified: number;
 }
