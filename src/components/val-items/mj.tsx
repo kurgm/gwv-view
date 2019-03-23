@@ -3,14 +3,14 @@ import * as React from "react";
 import Glyph from "../Glyph";
 import ValidateResult from "../ValidateResult";
 
-import { SimpleColumnHeader, SimpleColumnRow } from "../PagingTable";
+import {SimpleColumnHeader, SimpleColumnRow} from "../PagingTable";
 
 type IValueInvalidMJ = [string];
 type IValueUnset = [string, null, string[]];
 type IValueIncorrect = [string, string, string[]];
 type IValue = IValueInvalidMJ | IValueUnset | IValueIncorrect;
 
-class MjComponent extends React.Component<{ result: { [type: string]: IValue[]; } | null; }, {}> {
+class MjComponent extends React.Component<{ result: { [type: string]: IValue[] } | null }, {}> {
 	public static id = "mj";
 	public static title = "MJ文字情報一覧表";
 
@@ -36,12 +36,13 @@ class MjComponent extends React.Component<{ result: { [type: string]: IValue[]; 
 	}
 
 	private getGroupTitle(type: string) {
-		return ({
+		const titleMap: { [type: string]: string } = {
 			0: "エイリアス先が間違っていると思います。",
 			1: "関連字が間違っていると思います。",
 			2: "関連字が設定されていません。",
 			3: "対応するMJ文字図形名は欠番です。",
-		} as { [type: string]: string; })[type];
+		};
+		return titleMap[type];
 	}
 	private getTableHeaderRow(type: string) {
 		const columns = (() => {
@@ -55,6 +56,7 @@ class MjComponent extends React.Component<{ result: { [type: string]: IValue[]; 
 				case "3":
 					return ["グリフ名"];
 			}
+			return [];
 		})();
 		return (
 			<SimpleColumnHeader columns={columns} />
@@ -64,7 +66,7 @@ class MjComponent extends React.Component<{ result: { [type: string]: IValue[]; 
 		switch (type as "0" | "1" | "2" | "3") {
 			case "0":
 			case "1":
-				return (props: { item: IValueIncorrect; }) => (
+				return (props: { item: IValueIncorrect }) => (
 					<SimpleColumnRow columns={[
 						<Glyph name={props.item[0]} />,
 						<Glyph name={props.item[1]} />,
@@ -72,19 +74,20 @@ class MjComponent extends React.Component<{ result: { [type: string]: IValue[]; 
 					]} />
 				);
 			case "2":
-				return (props: { item: IValueUnset; }) => (
+				return (props: { item: IValueUnset }) => (
 					<SimpleColumnRow columns={[
 						<Glyph name={props.item[0]} />,
 						props.item[2].map((name, i) => [i === 0 ? "" : "または", <Glyph name={name} key={i} />]),
 					]} />
 				);
 			case "3":
-				return (props: { item: IValueInvalidMJ; }) => (
+				return (props: { item: IValueInvalidMJ }) => (
 					<SimpleColumnRow columns={[
 						<Glyph name={props.item[0]} />,
 					]} />
 				);
 		}
+		return () => null;
 	}
 }
 

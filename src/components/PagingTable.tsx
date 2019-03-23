@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { getSettings } from "../settings";
+import {getSettings} from "../settings";
 
 import Card from "@material-ui/core/Card/Card";
 import CardContent from "@material-ui/core/CardContent/CardContent";
@@ -18,7 +18,7 @@ import Collapse from "@material-ui/core/Collapse/Collapse";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
-import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
+import withStyles, {WithStyles} from "@material-ui/core/styles/withStyles";
 
 const styles = {
 	card: {
@@ -37,29 +37,29 @@ const styles = {
 	},
 };
 
-interface IPagingTableProps<T> {
+interface PagingTableProps<T> {
 	title: string;
 	thead?: React.ReactNode;
-	RowRenderer: React.SFC<{ item: T; }>;
+	RowRenderer: React.SFC<{ item: T }>;
 	items: T[];
 }
 
-interface IPagingTableState {
+interface PagingTableState {
 	expanded: boolean;
 	itemsPerPage: number;
 	page: number;
 }
 
 class PagingTable<T> extends React.Component<
-	IPagingTableProps<T> & WithStyles<keyof typeof styles>, IPagingTableState> {
-	public state: Readonly<IPagingTableState> = {
+	PagingTableProps<T> & WithStyles<keyof typeof styles>, PagingTableState> {
+	public state: Readonly<PagingTableState> = {
 		expanded: false,
 		itemsPerPage: getSettings().itemsPerPage,
 		page: 0,
 	};
 
 	public render() {
-		const { itemsPerPage, page } = this.state;
+		const {itemsPerPage, page} = this.state;
 		const numItems = this.props.items.length;
 		const start = itemsPerPage * page;
 		const end = Math.min(numItems, itemsPerPage * (page + 1));
@@ -70,7 +70,7 @@ class PagingTable<T> extends React.Component<
 					onClick={this.handleExpandClick}
 					className={this.props.classes.cardTitle}
 				>
-					<div style={{ display: "flex" }}>
+					<div style={{display: "flex"}}>
 						<Typography
 							variant="h5"
 							component="h2"
@@ -79,7 +79,7 @@ class PagingTable<T> extends React.Component<
 							{`${this.props.title}（${this.props.items.length} 件）`}
 						</Typography>
 						<div className={this.props.classes.flexGrow} />
-						<IconButton style={{ margin: "-8px 0" }}>
+						<IconButton style={{margin: "-8px 0"}}>
 							{this.state.expanded
 								? <ExpandLessIcon />
 								: <ExpandMoreIcon />
@@ -88,7 +88,7 @@ class PagingTable<T> extends React.Component<
 					</div>
 				</CardContent>
 				<Collapse in={this.state.expanded}>
-					<div style={{ overflowX: "auto" }}>
+					<div style={{overflowX: "auto"}}>
 						{/* TODO: search bar */}
 						<Table>
 							{this.props.thead}
@@ -106,7 +106,7 @@ class PagingTable<T> extends React.Component<
 										rowsPerPage={itemsPerPage}
 										rowsPerPageOptions={[10, 20, 50, 100]}
 										onChangeRowsPerPage={this.handleItemsPerPageChange}
-										labelDisplayedRows={({ from, to, count }) => `${from}-${to} / ${count}`}
+										labelDisplayedRows={({from, to, count}) => `${from}-${to} / ${count}`}
 										count={numItems}
 										page={page}
 										onChangePage={this.handleChangePage}
@@ -121,14 +121,14 @@ class PagingTable<T> extends React.Component<
 	}
 
 	private handleItemsPerPageChange = (e: React.FormEvent<any>) => {
-		const menuItemValue = +(e.target as HTMLSelectElement).value;
+		const menuItemValue = Number((e.target as HTMLSelectElement).value);
 		this.setState({
 			itemsPerPage: menuItemValue,
 			page: Math.floor(this.state.page * this.state.itemsPerPage / menuItemValue),
 		});
 	}
 	private handleChangePage = (_e: any, page: number) => {
-		this.setState({ page });
+		this.setState({page});
 	}
 
 	private handleExpandClick = (_e: any) => {
@@ -148,7 +148,7 @@ export const SimpleColumnHeader = (params: { columns: React.ReactNode[] }) => (
 	</TableRow>
 );
 
-interface ISimpleColumnRowProps {
+interface SimpleColumnRowProps {
 	columns: React.ReactNode[];
 }
 
@@ -160,7 +160,7 @@ const simpleColumnRowStyles = {
 };
 
 export const SimpleColumnRow = withStyles(simpleColumnRowStyles)(
-	(params: ISimpleColumnRowProps & WithStyles<keyof typeof simpleColumnRowStyles>) => (
+	(params: SimpleColumnRowProps & WithStyles<keyof typeof simpleColumnRowStyles>) => (
 		<TableRow hover>
 			{params.columns.map((column, i) => (
 				<TableCell key={`${i}`} className={params.classes.cell}>

@@ -1,12 +1,12 @@
 import * as React from "react";
 
-import { NavLink, NavLinkProps } from "react-router-dom";
+import {NavLink, NavLinkProps} from "react-router-dom";
 
-import { Omit } from "@material-ui/core";
+import {Omit} from "@material-ui/core";
 
-import ListItem, { ListItemProps } from "@material-ui/core/ListItem/ListItem";
+import ListItem, {ListItemProps} from "@material-ui/core/ListItem/ListItem";
 
-import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
+import withStyles, {WithStyles} from "@material-ui/core/styles/withStyles";
 
 const styles = {
 	selectedItem: {
@@ -17,17 +17,17 @@ const styles = {
 	},
 };
 
-export interface INavLinkListItemProps
+export interface NavLinkListItemProps
 	extends
 	Omit<ListItemProps, "classes">,
 	Omit<NavLinkProps, keyof NavLinkProps & keyof ListItemProps> {
 }
 
-class NavLinkListItem extends React.Component<INavLinkListItemProps & WithStyles<keyof typeof styles>> {
+class NavLinkListItem extends React.Component<NavLinkListItemProps & WithStyles<keyof typeof styles>> {
 	public render() {
-		const { classes, ...rest } = this.props;
-		const { selectedItem, ...restClasses } = classes;
-		const props = { ...rest, activeClassName: selectedItem };
+		const {classes, ...rest} = this.props;
+		const {selectedItem, ...restClasses} = classes;
+		const props = {...rest, activeClassName: selectedItem};
 		return (
 			<ListItem
 				button

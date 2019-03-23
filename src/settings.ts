@@ -2,12 +2,12 @@ export enum ImageType {
 	NONE, PNG50, SVG,
 }
 
-export interface ISettings {
+export interface Settings {
 	imageType: ImageType;
 	itemsPerPage: number;
 }
 
-const defaultSettings: ISettings = {
+const defaultSettings: Settings = {
 	imageType: ImageType.PNG50,
 	itemsPerPage: 10,
 };
@@ -18,7 +18,7 @@ let currentSettings = defaultSettings;
 	if (settingsString !== null) {
 		currentSettings = {
 			...defaultSettings,
-			...JSON.parse(settingsString) as ISettings,
+			...JSON.parse(settingsString) as Settings,
 		};
 	}
 }
@@ -27,20 +27,15 @@ export function getSettings() {
 	return currentSettings;
 }
 
-export function setSettings(newSettings: ISettings) {
+export function setSettings(newSettings: Settings) {
 	localStorage.setItem("preference", JSON.stringify(newSettings));
 	currentSettings = newSettings;
 }
 
-// export function updateSettings(settings: Partial<ISettings>) {
-// 	const newSettings: ISettings = {
-// 		...currentSettings,
-// 		...settings,
-// 	};
-export function updateSettings<K extends keyof ISettings>(settings: Pick<ISettings, K>) {
-	const newSettings: ISettings = {...currentSettings};
-	(Object.keys(settings) as K[]).forEach((k) => {
-		newSettings[k] = settings[k];
-	});
+export function updateSettings(settings: Partial<Settings>) {
+	const newSettings: Settings = {
+		...currentSettings,
+		...settings,
+	};
 	setSettings(newSettings);
 }

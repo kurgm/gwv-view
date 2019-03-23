@@ -3,13 +3,13 @@ import * as React from "react";
 import Glyph from "../Glyph";
 import ValidateResult from "../ValidateResult";
 
-import { SimpleColumnHeader, SimpleColumnRow } from "../PagingTable";
+import {SimpleColumnHeader, SimpleColumnRow} from "../PagingTable";
 
 type IValueWithoutEntity = [string];
 type IValueWithEntity = [string, string];
 type IValue = IValueWithoutEntity | IValueWithEntity;
 
-class UcsaliasComponent extends React.Component<{ result: { [type: string]: IValue[]; } | null; }, {}> {
+class UcsaliasComponent extends React.Component<{ result: { [type: string]: IValue[] } | null }, {}> {
 	public static id = "ucsalias";
 	public static title = "UCSと別名";
 
@@ -56,14 +56,14 @@ class UcsaliasComponent extends React.Component<{ result: { [type: string]: IVal
 	}
 	private getRowRenderer(type: string) {
 		if (type === "1") {
-			return (props: { item: IValueWithoutEntity; }) => (
+			return (props: { item: IValueWithoutEntity }) => (
 				<SimpleColumnRow columns={[
 					<Glyph name={props.item[0]} />,
 					<Glyph name={props.item[0].split("-")[0]} />,
 				]} />
 			);
 		}
-		return (props: { item: IValueWithEntity; }) => (
+		return (props: { item: IValueWithEntity }) => (
 			<SimpleColumnRow columns={[
 				<Glyph name={props.item[0]} />,
 				<Glyph name={props.item[1]} />,

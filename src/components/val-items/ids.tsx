@@ -4,13 +4,13 @@ import Glyph from "../Glyph";
 import KageLine from "../KageLine";
 import ValidateResult from "../ValidateResult";
 
-import { SimpleColumnHeader, SimpleColumnRow } from "../PagingTable";
+import {SimpleColumnHeader, SimpleColumnRow} from "../PagingTable";
 
 type IValueBuhin = [string, string];
 type IValueLineData = [string, KageLineData];
 type IValue = IValueBuhin | IValueLineData;
 
-class IdsComponent extends React.Component<{ result: { [type: string]: IValue[]; } | null; }, {}> {
+class IdsComponent extends React.Component<{ result: { [type: string]: IValue[] } | null }, {}> {
 	public static id = "ids";
 	public static title = "IDSとの不一致";
 
@@ -31,7 +31,7 @@ class IdsComponent extends React.Component<{ result: { [type: string]: IValue[];
 	}
 
 	private getGroupTitle(type: string) {
-		return ({
+		const titleMap: { [type: string]: string } = {
 			1: "左右型のIDSですが、上下結合の部品を（最初に）引用しています。",
 			2: "-02の部品が最初に引用されています。",
 			3: "左右型のIDSの左の字が最初に引用されていません。",
@@ -43,7 +43,8 @@ class IdsComponent extends React.Component<{ result: { [type: string]: IValue[];
 			22: "囲い型のIDSですが、内側にくる部品が最初に引用されています。",
 			23: "囲い型のIDSの外側の字が最初に引用されていません。",
 			33: "重ね型のIDSの1番目の字が最初に引用されていません。",
-		} as { [type: string]: string })[type];
+		};
+		return titleMap[type];
 	}
 	private getTableHeaderRow(type: string) {
 		let columns;
@@ -73,7 +74,7 @@ class IdsComponent extends React.Component<{ result: { [type: string]: IValue[];
 			case "10":
 			case "12":
 			case "22":
-				return (props: { item: IValueBuhin; }) => (
+				return (props: { item: IValueBuhin }) => (
 					<SimpleColumnRow columns={[
 						<Glyph name={props.item[0]} />,
 						<Glyph name={props.item[1]} />,
@@ -81,14 +82,14 @@ class IdsComponent extends React.Component<{ result: { [type: string]: IValue[];
 				);
 			case "6":
 			case "15":
-				return (props: { item: IValueLineData; }) => (
+				return (props: { item: IValueLineData }) => (
 					<SimpleColumnRow columns={[
 						<Glyph name={props.item[0]} />,
 						<Glyph name={props.item[1][1].split(":")[7]} />,
 					]} />
 				);
 			default:
-				return (props: { item: IValueLineData; }) => (
+				return (props: { item: IValueLineData }) => (
 					<SimpleColumnRow columns={[
 						<Glyph name={props.item[0]} />,
 						<KageLine data={props.item[1]} />,

@@ -17,12 +17,12 @@ import SkewComponent from "./components/val-items/skew";
 import UcsaliasComponent from "./components/val-items/ucsalias";
 import WidthComponent from "./components/val-items/width";
 
-export interface IValidateResultComponent extends React.ComponentClass<{ result: { [type: string]: any[]; } | null; }> {
+export interface ValidateResultComponent extends React.ComponentClass<{ result: { [type: string]: any[] } | null }> {
 	id: string;
 	title: string;
 }
 
-const validationItems: IValidateResultComponent[] = [
+const validationItems: ValidateResultComponent[] = [
 	CornerComponent,
 	RelatedComponent,
 	IllegalComponent,

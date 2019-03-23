@@ -7,14 +7,14 @@ import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 import ListSubheader from "@material-ui/core/ListSubheader/ListSubheader";
 import Paper from "@material-ui/core/Paper/Paper";
 
-import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
-import withWidth, { isWidthDown, WithWidth } from "@material-ui/core/withWidth/withWidth";
+import withStyles, {WithStyles} from "@material-ui/core/styles/withStyles";
+import withWidth, {WithWidth, isWidthDown} from "@material-ui/core/withWidth/withWidth";
 
 import SelectDialog from "./SelectDialog";
 
 import * as settings from "../settings";
 
-interface ISettingsState {
+interface SettingsState {
 	openDialog: number;
 }
 
@@ -26,10 +26,10 @@ const styles = {
 
 const itemsPerPageOptions = [10, 20, 50, 100];
 
-class Settings extends React.Component<WithStyles<keyof typeof styles> & WithWidth, ISettingsState> {
+class Settings extends React.Component<WithStyles<keyof typeof styles> & WithWidth, SettingsState> {
 	private static nDialogs = 2;
 
-	public state: Readonly<ISettingsState> = {
+	public state: Readonly<SettingsState> = {
 		openDialog: -1,
 	};
 	private openHandlers = (() => {

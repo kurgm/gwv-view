@@ -1,22 +1,20 @@
 import * as React from "react";
 
-import { RouteComponentProps, withRouter } from "react-router-dom";
+import {RouteComponentProps, withRouter} from "react-router-dom";
 
-import { StandardProps } from "@material-ui/core";
+import {Omit, StandardProps} from "@material-ui/core";
 import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
 import Divider from "@material-ui/core/Divider/Divider";
-import Drawer, { DrawerProps } from "@material-ui/core/Drawer/Drawer";
+import Drawer, {DrawerProps} from "@material-ui/core/Drawer/Drawer";
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import List from "@material-ui/core/List/List";
 import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 
-import withStyles, { StyleRules, WithStyles } from "@material-ui/core/styles/withStyles";
+import withStyles, {StyleRules, WithStyles} from "@material-ui/core/styles/withStyles";
 
 import NavLinkListItem from "./NavLinkListItem";
-
-import { Omit } from "@material-ui/core";
 
 const styles: StyleRules<"header" | "loading" | "paper"> = {
 	header: {},
@@ -29,14 +27,14 @@ const styles: StyleRules<"header" | "loading" | "paper"> = {
 
 export type NavDrawerClassKey = keyof typeof styles;
 
-interface INavDrawerProps extends
+interface NavDrawerProps extends
 	Omit<StandardProps<DrawerProps, NavDrawerClassKey>, "classes"> {
-	items: Array<{ id: string; title: string; length: number; }> | null;
+	items: { id: string; title: string; length: number }[] | null;
 	onNavLinkClicked: (e: React.MouseEvent<any>) => void;
 }
 
 class NavDrawer extends React.Component<
-	INavDrawerProps & RouteComponentProps<any> & WithStyles<NavDrawerClassKey>, {}> {
+	NavDrawerProps & RouteComponentProps<any> & WithStyles<NavDrawerClassKey>, {}> {
 	public render() {
 		const {
 			items,
@@ -54,7 +52,7 @@ class NavDrawer extends React.Component<
 			loading: loadingClassName,
 			...restClasses
 		} = classes;
-		const { search } = location;
+		const {search} = location;
 		const persistent = this.props.variant === "persistent";
 		return (
 			<Drawer classes={restClasses} {...rest}>
@@ -70,7 +68,7 @@ class NavDrawer extends React.Component<
 					<List>
 						<NavLinkListItem
 							onClick={onNavLinkClicked}
-							to={{ pathname: "/", search }}
+							to={{pathname: "/", search}}
 							exact>
 							<ListItemText primary="ホーム" />
 						</NavLinkListItem>
@@ -84,7 +82,7 @@ class NavDrawer extends React.Component<
 										? (
 											<NavLinkListItem
 												onClick={onNavLinkClicked}
-												to={{ pathname: `/result/${item.id}`, search }}
+												to={{pathname: `/result/${item.id}`, search}}
 												key={item.id}
 											>
 												<ListItemText
@@ -103,7 +101,7 @@ class NavDrawer extends React.Component<
 					<List>
 						<NavLinkListItem
 							onClick={onNavLinkClicked}
-							to={{ pathname: "/settings", search }}
+							to={{pathname: "/settings", search}}
 						>
 							<ListItemText primary="設定" />
 						</NavLinkListItem>

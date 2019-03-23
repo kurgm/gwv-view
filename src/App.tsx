@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { HashRouter, Route, Switch } from "react-router-dom";
+import {HashRouter, Route, Switch} from "react-router-dom";
 
 import DataProvider from "./components/DataProvider";
 import Home from "./components/Home";
@@ -15,9 +15,8 @@ class App extends React.Component<{}> {
 		return (
 			<HashRouter>
 				<DataProvider
-					view={(dataToShow) =>
-						<Master
-							items={dataToShow &&
+					view={(dataToShow) => <Master
+						items={dataToShow &&
 								validationItems
 									.filter((item) => item.id in dataToShow.result)
 									.map((item) => ({
@@ -26,18 +25,18 @@ class App extends React.Component<{}> {
 											.reduce((prev, key) => prev + dataToShow.result[item.id][key].length, 0),
 										title: item.title,
 									}))
-							}
-						>
-							<Switch>
-								<Route exact path="/" component={Home} />
-								{validationItems.map((ItemComponent) => (
-									<Route path={`/result/${ItemComponent.id}`} component={() => (
-										<ItemComponent result={dataToShow && (dataToShow.result[ItemComponent.id] || {})} />
-									)} key={ItemComponent.id} />
-								))}
-								<Route path="/settings" component={Settings} />
-							</Switch>
-						</Master>
+						}
+					>
+						<Switch>
+							<Route exact path="/" component={Home} />
+							{validationItems.map((ItemComponent) => (
+								<Route path={`/result/${ItemComponent.id}`} component={() => (
+									<ItemComponent result={dataToShow && (dataToShow.result[ItemComponent.id] || {})} />
+								)} key={ItemComponent.id} />
+							))}
+							<Route path="/settings" component={Settings} />
+						</Switch>
+					</Master>
 					}
 				/>
 			</HashRouter>

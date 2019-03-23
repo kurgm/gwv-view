@@ -3,11 +3,11 @@ import * as React from "react";
 import Glyph from "../Glyph";
 import ValidateResult from "../ValidateResult";
 
-import { SimpleColumnHeader, SimpleColumnRow } from "../PagingTable";
+import {SimpleColumnHeader, SimpleColumnRow} from "../PagingTable";
 
 type IValue = [string];
 
-class WidthComponent extends React.Component<{ result: { [type: string]: IValue[]; } | null; }, {}> {
+class WidthComponent extends React.Component<{ result: { [type: string]: IValue[] } | null }, {}> {
 	public static id = "width";
 	public static title = "全角・半角";
 
@@ -29,11 +29,12 @@ class WidthComponent extends React.Component<{ result: { [type: string]: IValue[
 	}
 
 	private getGroupTitle(type: string) {
-		return ({
+		const titleMap: { [type: string]: string } = {
 			0: "グループ:NonSpacingGlyphs-Halfwidthに含まれていますが全角です。",
 			1: "グループ:HalfwidthGlyphs-*に含まれていますが全角です。",
 			2: "半角ですがグループ:HalfwidthGlyphs-*に含まれていません。",
-		} as { [type: string]: string; })[type];
+		};
+		return titleMap[type];
 	}
 	private getTableHeaderRow(_type: string) {
 		return (
@@ -43,7 +44,7 @@ class WidthComponent extends React.Component<{ result: { [type: string]: IValue[
 		);
 	}
 	private getRowRenderer(_type: string) {
-		return (props: { item: IValue; }) => (
+		return (props: { item: IValue }) => (
 			<SimpleColumnRow columns={[
 				<Glyph name={props.item[0]} />,
 			]} />

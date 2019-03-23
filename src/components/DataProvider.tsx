@@ -1,29 +1,29 @@
 import * as React from "react";
 
-import { RouteComponentProps, withRouter } from "react-router-dom";
+import {RouteComponentProps, withRouter} from "react-router-dom";
 
 import searchData from "../searchData";
 
-interface IDataProviderProps {
-	view: (data: IGWVJSON | null) => React.ReactNode;
+interface DataProviderProps {
+	view: (data: GWVJSON | null) => React.ReactNode;
 }
 
-interface ISearchResult {
+interface SearchResult {
 	query: string;
-	result: IGWVJSON | null;
+	result: GWVJSON | null;
 }
 
-interface IDataProviderState {
-	data: IGWVJSON | null;
-	search: ISearchResult | null;
+interface DataProviderState {
+	data: GWVJSON | null;
+	search: SearchResult | null;
 }
 
-class DataProvider extends React.Component<IDataProviderProps & RouteComponentProps<any>, IDataProviderState> {
+class DataProvider extends React.Component<DataProviderProps & RouteComponentProps<any>, DataProviderState> {
 
-	public state = {
+	public state: Readonly<DataProviderState> = {
 		data: null,
 		search: null,
-	} as IDataProviderState;
+	};
 
 	public componentDidMount() {
 		const xhr = new XMLHttpRequest();
@@ -34,27 +34,27 @@ class DataProvider extends React.Component<IDataProviderProps & RouteComponentPr
 				return;
 			}
 			this.setState({
-				data: JSON.parse(xhr.responseText) as IGWVJSON,
+				data: JSON.parse(xhr.responseText) as GWVJSON,
 			});
 		});
 		xhr.send();
 	}
 
-	public componentWillReceiveProps(nextProps: Readonly<IDataProviderProps & RouteComponentProps<any>>) {
+	public componentWillReceiveProps(nextProps: Readonly<DataProviderProps & RouteComponentProps<any>>) {
 		if (this.props.location.search !== nextProps.location.search) {
 			this.triggerSearch(this.state.data, nextProps.location.search);
 		}
 	}
 
 	public render() {
-		const { data, search } = this.state;
+		const {data, search} = this.state;
 
 		const dataToShow = search ? search.result : data;
 
 		return this.props.view(dataToShow);
 	}
 
-	private triggerSearch(data: IGWVJSON | null, queryString: string) {
+	private triggerSearch(data: GWVJSON | null, queryString: string) {
 		const params = new URLSearchParams(queryString);
 		if (!params.has("search")) {
 			this.setState({

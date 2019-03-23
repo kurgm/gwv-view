@@ -4,11 +4,11 @@ import Glyph from "../Glyph";
 import KageLine from "../KageLine";
 import ValidateResult from "../ValidateResult";
 
-import { SimpleColumnHeader, SimpleColumnRow } from "../PagingTable";
+import {SimpleColumnHeader, SimpleColumnRow} from "../PagingTable";
 
-type IValue = [string, KageLineData, KageLineData];  // glyph name, tate, yoko
+type IValue = [string, KageLineData, KageLineData]; // glyph name, tate, yoko
 
-class CornerComponent extends React.Component<{ result: { [type: string]: IValue[]; } | null; }, {}> {
+class CornerComponent extends React.Component<{ result: { [type: string]: IValue[] } | null }, {}> {
 	public static id = "corner";
 	public static title = "カド形状・接続";
 
@@ -30,8 +30,18 @@ class CornerComponent extends React.Component<{ result: { [type: string]: IValue
 
 	private getGroupTitle(typeStr: string) {
 		const cornerTypes = [
-			"左上カド", "左下カド", "右上カド", "右下カド", "左下zh用旧カド", "擬似右下H/Tカド",
-			"左下zh用新カド", "接続(横)", "開放", "接続(縦)", "右下H/Tカド"];
+			"左上カド",
+			"左下カド",
+			"右上カド",
+			"右下カド",
+			"左下zh用旧カド",
+			"擬似右下H/Tカド",
+			"左下zh用新カド",
+			"接続(横)",
+			"開放",
+			"接続(縦)",
+			"右下H/Tカド",
+		];
 		const type = parseInt(typeStr, 16);
 		const usedCornerType = cornerTypes[type & 0x0f];
 		const guessedCornerType = cornerTypes[type >> 4];
@@ -58,7 +68,7 @@ class CornerComponent extends React.Component<{ result: { [type: string]: IValue
 		);
 	}
 	private getRowRenderer(_type: string) {
-		return (props: { item: IValue; }) => (
+		return (props: { item: IValue }) => (
 			<SimpleColumnRow columns={[
 				<Glyph name={props.item[0]} />,
 				<KageLine data={props.item[1]} />,

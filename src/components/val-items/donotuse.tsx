@@ -3,11 +3,11 @@ import * as React from "react";
 import Glyph from "../Glyph";
 import ValidateResult from "../ValidateResult";
 
-import { SimpleColumnHeader, SimpleColumnRow } from "../PagingTable";
+import {SimpleColumnHeader, SimpleColumnRow} from "../PagingTable";
 
 type IValue = string[];
 
-class DonotuseComponent extends React.Component<{ result: { [type: string]: IValue[]; } | null; }, {}> {
+class DonotuseComponent extends React.Component<{ result: { [type: string]: IValue[] } | null }, {}> {
 	public static id = "donotuse";
 	public static title = "Do not use";
 
@@ -39,7 +39,7 @@ class DonotuseComponent extends React.Component<{ result: { [type: string]: IVal
 		);
 	}
 	private getRowRenderer(_type: string) {
-		return (props: { item: IValue; }) => (
+		return (props: { item: IValue }) => (
 			<SimpleColumnRow columns={[
 				<Glyph name={props.item[0]} />,
 				props.item.slice(1).map((name, i) => (

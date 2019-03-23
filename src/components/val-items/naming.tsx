@@ -3,14 +3,14 @@ import * as React from "react";
 import Glyph from "../Glyph";
 import ValidateResult from "../ValidateResult";
 
-import { SimpleColumnHeader, SimpleColumnRow } from "../PagingTable";
+import {SimpleColumnHeader, SimpleColumnRow} from "../PagingTable";
 
-type IValueIDS = [string, string];  // glyph name, parsed IDS structure
+type IValueIDS = [string, string]; // glyph name, parsed IDS structure
 type IValueCDP = [string, string, string]; // glyph name, CDP glyph name, alternative UCS glyph name
 type IValueNone = [string];
 type IValue = IValueIDS | IValueCDP | IValueNone;
 
-class NamingComponent extends React.Component<{ result: { [type: string]: IValue[]; } | null; }, {}> {
+class NamingComponent extends React.Component<{ result: { [type: string]: IValue[] } | null }, {}> {
 	public static id = "naming";
 	public static title = "命名";
 
@@ -41,12 +41,13 @@ class NamingComponent extends React.Component<{ result: { [type: string]: IValue
 	}
 
 	private getGroupTitle(type: string) {
-		return ({
+		const titleMap: { [type: string]: string } = {
 			0: "規則に無いグリフ名です。",
 			1: "不正なIDSです。",
 			2: "許可されていないグリフ名です（欠番など）。",
 			3: "IDS文字名にUCSで符号化されたCDP外字が含まれています。",
-		} as { [type: string]: string; })[type];
+		};
+		return titleMap[type];
 	}
 	private getTableHeaderRow(type: string) {
 		return (
@@ -59,7 +60,7 @@ class NamingComponent extends React.Component<{ result: { [type: string]: IValue
 	}
 	private getRowRenderer(type: string) {
 		if (type === "3") {
-			return (props: { item: IValueCDP; }) => (
+			return (props: { item: IValueCDP }) => (
 				<SimpleColumnRow columns={[
 					<Glyph name={props.item[0]} />,
 					<Glyph name={props.item[1]} />,
@@ -67,7 +68,7 @@ class NamingComponent extends React.Component<{ result: { [type: string]: IValue
 				]} />
 			);
 		}
-		return (props: { item: IValueIDS | IValueNone; }) => (
+		return (props: { item: IValueIDS | IValueNone }) => (
 			<SimpleColumnRow columns={[
 				<Glyph name={props.item[0]} />,
 			]} />

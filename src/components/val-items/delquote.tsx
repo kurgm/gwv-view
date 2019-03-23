@@ -3,11 +3,11 @@ import * as React from "react";
 import Glyph from "../Glyph";
 import ValidateResult from "../ValidateResult";
 
-import { SimpleColumnHeader, SimpleColumnRow } from "../PagingTable";
+import {SimpleColumnHeader, SimpleColumnRow} from "../PagingTable";
 
-type IValue = [string, string];  // glyph name, buhin name
+type IValue = [string, string]; // glyph name, buhin name
 
-class DelquoteComponent extends React.Component<{ result: { [type: string]: IValue[]; } | null; }, {}> {
+class DelquoteComponent extends React.Component<{ result: { [type: string]: IValue[] } | null }, {}> {
 	public static id = "delquote";
 	public static title = "削除された部品";
 
@@ -39,7 +39,7 @@ class DelquoteComponent extends React.Component<{ result: { [type: string]: IVal
 		);
 	}
 	private getRowRenderer(_type: string) {
-		return (props: { item: IValue; }) => (
+		return (props: { item: IValue }) => (
 			<SimpleColumnRow columns={[
 				<Glyph name={props.item[0]} />,
 				<Glyph name={props.item[1]} />,

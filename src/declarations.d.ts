@@ -6,17 +6,17 @@ declare module "*.md" {
 // override incorrect typing
 
 declare module "@material-ui/core/ListItem/ListItem" {
-	import * as React from 'react';
-	import { StandardProps } from '@material-ui/core';
-	import { ButtonBaseProps } from '@material-ui/core/ButtonBase/ButtonBase';
+	import * as React from "react";
+	import {ButtonBaseProps} from "@material-ui/core/ButtonBase/ButtonBase";
+	import {StandardProps} from "@material-ui/core";
 
 	export interface ListItemProps
 		extends StandardProps<
 		ButtonBaseProps & React.LiHTMLAttributes<HTMLElement>,
 		ListItemClassKey,
-		'component'
+		"component"
 		> {
-		alignItems?: 'flex-start' | 'center';
+		alignItems?: "flex-start" | "center";
 		button?: boolean;
 		component?: React.ReactType;
 		ContainerComponent?: React.ReactType<React.HTMLAttributes<HTMLDivElement>>;
@@ -30,17 +30,17 @@ declare module "@material-ui/core/ListItem/ListItem" {
 	}
 
 	export type ListItemClassKey =
-		| 'root'
-		| 'container'
-		| 'focusVisible'
-		| 'default'
-		| 'dense'
-		| 'disabled'
-		| 'divider'
-		| 'gutters'
-		| 'button'
-		| 'secondaryAction'
-		| 'selected';
+		| "root"
+		| "container"
+		| "focusVisible"
+		| "default"
+		| "dense"
+		| "disabled"
+		| "divider"
+		| "gutters"
+		| "button"
+		| "secondaryAction"
+		| "selected";
 
 	const ListItem: React.ComponentType<ListItemProps>;
 
@@ -50,7 +50,7 @@ declare module "@material-ui/core/ListItem/ListItem" {
 
 type KageLineData = [number, string];
 
-interface IGWVJSON {
-	result: { [id: string]: { [type: string]: any[]; }; };
+interface GWVJSON {
+	result: { [id: string]: { [type: string]: any[] } };
 	lastModified: number;
 }

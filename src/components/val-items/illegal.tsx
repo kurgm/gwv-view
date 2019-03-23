@@ -4,11 +4,11 @@ import Glyph from "../Glyph";
 import KageLine from "../KageLine";
 import ValidateResult from "../ValidateResult";
 
-import { SimpleColumnHeader, SimpleColumnRow } from "../PagingTable";
+import {SimpleColumnHeader, SimpleColumnRow} from "../PagingTable";
 
-type IValue = [string, string, KageLineData];  // glyph name, stroke type (?:?:?), line data
+type IValue = [string, string, KageLineData]; // glyph name, stroke type (?:?:?), line data
 
-class IllegalComponent extends React.Component<{ result: { [type: string]: IValue[]; } | null; }, {}> {
+class IllegalComponent extends React.Component<{ result: { [type: string]: IValue[] } | null }, {}> {
 	public static id = "illegal";
 	public static title = "不正なデータ";
 
@@ -29,7 +29,7 @@ class IllegalComponent extends React.Component<{ result: { [type: string]: IValu
 	}
 
 	private getGroupTitle(type: string) {
-		return ({
+		const titleMap: { [type: string]: string } = {
 			0: "定義されていない筆画の種類です。",
 			1: "列数が不足しています。",
 			2: "列数が超過していて、0でない値です。",
@@ -45,7 +45,8 @@ class IllegalComponent extends React.Component<{ result: { [type: string]: IValu
 			31: "折れの後半が縦になっています。",
 			40: "乙線の前半が横になっています。",
 			41: "乙線の後半が左向きです。",
-		} as { [type: string]: string; })[type];
+		};
+		return titleMap[type];
 	}
 	private getTableHeaderRow(_type: string) {
 		return (
@@ -53,7 +54,7 @@ class IllegalComponent extends React.Component<{ result: { [type: string]: IValu
 		);
 	}
 	private getRowRenderer(_type: string) {
-		return (props: { item: IValue; }) => (
+		return (props: { item: IValue }) => (
 			<SimpleColumnRow columns={[
 				<Glyph name={props.item[0]} />,
 				<KageLine data={props.item[2]} />,

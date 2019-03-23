@@ -4,13 +4,13 @@ import Glyph from "../Glyph";
 import KageLine from "../KageLine";
 import ValidateResult from "../ValidateResult";
 
-import { SimpleColumnHeader, SimpleColumnRow } from "../PagingTable";
+import {SimpleColumnHeader, SimpleColumnRow} from "../PagingTable";
 
 type IValueWithoutLength = [string, KageLineData, KageLineData];
 type IValueWithLength = [string, KageLineData, KageLineData, number];
 type IValue = IValueWithoutLength | IValueWithLength;
 
-class DupComponent extends React.Component<{ result: { [type: string]: IValue[]; } | null; }, {}> {
+class DupComponent extends React.Component<{ result: { [type: string]: IValue[] } | null }, {}> {
 	public static id = "dup";
 	public static title = "重複";
 
@@ -33,14 +33,15 @@ class DupComponent extends React.Component<{ result: { [type: string]: IValue[];
 	}
 
 	private getGroupTitle(type: string) {
-		return ({
+		const titleMap: { [type: string]: string } = {
 			10: "横画が重複しています。",
 			11: "縦画が重複しています。",
 			2: "曲線が重複しています。",
 			3: "複曲線が重複しています。",
 			9: "部品位置が重複しています。",
 			99: "部品が重複しています。",
-		} as { [type: string]: string; })[type];
+		};
+		return titleMap[type];
 	}
 	private getTableHeaderRow(type: string) {
 		const columns = ["グリフ名", "行1", "行2"];
@@ -53,7 +54,7 @@ class DupComponent extends React.Component<{ result: { [type: string]: IValue[];
 	}
 	private getRowRenderer(type: string) {
 		if (type === "10" || type === "11") {
-			return (props: { item: IValueWithLength; }) => (
+			return (props: { item: IValueWithLength }) => (
 				<SimpleColumnRow columns={[
 					<Glyph name={props.item[0]} />,
 					<KageLine data={props.item[1]} />,
@@ -62,7 +63,7 @@ class DupComponent extends React.Component<{ result: { [type: string]: IValue[];
 				]} />
 			);
 		}
-		return (props: { item: IValueWithoutLength; }) => (
+		return (props: { item: IValueWithoutLength }) => (
 			<SimpleColumnRow columns={[
 				<Glyph name={props.item[0]} />,
 				<KageLine data={props.item[1]} />,

@@ -8,18 +8,18 @@ import Typography from "@material-ui/core/Typography/Typography";
 import indigo from "@material-ui/core/colors/indigo";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
-import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
-import withWidth, { isWidthUp, WithWidth } from "@material-ui/core/withWidth/withWidth";
+import withStyles, {WithStyles} from "@material-ui/core/styles/withStyles";
+import withWidth, {WithWidth, isWidthUp} from "@material-ui/core/withWidth/withWidth";
 
 import MenuIcon from "@material-ui/icons/Menu";
 
 import NavDrawer from "./NavDrawer";
 
-interface IMasterProps {
-	items: Array<{ id: string; title: string; length: number; }> | null;
+interface MasterProps {
+	items: { id: string; title: string; length: number }[] | null;
 }
 
-interface IMasterState {
+interface MasterState {
 	navDrawerOpen: boolean;
 }
 
@@ -96,16 +96,16 @@ const styles = {
 };
 
 class Master extends React.Component<
-	IMasterProps & WithStyles<keyof typeof styles> & WithWidth, IMasterState> {
+	MasterProps & WithStyles<keyof typeof styles> & WithWidth, MasterState> {
 
-	public state: Readonly<IMasterState> = {
+	public state: Readonly<MasterState> = {
 		navDrawerOpen: false,
 	};
 
 	public render() {
 		const title = "GlyphWiki dump 検証";
 
-		const { navDrawerOpen } = this.state;
+		const {navDrawerOpen} = this.state;
 		let persistent = false;
 		if (isWidthUp("md", this.props.width)) {
 			persistent = true;

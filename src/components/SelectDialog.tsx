@@ -9,17 +9,17 @@ import FormControlLabel from "@material-ui/core/FormControlLabel/FormControlLabe
 import Radio from "@material-ui/core/Radio/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup/RadioGroup";
 
-interface ISelectDialogProps extends DialogProps {
+interface SelectDialogProps extends DialogProps {
 	dialogTitle: React.ReactNode;
 	options: string[];
 	selectedIndex: number;
 	onConfirmValue(event: React.SyntheticEvent<any>, index: number): void;
 }
-interface ISelectDialogState {
+interface SelectDialogState {
 	selectedIndex: number;
 }
 
-class SelectDialog extends React.Component<ISelectDialogProps, ISelectDialogState> {
+class SelectDialog extends React.Component<SelectDialogProps, SelectDialogState> {
 	public state = {
 		selectedIndex: 0,
 	};
@@ -30,7 +30,7 @@ class SelectDialog extends React.Component<ISelectDialogProps, ISelectDialogStat
 		});
 	}
 
-	public componentWillUpdate(nextProps: Readonly<ISelectDialogProps>) {
+	public componentWillUpdate(nextProps: Readonly<SelectDialogProps>) {
 		if (nextProps.selectedIndex !== this.props.selectedIndex) {
 			this.setState({
 				selectedIndex: nextProps.selectedIndex,
@@ -39,18 +39,18 @@ class SelectDialog extends React.Component<ISelectDialogProps, ISelectDialogStat
 	}
 
 	public render() {
-		const { selectedIndex, onConfirmValue, options, dialogTitle, ...rest } = this.props;
+		const {selectedIndex, onConfirmValue, options, dialogTitle, ...rest} = this.props;
 		return (
 			<Dialog {...rest}>
 				<DialogTitle>{dialogTitle}</DialogTitle>
 				<DialogContent>
 					<RadioGroup
-						value={"" + this.state.selectedIndex}
+						value={`${this.state.selectedIndex}`}
 						onChange={this.handleChange}
 					>
 						{this.props.options.map((option, index) => (
 							<FormControlLabel
-								value={"" + index}
+								value={`${index}`}
 								key={index}
 								control={<Radio />}
 								label={option}
@@ -78,9 +78,9 @@ class SelectDialog extends React.Component<ISelectDialogProps, ISelectDialogStat
 	// }
 	protected handleChange = (event: React.ChangeEvent<any>, value: string) => {
 		this.setState({
-			selectedIndex: +value,
+			selectedIndex: Number(value),
 		});
-		this.props.onConfirmValue(event, +value);
+		this.props.onConfirmValue(event, Number(value));
 	}
 }
 

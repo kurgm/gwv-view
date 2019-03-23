@@ -3,11 +3,11 @@ import * as React from "react";
 import Glyph from "../Glyph";
 import ValidateResult from "../ValidateResult";
 
-import { SimpleColumnHeader, SimpleColumnRow } from "../PagingTable";
+import {SimpleColumnHeader, SimpleColumnRow} from "../PagingTable";
 
 type IValue = string[];
 
-class MustrenewComponent extends React.Component<{ result: { [type: string]: IValue[]; } | null; }, {}> {
+class MustrenewComponent extends React.Component<{ result: { [type: string]: IValue[] } | null }, {}> {
 	public static id = "mustrenew";
 	public static title = "旧部品の更新";
 
@@ -42,7 +42,7 @@ class MustrenewComponent extends React.Component<{ result: { [type: string]: IVa
 		);
 	}
 	private getRowRenderer(_type: string) {
-		return (props: { item: IValue; }) => {
+		return (props: { item: IValue }) => {
 			const newestname = props.item[0].split("@")[0];
 			return (
 				<SimpleColumnRow columns={[

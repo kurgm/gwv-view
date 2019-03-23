@@ -3,11 +3,11 @@ import * as React from "react";
 import Glyph from "../Glyph";
 import ValidateResult from "../ValidateResult";
 
-import { SimpleColumnHeader, SimpleColumnRow } from "../PagingTable";
+import {SimpleColumnHeader, SimpleColumnRow} from "../PagingTable";
 
 type IValue = string[];
 
-class KosekitokiComponent extends React.Component<{ result: { [type: string]: IValue[]; } | null; }, {}> {
+class KosekitokiComponent extends React.Component<{ result: { [type: string]: IValue[] } | null }, {}> {
 	public static id = "kosekitoki";
 	public static title = "kosekiとtoki-00";
 
@@ -28,11 +28,12 @@ class KosekitokiComponent extends React.Component<{ result: { [type: string]: IV
 	}
 
 	private getGroupTitle(type: string) {
-		return ({
+		const titleMap: { [type: string]: string } = {
 			0: "エイリアスになっていません。",
 			1: "koseki-xxxxxxのエイリアスになっていません。",
 			2: "koseki-xxxxxxと異なるエイリアスです。",
-		} as { [type: string]: string; })[type];
+		};
+		return titleMap[type];
 	}
 	private getTableHeaderRow(type: string) {
 		const columns = (() => {
@@ -44,13 +45,14 @@ class KosekitokiComponent extends React.Component<{ result: { [type: string]: IV
 				case "2":
 					return ["グリフ名", "実体", "koseki-xxxxxxの実体"];
 			}
+			return [];
 		})();
 		return (
 			<SimpleColumnHeader columns={columns} />
 		);
 	}
 	private getRowRenderer(_type: string) {
-		return (props: { item: IValue; }) => (
+		return (props: { item: IValue }) => (
 			<SimpleColumnRow columns={props.item.map((name, i) => (
 				<Glyph name={name} key={i} />
 			))} />

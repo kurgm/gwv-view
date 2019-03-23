@@ -1,11 +1,11 @@
 import * as React from "react";
 
-import { getSettings, ImageType } from "../settings";
+import {ImageType, getSettings} from "../settings";
 
-interface IGlyphProps {
+interface GlyphProps {
 	name: string;
 }
-interface IGlyphState {
+interface GlyphState {
 	newpage: boolean;
 }
 
@@ -14,13 +14,13 @@ const extensions = {
 	[ImageType.SVG]: ".svg",
 };
 
-class Glyph extends React.Component<IGlyphProps, IGlyphState> {
-	public state: Readonly<IGlyphState> = {
+class Glyph extends React.Component<GlyphProps, GlyphState> {
+	public state: Readonly<GlyphState> = {
 		newpage: false,
 	};
 	private imageElement!: HTMLImageElement | null;
 
-	public componentWillReceiveProps(nextProps: Readonly<IGlyphProps>) {
+	public componentWillReceiveProps(nextProps: Readonly<GlyphProps>) {
 		if (this.props.name !== nextProps.name) {
 			this.setState({
 				newpage: false,
@@ -29,7 +29,7 @@ class Glyph extends React.Component<IGlyphProps, IGlyphState> {
 	}
 
 	public render() {
-		const { imageType } = getSettings();
+		const {imageType} = getSettings();
 		return (
 			<a
 				href={`https://glyphwiki.org/wiki/${this.props.name}`}
@@ -42,7 +42,9 @@ class Glyph extends React.Component<IGlyphProps, IGlyphState> {
 						alt={this.props.name}
 						className="thumb"
 						onLoad={this.handleLoad}
-						ref={(instance) => { this.imageElement = instance; }}
+						ref={(instance) => {
+							this.imageElement = instance;
+						}}
 					/>
 				)}
 				{this.props.name}

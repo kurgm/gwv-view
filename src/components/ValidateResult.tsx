@@ -3,7 +3,7 @@ import * as React from "react";
 import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
 import TableHead from "@material-ui/core/TableHead/TableHead";
 
-import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
+import withStyles, {WithStyles} from "@material-ui/core/styles/withStyles";
 
 import PagingTable from "./PagingTable";
 
@@ -17,18 +17,18 @@ const styles = {
 	},
 };
 
-export interface IValidateResultProps<T> {
+export interface ValidateResultProps<T> {
 	description: React.ReactChild;
-	result: { [type: string]: T[]; } | null;
+	result: { [type: string]: T[] } | null;
 	getGroupTitle(type: string): string;
 	getTableHeaderRow(type: string): React.ReactChild;
-	getRowRenderer(type: string): React.SFC<{ item: T; }>;
+	getRowRenderer(type: string): React.SFC<{ item: T }>;
 }
 
 export class ValidateResult extends React.Component<
-	IValidateResultProps<any> & WithStyles<keyof typeof styles>, {}> {
+	ValidateResultProps<any> & WithStyles<keyof typeof styles>, {}> {
 	public shouldComponentUpdate(
-		nextProps: Readonly<IValidateResultProps<any> & WithStyles<keyof typeof styles>>) {
+		nextProps: Readonly<ValidateResultProps<any> & WithStyles<keyof typeof styles>>) {
 		return this.props.result !== nextProps.result;
 	}
 	public render() {
@@ -57,7 +57,7 @@ export class ValidateResult extends React.Component<
 						))
 					)
 					: (
-						<div style={{ textAlign: "center" }}>
+						<div style={{textAlign: "center"}}>
 							<CircularProgress />
 						</div>
 					)
