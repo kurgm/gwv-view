@@ -22,25 +22,25 @@
     "@material-ui/core": "^3.9.2",
     "@material-ui/icons": "^3.0.2",
     "babel-polyfill": "^6.26.0",
-    "react": "^16.8.4",
-    "react-dom": "^16.8.4",
-    "react-router-dom": "^4.3.1"
+    "react": "^16.8.5",
+    "react-dom": "^16.8.5",
+    "react-router-dom": "^5.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.3.4",
+    "@babel/core": "^7.4.0",
     "@babel/preset-react": "^7.0.0",
-    "@types/node": "^11.11.0",
+    "@types/node": "^11.11.6",
     "@types/prop-types": "^15.7.0",
-    "@types/react": "^16.8.7",
-    "@types/react-dom": "^16.8.2",
+    "@types/react": "^16.8.8",
+    "@types/react-dom": "^16.8.3",
     "@types/react-router-dom": "^4.3.1",
     "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "^8.0.5",
     "markdown-jsx-loader": "^3.0.2",
     "source-map-loader": "^0.2.4",
-    "tslint": "^5.13.1",
-    "typescript": "^3.3.3333",
+    "tslint": "^5.14.0",
+    "typescript": "^3.3.4000",
     "webpack": "^4.29.6",
-    "webpack-cli": "^3.2.3"
+    "webpack-cli": "^3.3.0"
   }
 }

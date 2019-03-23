@@ -1,8 +1,6 @@
 import * as React from "react";
 
-import HashRouter from "react-router-dom/HashRouter";
-import Route from "react-router-dom/Route";
-import Switch from "react-router-dom/Switch";
+import { HashRouter, Route, Switch } from "react-router-dom";
 
 import DataProvider from "./components/DataProvider";
 import Home from "./components/Home";

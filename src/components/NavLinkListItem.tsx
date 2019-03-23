@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import NavLink, { NavLinkProps } from "react-router-dom/NavLink";
+import { NavLink, NavLinkProps } from "react-router-dom";
 
 import { Omit } from "@material-ui/core";
 
