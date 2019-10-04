@@ -28,7 +28,7 @@ class WidthComponent extends React.Component<{ result: { [type: string]: IValue[
 		);
 	}
 
-	private getGroupTitle(type: string) {
+	private getGroupTitle = (type: string) => {
 		const titleMap: { [type: string]: string } = {
 			0: "グループ:NonSpacingGlyphs-Halfwidthに含まれていますが全角です。",
 			1: "グループ:HalfwidthGlyphs-*に含まれていますが全角です。",
@@ -36,14 +36,14 @@ class WidthComponent extends React.Component<{ result: { [type: string]: IValue[
 		};
 		return titleMap[type];
 	}
-	private getTableHeaderRow(_type: string) {
+	private getTableHeaderRow = (_type: string) => {
 		return (
 			<SimpleColumnHeader columns={[
 				"グリフ名",
 			]} />
 		);
 	}
-	private getRowRenderer(_type: string) {
+	private getRowRenderer = (_type: string) => {
 		return (props: { item: IValue }) => (
 			<SimpleColumnRow columns={[
 				<Glyph name={props.item[0]} />,

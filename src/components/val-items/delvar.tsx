@@ -27,10 +27,10 @@ class DelvarComponent extends React.Component<{ result: { [type: string]: IValue
 		);
 	}
 
-	private getGroupTitle(_type: string) {
+	private getGroupTitle = (_type: string) => {
 		return "派生元が存在しません。";
 	}
-	private getTableHeaderRow(_type: string) {
+	private getTableHeaderRow = (_type: string) => {
 		return (
 			<SimpleColumnHeader columns={[
 				"グリフ名",
@@ -38,7 +38,7 @@ class DelvarComponent extends React.Component<{ result: { [type: string]: IValue
 			]} />
 		);
 	}
-	private getRowRenderer(_type: string) {
+	private getRowRenderer = (_type: string) => {
 		return (props: { item: IValue }) => (
 			<SimpleColumnRow columns={[
 				<Glyph name={props.item[0]} />,

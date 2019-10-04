@@ -40,9 +40,9 @@ class DataProvider extends React.Component<DataProviderProps & RouteComponentPro
 		xhr.send();
 	}
 
-	public componentWillReceiveProps(nextProps: Readonly<DataProviderProps & RouteComponentProps<any>>) {
-		if (this.props.location.search !== nextProps.location.search) {
-			this.triggerSearch(this.state.data, nextProps.location.search);
+	public componentDidUpdate(prevProps: Readonly<DataProviderProps & RouteComponentProps<any>>) {
+		if (prevProps.location.search !== this.props.location.search) {
+			this.triggerSearch(this.state.data, this.props.location.search);
 		}
 	}
 

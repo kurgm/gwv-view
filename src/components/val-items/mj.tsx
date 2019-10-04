@@ -35,7 +35,7 @@ class MjComponent extends React.Component<{ result: { [type: string]: IValue[] }
 		);
 	}
 
-	private getGroupTitle(type: string) {
+	private getGroupTitle = (type: string) => {
 		const titleMap: { [type: string]: string } = {
 			0: "エイリアス先が間違っていると思います。",
 			1: "関連字が間違っていると思います。",
@@ -44,7 +44,7 @@ class MjComponent extends React.Component<{ result: { [type: string]: IValue[] }
 		};
 		return titleMap[type];
 	}
-	private getTableHeaderRow(type: string) {
+	private getTableHeaderRow = (type: string) => {
 		const columns = (() => {
 			switch (type as "0" | "1" | "2" | "3") {
 				case "0":
@@ -62,7 +62,7 @@ class MjComponent extends React.Component<{ result: { [type: string]: IValue[] }
 			<SimpleColumnHeader columns={columns} />
 		);
 	}
-	private getRowRenderer(type: string) {
+	private getRowRenderer = (type: string) => {
 		switch (type as "0" | "1" | "2" | "3") {
 			case "0":
 			case "1":

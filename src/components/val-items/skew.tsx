@@ -30,7 +30,7 @@ class SkewComponent extends React.Component<{ result: { [type: string]: IValue[]
 		);
 	}
 
-	private getGroupTitle(type: string) {
+	private getGroupTitle = (type: string) => {
 		const titleMap: { [type: string]: string } = {
 			10: "横画が歪んでいます。",
 			11: "縦画が歪んでいます。",
@@ -43,7 +43,7 @@ class SkewComponent extends React.Component<{ result: { [type: string]: IValue[]
 		};
 		return titleMap[type];
 	}
-	private getTableHeaderRow(type: string) {
+	private getTableHeaderRow = (type: string) => {
 		return (
 			<SimpleColumnHeader columns={
 				type === "70"
@@ -52,7 +52,7 @@ class SkewComponent extends React.Component<{ result: { [type: string]: IValue[]
 			} />
 		);
 	}
-	private getRowRenderer(type: string) {
+	private getRowRenderer = (type: string) => {
 		if (type === "70") {
 			return (props: { item: IValueWithoutAngle }) => (
 				<SimpleColumnRow columns={[

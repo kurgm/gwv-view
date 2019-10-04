@@ -31,7 +31,7 @@ class JComponent extends React.Component<{ result: { [type: string]: IValue[] } 
 		);
 	}
 
-	private getGroupTitle(typeStr: string) {
+	private getGroupTitle = (typeStr: string) => {
 		const type = Number(typeStr);
 		if (type >= 30 && type <= 39) {
 			const source = ["J", "K"][type - 30];
@@ -48,7 +48,7 @@ class JComponent extends React.Component<{ result: { [type: string]: IValue[] } 
 		};
 		return titleMap[typeStr];
 	}
-	private getTableHeaderRow(type: string) {
+	private getTableHeaderRow = (type: string) => {
 		const columns = (() => {
 			switch (type as "0" | "1" | "2" | "4" | "40" | "41" | "5" | "30" | "31") {
 				case "0":
@@ -71,7 +71,7 @@ class JComponent extends React.Component<{ result: { [type: string]: IValue[] } 
 			<SimpleColumnHeader columns={columns} />
 		);
 	}
-	private getRowRenderer(type: string) {
+	private getRowRenderer = (type: string) => {
 		switch (type as "0" | "1" | "2" | "4" | "40" | "41" | "5" | "30" | "31") {
 			case "0":
 			case "4":

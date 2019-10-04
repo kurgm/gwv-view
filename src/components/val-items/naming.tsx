@@ -40,7 +40,7 @@ class NamingComponent extends React.Component<{ result: { [type: string]: IValue
 		);
 	}
 
-	private getGroupTitle(type: string) {
+	private getGroupTitle = (type: string) => {
 		const titleMap: { [type: string]: string } = {
 			0: "規則に無いグリフ名です。",
 			1: "不正なIDSです。",
@@ -50,7 +50,7 @@ class NamingComponent extends React.Component<{ result: { [type: string]: IValue
 		};
 		return titleMap[type];
 	}
-	private getTableHeaderRow(type: string) {
+	private getTableHeaderRow = (type: string) => {
 		return (
 			<SimpleColumnHeader columns={
 				type === "3"
@@ -59,7 +59,7 @@ class NamingComponent extends React.Component<{ result: { [type: string]: IValue
 			} />
 		);
 	}
-	private getRowRenderer(type: string) {
+	private getRowRenderer = (type: string) => {
 		if (type === "3") {
 			return (props: { item: IValueCDP }) => (
 				<SimpleColumnRow columns={[

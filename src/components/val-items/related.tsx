@@ -27,7 +27,7 @@ class RelatedComponent extends React.Component<{ result: { [type: string]: IValu
 		);
 	}
 
-	private getGroupTitle(typeStr: string) {
+	private getGroupTitle = (typeStr: string) => {
 		const type = parseInt(typeStr, 10);
 		const header = type >= 10 ? "実体の" : "";
 		switch (type % 10 as 0 | 1 | 2) {
@@ -40,7 +40,7 @@ class RelatedComponent extends React.Component<{ result: { [type: string]: IValu
 		}
 		return "";
 	}
-	private getTableHeaderRow(typeStr: string) {
+	private getTableHeaderRow = (typeStr: string) => {
 		const type = parseInt(typeStr, 10);
 		let columns = type >= 10 ? ["グリフ名", "実体"] : ["グリフ名"];
 		switch (type % 10) {
@@ -58,7 +58,7 @@ class RelatedComponent extends React.Component<{ result: { [type: string]: IValu
 			<SimpleColumnHeader columns={columns} />
 		);
 	}
-	private getRowRenderer(_type: string) {
+	private getRowRenderer = (_type: string) => {
 		return (props: { item: IValue }) => (
 			<SimpleColumnRow columns={props.item.map((name, i) => (
 				<Glyph name={name} key={i} />

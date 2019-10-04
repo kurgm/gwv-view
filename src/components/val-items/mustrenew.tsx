@@ -28,10 +28,10 @@ class MustrenewComponent extends React.Component<{ result: { [type: string]: IVa
 		);
 	}
 
-	private getGroupTitle(type: string) {
+	private getGroupTitle = (type: string) => {
 		return type === "@" ? "最新版が旧部品を引用している部品" : "最新版が旧部品を引用していない部品";
 	}
-	private getTableHeaderRow(_type: string) {
+	private getTableHeaderRow = (_type: string) => {
 		return (
 			<SimpleColumnHeader columns={[
 				"旧部品",
@@ -41,7 +41,7 @@ class MustrenewComponent extends React.Component<{ result: { [type: string]: IVa
 			]} />
 		);
 	}
-	private getRowRenderer(_type: string) {
+	private getRowRenderer = (_type: string) => {
 		return (props: { item: IValue }) => {
 			const newestname = props.item[0].split("@")[0];
 			return (

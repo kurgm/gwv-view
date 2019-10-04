@@ -3,7 +3,7 @@ function getMatcher(query: string) {
 	try {
 		re = new RegExp(query);
 	} catch (e) {
-		return (value: string) => value.indexOf(query) !== -1;
+		return (value: string) => value.includes(query);
 	}
 	return (value: string) => re.test(value);
 }

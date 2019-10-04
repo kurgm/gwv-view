@@ -32,7 +32,7 @@ class DupComponent extends React.Component<{ result: { [type: string]: IValue[] 
 		);
 	}
 
-	private getGroupTitle(type: string) {
+	private getGroupTitle = (type: string) => {
 		const titleMap: { [type: string]: string } = {
 			10: "横画が重複しています。",
 			11: "縦画が重複しています。",
@@ -43,7 +43,7 @@ class DupComponent extends React.Component<{ result: { [type: string]: IValue[] 
 		};
 		return titleMap[type];
 	}
-	private getTableHeaderRow(type: string) {
+	private getTableHeaderRow = (type: string) => {
 		const columns = ["グリフ名", "行1", "行2"];
 		if (type === "10" || type === "11") {
 			columns.push("重複");
@@ -52,7 +52,7 @@ class DupComponent extends React.Component<{ result: { [type: string]: IValue[] 
 			<SimpleColumnHeader columns={columns} />
 		);
 	}
-	private getRowRenderer(type: string) {
+	private getRowRenderer = (type: string) => {
 		if (type === "10" || type === "11") {
 			return (props: { item: IValueWithLength }) => (
 				<SimpleColumnRow columns={[

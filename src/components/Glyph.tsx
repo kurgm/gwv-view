@@ -20,8 +20,8 @@ class Glyph extends React.Component<GlyphProps, GlyphState> {
 	};
 	private imageElement!: HTMLImageElement | null;
 
-	public componentWillReceiveProps(nextProps: Readonly<GlyphProps>) {
-		if (this.props.name !== nextProps.name) {
+	public componentDidUpdate(prevProps: Readonly<GlyphProps>) {
+		if (prevProps.name !== this.props.name) {
 			this.setState({
 				newpage: false,
 			});

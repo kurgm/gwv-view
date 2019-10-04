@@ -27,7 +27,7 @@ class KosekitokiComponent extends React.Component<{ result: { [type: string]: IV
 		);
 	}
 
-	private getGroupTitle(type: string) {
+	private getGroupTitle = (type: string) => {
 		const titleMap: { [type: string]: string } = {
 			0: "エイリアスになっていません。",
 			1: "koseki-xxxxxxのエイリアスになっていません。",
@@ -35,7 +35,7 @@ class KosekitokiComponent extends React.Component<{ result: { [type: string]: IV
 		};
 		return titleMap[type];
 	}
-	private getTableHeaderRow(type: string) {
+	private getTableHeaderRow = (type: string) => {
 		const columns = (() => {
 			switch (type as "0" | "1" | "2") {
 				case "0":
@@ -51,7 +51,7 @@ class KosekitokiComponent extends React.Component<{ result: { [type: string]: IV
 			<SimpleColumnHeader columns={columns} />
 		);
 	}
-	private getRowRenderer(_type: string) {
+	private getRowRenderer = (_type: string) => {
 		return (props: { item: IValue }) => (
 			<SimpleColumnRow columns={props.item.map((name, i) => (
 				<Glyph name={name} key={i} />

@@ -27,10 +27,10 @@ class DelquoteComponent extends React.Component<{ result: { [type: string]: IVal
 		);
 	}
 
-	private getGroupTitle(_type: string) {
+	private getGroupTitle = (_type: string) => {
 		return "最新版が存在しない部品を引用しています。";
 	}
-	private getTableHeaderRow(_type: string) {
+	private getTableHeaderRow = (_type: string) => {
 		return (
 			<SimpleColumnHeader columns={[
 				"グリフ名",
@@ -38,7 +38,7 @@ class DelquoteComponent extends React.Component<{ result: { [type: string]: IVal
 			]} />
 		);
 	}
-	private getRowRenderer(_type: string) {
+	private getRowRenderer = (_type: string) => {
 		return (props: { item: IValue }) => (
 			<SimpleColumnRow columns={[
 				<Glyph name={props.item[0]} />,

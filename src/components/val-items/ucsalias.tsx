@@ -30,7 +30,7 @@ class UcsaliasComponent extends React.Component<{ result: { [type: string]: IVal
 		);
 	}
 
-	private getGroupTitle(typeStr: string) {
+	private getGroupTitle = (typeStr: string) => {
 		const type = parseInt(typeStr, 10);
 		switch (type) {
 			case 0:
@@ -46,7 +46,7 @@ class UcsaliasComponent extends React.Component<{ result: { [type: string]: IVal
 			}
 		}
 	}
-	private getTableHeaderRow(_type: string) {
+	private getTableHeaderRow = (_type: string) => {
 		return (
 			<SimpleColumnHeader columns={[
 				"グリフ名",
@@ -54,7 +54,7 @@ class UcsaliasComponent extends React.Component<{ result: { [type: string]: IVal
 			]} />
 		);
 	}
-	private getRowRenderer(type: string) {
+	private getRowRenderer = (type: string) => {
 		if (type === "1") {
 			return (props: { item: IValueWithoutEntity }) => (
 				<SimpleColumnRow columns={[

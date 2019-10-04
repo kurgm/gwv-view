@@ -28,7 +28,7 @@ class IllegalComponent extends React.Component<{ result: { [type: string]: IValu
 		);
 	}
 
-	private getGroupTitle(type: string) {
+	private getGroupTitle = (type: string) => {
 		const titleMap: { [type: string]: string } = {
 			0: "定義されていない筆画の種類です。",
 			1: "列数が不足しています。",
@@ -48,12 +48,12 @@ class IllegalComponent extends React.Component<{ result: { [type: string]: IValu
 		};
 		return titleMap[type];
 	}
-	private getTableHeaderRow(_type: string) {
+	private getTableHeaderRow = (_type: string) => {
 		return (
 			<SimpleColumnHeader columns={["グリフ名", "データ"]} />
 		);
 	}
-	private getRowRenderer(_type: string) {
+	private getRowRenderer = (_type: string) => {
 		return (props: { item: IValue }) => (
 			<SimpleColumnRow columns={[
 				<Glyph name={props.item[0]} />,

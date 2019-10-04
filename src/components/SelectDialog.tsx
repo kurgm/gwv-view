@@ -24,16 +24,16 @@ class SelectDialog extends React.Component<SelectDialogProps, SelectDialogState>
 		selectedIndex: 0,
 	};
 
-	public componentWillMount() {
+	public componentDidMount() {
 		this.setState({
 			selectedIndex: this.props.selectedIndex,
 		});
 	}
 
-	public componentWillUpdate(nextProps: Readonly<SelectDialogProps>) {
-		if (nextProps.selectedIndex !== this.props.selectedIndex) {
+	public componentDidUpdate(prevProps: Readonly<SelectDialogProps>) {
+		if (this.props.selectedIndex !== prevProps.selectedIndex) {
 			this.setState({
-				selectedIndex: nextProps.selectedIndex,
+				selectedIndex: this.props.selectedIndex,
 			});
 		}
 	}

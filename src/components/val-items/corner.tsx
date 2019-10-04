@@ -28,7 +28,7 @@ class CornerComponent extends React.Component<{ result: { [type: string]: IValue
 		);
 	}
 
-	private getGroupTitle(typeStr: string) {
+	private getGroupTitle = (typeStr: string) => {
 		const cornerTypes = [
 			"左上カド",
 			"左下カド",
@@ -58,7 +58,7 @@ class CornerComponent extends React.Component<{ result: { [type: string]: IValue
 		}
 		return `${guessedCornerType}に${usedCornerType}形状が使用されています。`;
 	}
-	private getTableHeaderRow(_type: string) {
+	private getTableHeaderRow = (_type: string) => {
 		return (
 			<SimpleColumnHeader columns={[
 				"グリフ名",
@@ -67,7 +67,7 @@ class CornerComponent extends React.Component<{ result: { [type: string]: IValue
 			]} />
 		);
 	}
-	private getRowRenderer(_type: string) {
+	private getRowRenderer = (_type: string) => {
 		return (props: { item: IValue }) => (
 			<SimpleColumnRow columns={[
 				<Glyph name={props.item[0]} />,
