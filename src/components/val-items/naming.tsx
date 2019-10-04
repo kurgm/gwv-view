@@ -46,6 +46,7 @@ class NamingComponent extends React.Component<{ result: { [type: string]: IValue
 			1: "不正なIDSです。",
 			2: "許可されていないグリフ名です（欠番など）。",
 			3: "IDS文字名にUCSで符号化されたCDP外字が含まれています。",
+			4: "廃止予定の命名規則です。",
 		};
 		return titleMap[type];
 	}
