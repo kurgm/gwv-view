@@ -51,7 +51,7 @@ interface PagingTableState {
 }
 
 class PagingTable<T> extends React.Component<
-	PagingTableProps<T> & WithStyles<keyof typeof styles>, PagingTableState> {
+PagingTableProps<T> & WithStyles<keyof typeof styles>, PagingTableState> {
 	public state: Readonly<PagingTableState> = {
 		expanded: false,
 		itemsPerPage: getSettings().itemsPerPage,

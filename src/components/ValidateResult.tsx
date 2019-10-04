@@ -26,7 +26,7 @@ export interface ValidateResultProps<T> {
 }
 
 export class ValidateResult extends React.Component<
-	ValidateResultProps<any> & WithStyles<keyof typeof styles>, {}> {
+ValidateResultProps<any> & WithStyles<keyof typeof styles>, {}> {
 	public shouldComponentUpdate(
 		nextProps: Readonly<ValidateResultProps<any> & WithStyles<keyof typeof styles>>) {
 		return this.props.result !== nextProps.result;

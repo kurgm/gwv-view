@@ -27,9 +27,6 @@ const theme = createMuiTheme({
 	palette: {
 		primary: indigo,
 	},
-	typography: {
-		useNextVariants: true,
-	},
 });
 
 const drawerWidth = 240;
@@ -96,7 +93,7 @@ const styles = {
 };
 
 class Master extends React.Component<
-	MasterProps & WithStyles<keyof typeof styles> & WithWidth, MasterState> {
+MasterProps & WithStyles<keyof typeof styles> & WithWidth, MasterState> {
 
 	public state: Readonly<MasterState> = {
 		navDrawerOpen: false,

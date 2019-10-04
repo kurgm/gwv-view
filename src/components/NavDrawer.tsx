@@ -12,7 +12,7 @@ import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 
-import withStyles, {StyleRules, WithStyles} from "@material-ui/core/styles/withStyles";
+import withStyles, {StyledComponentProps, StyleRules, WithStyles} from "@material-ui/core/styles/withStyles";
 
 import NavLinkListItem from "./NavLinkListItem";
 
@@ -34,7 +34,7 @@ interface NavDrawerProps extends
 }
 
 class NavDrawer extends React.Component<
-	NavDrawerProps & RouteComponentProps<any> & WithStyles<NavDrawerClassKey>, {}> {
+NavDrawerProps & RouteComponentProps<any> & WithStyles<NavDrawerClassKey>, {}> {
 	public render() {
 		const {
 			items,
@@ -59,7 +59,7 @@ class NavDrawer extends React.Component<
 				<div>
 					<div className={headerClassName}>
 						{persistent && (
-							<IconButton onClick={this.props.onClose}>
+							<IconButton onClick={this.onCollapseButtonClick}>
 								<ChevronLeftIcon />
 							</IconButton>
 						)}
@@ -110,6 +110,14 @@ class NavDrawer extends React.Component<
 			</Drawer>
 		);
 	}
+
+	private onCollapseButtonClick = (e: React.MouseEvent<any>) => {
+		if (this.props.onClose) {
+			this.props.onClose(e, "backdropClick");
+		}
+	}
 }
 
-export default withRouter(withStyles(styles)(NavDrawer));
+export default withRouter(withStyles(styles)(NavDrawer) as React.ComponentClass<
+NavDrawerProps & RouteComponentProps<any> & StyledComponentProps<NavDrawerClassKey>
+>);

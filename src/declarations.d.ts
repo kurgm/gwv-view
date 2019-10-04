@@ -7,28 +7,31 @@ declare module "*.md" {
 
 declare module "@material-ui/core/ListItem/ListItem" {
 	import * as React from "react";
-	import {ButtonBaseProps} from "@material-ui/core/ButtonBase/ButtonBase";
-	import {StandardProps} from "@material-ui/core";
-
-	export interface ListItemProps
-		extends StandardProps<
-		ButtonBaseProps & React.LiHTMLAttributes<HTMLElement>,
-		ListItemClassKey,
-		"component"
-		> {
-		alignItems?: "flex-start" | "center";
-		button?: boolean;
-		component?: React.ReactType;
-		ContainerComponent?: React.ReactType<React.HTMLAttributes<HTMLDivElement>>;
-		ContainerProps?: React.HTMLAttributes<HTMLDivElement>;
-		dense?: boolean;
-		disabled?: boolean;
-		disableGutters?: boolean;
-		divider?: boolean;
-		focusVisibleClassName?: string;
-		selected?: boolean;
+	import { ExtendButtonBase } from "@material-ui/core/ButtonBase";
+	import { OverridableComponent, OverrideProps } from "@material-ui/core/OverridableComponent";
+	
+	export interface ListItemTypeMap<P, D extends React.ElementType> {
+		props: P & {
+			alignItems?: "flex-start" | "center";
+			autoFocus?: boolean;
+			button?: boolean;
+			component?: React.ReactType;
+			ContainerComponent?: React.ElementType<React.HTMLAttributes<HTMLDivElement>>;
+			ContainerProps?: React.HTMLAttributes<HTMLDivElement>;
+			dense?: boolean;
+			disabled?: boolean;
+			disableGutters?: boolean;
+			divider?: boolean;
+			focusVisibleClassName?: string;
+			selected?: boolean;
+		};
+		defaultComponent: D;
+		classKey: ListItemClassKey;
 	}
-
+	
+	const ListItem: OverridableComponent<ListItemTypeMap<{ button?: false }, "li">> &
+	ExtendButtonBase<ListItemTypeMap<{ button: true }, "div">>;
+	
 	export type ListItemClassKey =
 		| "root"
 		| "container"
@@ -41,9 +44,12 @@ declare module "@material-ui/core/ListItem/ListItem" {
 		| "button"
 		| "secondaryAction"
 		| "selected";
-
-	const ListItem: React.ComponentType<ListItemProps>;
-
+	
+	export type ListItemProps<D extends React.ElementType = "li", P = {}> = OverrideProps<
+	ListItemTypeMap<P, D>,
+	D
+	>;
+	
 	export default ListItem;
 
 }

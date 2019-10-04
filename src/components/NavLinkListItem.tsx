@@ -25,7 +25,7 @@ export interface NavLinkListItemProps
 
 class NavLinkListItem extends React.Component<NavLinkListItemProps & WithStyles<keyof typeof styles>> {
 	public render() {
-		const {classes, ...rest} = this.props;
+		const {classes, button, ...rest} = this.props;
 		const {selectedItem, ...restClasses} = classes;
 		const props = {...rest, activeClassName: selectedItem};
 		return (
