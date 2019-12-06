@@ -6,10 +6,10 @@ import Toolbar from "@material-ui/core/Toolbar/Toolbar";
 import Typography from "@material-ui/core/Typography/Typography";
 
 import indigo from "@material-ui/core/colors/indigo";
+import {ThemeProvider} from "@material-ui/core/styles";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
-import {ThemeProvider as MuiThemeProvider} from "@material-ui/core/styles";
-import withStyles, {WithStyles} from "@material-ui/core/styles/withStyles";
-import withWidth, {WithWidth, isWidthUp} from "@material-ui/core/withWidth/withWidth";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import useMediaQuery from "@material-ui/core/useMediaQuery/useMediaQuery";
 
 import MenuIcon from "@material-ui/icons/Menu";
 
@@ -17,10 +17,6 @@ import NavDrawer from "./NavDrawer";
 
 interface MasterProps {
 	items: { id: string; title: string; length: number }[] | null;
-}
-
-interface MasterState {
-	navDrawerOpen: boolean;
 }
 
 const theme = createMuiTheme({
@@ -35,7 +31,7 @@ const appBarHeight = 56;
 const appBarHeightLarge = 64;
 const appBarHeightSmall = 48;
 
-const styles = {
+const useStyles = makeStyles({
 	appBar: {
 		transition: theme.transitions.create(["margin", "width"], {
 			duration: theme.transitions.duration.leavingScreen,
@@ -90,83 +86,69 @@ const styles = {
 			easing: theme.transitions.easing.easeOut,
 		}),
 	},
-};
+});
 
-class Master extends React.Component<
-MasterProps & WithStyles<keyof typeof styles> & WithWidth, MasterState> {
+const Master: React.FunctionComponent<MasterProps> = (props) => {
+	const classes = useStyles();
 
-	public state: Readonly<MasterState> = {
-		navDrawerOpen: false,
+	const persistent = useMediaQuery(theme.breakpoints.up("md"));
+
+	const [navDrawerOpen, setNavDrawerOpen] = React.useState(false);
+
+	const handleLeftIconButtonClick = () => {
+		setNavDrawerOpen(!navDrawerOpen);
+	};
+	const handleNavDrawerClose = (_e: any): void => {
+		setNavDrawerOpen(false);
+	};
+	const handleNavLinkClick = (_e: any): void => {
+		if (!persistent) {
+			setNavDrawerOpen(false);
+		}
 	};
 
-	public render() {
-		const title = "GlyphWiki dump 検証";
+	const title = "GlyphWiki dump 検証";
 
-		const {navDrawerOpen} = this.state;
-		let persistent = false;
-		if (isWidthUp("md", this.props.width)) {
-			persistent = true;
-		}
-
-		return (
-			<MuiThemeProvider theme={theme}>
-				<div>
-					<AppBar
-						className={`${this.props.classes.appBar} ${persistent && navDrawerOpen ? this.props.classes.appBarShift : ""}`}
-					>
-						<Toolbar>
-							{!(persistent && navDrawerOpen) &&
-								<IconButton
-									onClick={this.handleLeftIconButtonClick}
-									color="inherit"
-									className={this.props.classes.menuButton}
-								>
-									<MenuIcon />
-								</IconButton>
-							}
-							<Typography variant="h6" color="inherit" noWrap>
-								{title}
-							</Typography>
-						</Toolbar>
-					</AppBar>
-					<NavDrawer
-						items={this.props.items}
-						variant={persistent ? "persistent" : "temporary"}
-						onClose={this.handleNavDrawerClose}
-						onNavLinkClicked={this.handleNavLinkClick}
-						open={navDrawerOpen}
-						classes={{
-							header: this.props.classes.drawerHeader,
-							paper: this.props.classes.drawerPaper,
-						}}
-					/>
-					<div
-						className={`${this.props.classes.root} ${persistent && navDrawerOpen ? this.props.classes.rootShift : ""}`}
-					>
-						{this.props.children}
-					</div>
+	return (
+		<ThemeProvider theme={theme}>
+			<div>
+				<AppBar
+					className={`${classes.appBar} ${persistent && navDrawerOpen ? classes.appBarShift : ""}`}
+				>
+					<Toolbar>
+						{!(persistent && navDrawerOpen) &&
+							<IconButton
+								onClick={handleLeftIconButtonClick}
+								color="inherit"
+								className={classes.menuButton}
+							>
+								<MenuIcon />
+							</IconButton>
+						}
+						<Typography variant="h6" color="inherit" noWrap>
+							{title}
+						</Typography>
+					</Toolbar>
+				</AppBar>
+				<NavDrawer
+					items={props.items}
+					variant={persistent ? "persistent" : "temporary"}
+					onClose={handleNavDrawerClose}
+					onNavLinkClicked={handleNavLinkClick}
+					open={navDrawerOpen}
+					classes={{
+						header: classes.drawerHeader,
+						paper: classes.drawerPaper,
+					}}
+				/>
+				<div
+					className={`${classes.root} ${persistent && navDrawerOpen ? classes.rootShift : ""}`}
+				>
+					{props.children}
 				</div>
-			</MuiThemeProvider>
-		);
-	}
+			</div>
+		</ThemeProvider>
+	);
+};
 
-	private handleLeftIconButtonClick = () => {
-		this.setState({
-			navDrawerOpen: !this.state.navDrawerOpen,
-		});
-	}
-	private handleNavDrawerClose = (_e: any): void => {
-		this.setState({
-			navDrawerOpen: false,
-		});
-	}
-	private handleNavLinkClick = (_e: any): void => {
-		if (!isWidthUp("md", this.props.width)) {
-			this.setState({
-				navDrawerOpen: false,
-			});
-		}
-	}
-}
-
-export default withWidth()(withStyles(styles)(Master));
+export default Master;

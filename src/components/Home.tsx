@@ -1,24 +1,23 @@
 import * as React from "react";
 
-import withStyles, {WithStyles} from "@material-ui/core/styles/withStyles";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 
 import * as HomeDoc from "./Home.md";
 
-const styles = {
+const useStyles = makeStyles({
 	content: {
 		// margin: spacing.desktopGutter,
 		margin: 24, // TODO avoid magic number
 	},
+});
+
+const Home: React.FunctionComponent = () => {
+	const classes = useStyles();
+	return (
+		<div className={classes.content}>
+			<HomeDoc />
+		</div>
+	);
 };
 
-class Home extends React.Component<WithStyles<keyof typeof styles>, {}> {
-	public render() {
-		return (
-			<div className={this.props.classes.content}>
-				<HomeDoc />
-			</div>
-		);
-	}
-}
-
-export default withStyles(styles)(Home);
+export default Home;

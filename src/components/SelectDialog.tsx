@@ -15,73 +15,55 @@ interface SelectDialogProps extends DialogProps {
 	selectedIndex: number;
 	onConfirmValue(event: React.SyntheticEvent<any>, index: number): void;
 }
-interface SelectDialogState {
-	selectedIndex: number;
-}
 
-class SelectDialog extends React.Component<SelectDialogProps, SelectDialogState> {
-	public state = {
-		selectedIndex: 0,
+const SelectDialog: React.FunctionComponent<SelectDialogProps> = (props) => {
+	const [selectedIndex, setSelectedIndex] = React.useState(0);
+
+	React.useEffect(() => {
+		setSelectedIndex(props.selectedIndex);
+	}, [props.selectedIndex]);
+
+	const handleCancel = (event: React.MouseEvent<any>) => {
+		props.onConfirmValue(event, props.selectedIndex);
+		if (props.onClose) {
+			(props.onClose as React.EventHandler<any>)(event);
+		}
+	};
+	const handleChange = (event: React.ChangeEvent<any>, value: string) => {
+		setSelectedIndex(Number(value));
+		props.onConfirmValue(event, Number(value));
 	};
 
-	public componentDidMount() {
-		this.setState({
-			selectedIndex: this.props.selectedIndex,
-		});
-	}
-
-	public componentDidUpdate(prevProps: Readonly<SelectDialogProps>) {
-		if (this.props.selectedIndex !== prevProps.selectedIndex) {
-			this.setState({
-				selectedIndex: this.props.selectedIndex,
-			});
-		}
-	}
-
-	public render() {
-		const {selectedIndex, onConfirmValue, options, dialogTitle, ...rest} = this.props;
-		return (
-			<Dialog {...rest}>
-				<DialogTitle>{dialogTitle}</DialogTitle>
-				<DialogContent>
-					<RadioGroup
-						value={`${this.state.selectedIndex}`}
-						onChange={this.handleChange}
-					>
-						{this.props.options.map((option, index) => (
-							<FormControlLabel
-								value={`${index}`}
-								key={index}
-								control={<Radio />}
-								label={option}
-							/>
-						))}
-					</RadioGroup>
-				</DialogContent>
-				<DialogActions>
-					<Button onClick={this.handleCancel}>
-						キャンセル
-					</Button>
-				</DialogActions>
-			</Dialog>
-		);
-	}
-
-	protected handleCancel = (event: React.MouseEvent<any>) => {
-		this.props.onConfirmValue(event, this.props.selectedIndex);
-		if (this.props.onClose) {
-			(this.props.onClose as React.EventHandler<any>)(event);
-		}
-	}
-	// protected handleOk = () => {
-	// 	this.props.onConfirmValue(this.state.value!);
-	// }
-	protected handleChange = (event: React.ChangeEvent<any>, value: string) => {
-		this.setState({
-			selectedIndex: Number(value),
-		});
-		this.props.onConfirmValue(event, Number(value));
-	}
-}
+	const {
+		selectedIndex: defaultSelectedIndex,
+		onConfirmValue, options, dialogTitle,
+		...rest
+	} = props;
+	return (
+		<Dialog {...rest}>
+			<DialogTitle>{dialogTitle}</DialogTitle>
+			<DialogContent>
+				<RadioGroup
+					value={`${selectedIndex}`}
+					onChange={handleChange}
+				>
+					{options.map((option, index) => (
+						<FormControlLabel
+							value={`${index}`}
+							key={index}
+							control={<Radio />}
+							label={option}
+						/>
+					))}
+				</RadioGroup>
+			</DialogContent>
+			<DialogActions>
+				<Button onClick={handleCancel}>
+					キャンセル
+				</Button>
+			</DialogActions>
+		</Dialog>
+	);
+};
 
 export default SelectDialog;

@@ -1,5 +1,5 @@
 declare module "*.md" {
-	const _exports: React.StatelessComponent;
+	const _exports: React.FunctionComponent;
 	export = _exports;
 }
 

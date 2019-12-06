@@ -7,114 +7,33 @@ import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 import ListSubheader from "@material-ui/core/ListSubheader/ListSubheader";
 import Paper from "@material-ui/core/Paper/Paper";
 
-import withStyles, {WithStyles} from "@material-ui/core/styles/withStyles";
-import withWidth, {WithWidth, isWidthDown} from "@material-ui/core/withWidth/withWidth";
+import makeStyles from "@material-ui/core/styles/makeStyles";
+import useTheme from "@material-ui/core/styles/useTheme";
+import useMediaQuery from "@material-ui/core/useMediaQuery/useMediaQuery";
 
 import SelectDialog from "./SelectDialog";
 
 import * as settings from "../settings";
 
-interface SettingsState {
-	openDialog: number;
-}
-
-const styles = {
+const useStyles = makeStyles({
 	content: {
 		margin: 24, // TODO avoid magic number
 	},
-};
+});
 
 const itemsPerPageOptions = [10, 20, 50, 100];
 
-class Settings extends React.Component<WithStyles<keyof typeof styles> & WithWidth, SettingsState> {
-	private static nDialogs = 2;
+const Settings: React.FunctionComponent = () => {
+	const classes = useStyles();
 
-	public state: Readonly<SettingsState> = {
-		openDialog: -1,
+	const [openDialog, setOpenDialog] = React.useState(-1);
+
+	const handleClose = () => {
+		setOpenDialog(-1);
 	};
-	private openHandlers = (() => {
-		const handlers = [];
-		for (let i = 0; i < Settings.nDialogs; i++) {
-			handlers[i] = () => {
-				this.setState({
-					openDialog: i,
-				});
-			};
-		}
-		return handlers;
-	})();
 
-	public render() {
-		const currentSettings = settings.getSettings();
-		const imageTypeStrings = {
-			[settings.ImageType.NONE]: "表示しない",
-			[settings.ImageType.PNG50]: "PNG (50px)",
-			[settings.ImageType.SVG]: "SVG",
-		};
-		const lists = [
-			<List>
-				<ListSubheader>全般</ListSubheader>
-				<ListItem button onClick={this.openHandlers[0]}>
-					<ListItemText
-						primary="画像の形式"
-						secondary={imageTypeStrings[currentSettings.imageType]}
-					/>
-				</ListItem>
-				<ListItem button onClick={this.openHandlers[1]}>
-					<ListItemText
-						primary="ページあたりの行数"
-						secondary={currentSettings.itemsPerPage}
-					/>
-				</ListItem>
-			</List>,
-		];
-		const dialogs = [
-			<SelectDialog
-				dialogTitle="画像の形式"
-				open={this.state.openDialog === 0}
-				onClose={this.handleClose}
-				key={0}
-				selectedIndex={currentSettings.imageType}
-				options={[
-					imageTypeStrings[settings.ImageType.NONE],
-					imageTypeStrings[settings.ImageType.PNG50],
-					imageTypeStrings[settings.ImageType.SVG],
-				]}
-				onConfirmValue={this.handleDialogConfirm}
-			/>,
-			<SelectDialog
-				dialogTitle="ページあたりの行数"
-				open={this.state.openDialog === 1}
-				onClose={this.handleClose}
-				key={1}
-				selectedIndex={itemsPerPageOptions.indexOf(currentSettings.itemsPerPage)}
-				options={itemsPerPageOptions.map((n) => `${n}`)}
-				onConfirmValue={this.handleDialogConfirm}
-			/>,
-		];
-		if (isWidthDown("xs", this.props.width)) {
-			return (
-				<div>
-					{lists.map((l, i) => (
-						<div key={i}>
-							{l}
-							<Divider />
-						</div>
-					))}
-					{dialogs}
-				</div>
-			);
-		}
-		return (
-			<div className={this.props.classes.content}>
-				{lists.map((l, i) => <Paper key={i}>{l}</Paper>)}
-				{dialogs}
-			</div>
-		);
-	}
-
-	private handleDialogConfirm = (_e: React.FormEvent<{}>, selectedIndex: number) => {
-		switch (this.state.openDialog) {
+	const handleDialogConfirm = (_e: React.FormEvent<{}>, selectedIndex: number) => {
+		switch (openDialog) {
 			case 0: {
 				settings.updateSettings({
 					imageType: selectedIndex,
@@ -128,14 +47,78 @@ class Settings extends React.Component<WithStyles<keyof typeof styles> & WithWid
 				break;
 			}
 		}
-		this.handleClose();
-	}
+		handleClose();
+	};
 
-	private handleClose = () => {
-		this.setState({
-			openDialog: -1,
-		});
-	}
-}
+	const currentSettings = settings.getSettings();
+	const imageTypeStrings = {
+		[settings.ImageType.NONE]: "表示しない",
+		[settings.ImageType.PNG50]: "PNG (50px)",
+		[settings.ImageType.SVG]: "SVG",
+	};
 
-export default withWidth()(withStyles(styles)(Settings));
+	const lists = [
+		<List>
+			<ListSubheader>全般</ListSubheader>
+			<ListItem button onClick={() => {setOpenDialog(0);}}>
+				<ListItemText
+					primary="画像の形式"
+					secondary={imageTypeStrings[currentSettings.imageType]}
+				/>
+			</ListItem>
+			<ListItem button onClick={() => {setOpenDialog(1);}}>
+				<ListItemText
+					primary="ページあたりの行数"
+					secondary={currentSettings.itemsPerPage}
+				/>
+			</ListItem>
+		</List>,
+	];
+
+	const dialogs = [
+		<SelectDialog
+			dialogTitle="画像の形式"
+			open={openDialog === 0}
+			onClose={handleClose}
+			key={0}
+			selectedIndex={currentSettings.imageType}
+			options={[
+				imageTypeStrings[settings.ImageType.NONE],
+				imageTypeStrings[settings.ImageType.PNG50],
+				imageTypeStrings[settings.ImageType.SVG],
+			]}
+			onConfirmValue={handleDialogConfirm}
+		/>,
+		<SelectDialog
+			dialogTitle="ページあたりの行数"
+			open={openDialog === 1}
+			onClose={handleClose}
+			key={1}
+			selectedIndex={itemsPerPageOptions.indexOf(currentSettings.itemsPerPage)}
+			options={itemsPerPageOptions.map((n) => `${n}`)}
+			onConfirmValue={handleDialogConfirm}
+		/>,
+	];
+
+	if (useMediaQuery(useTheme().breakpoints.down("xs"))) {
+		return (
+			<div>
+				{lists.map((l, i) => (
+					<div key={i}>
+						{l}
+						<Divider />
+					</div>
+				))}
+				{dialogs}
+			</div>
+		);
+	}
+	return (
+		<div className={classes.content}>
+			{lists.map((l, i) => <Paper key={i}>{l}</Paper>)}
+			{dialogs}
+		</div>
+	);
+};
+
+export default Settings;

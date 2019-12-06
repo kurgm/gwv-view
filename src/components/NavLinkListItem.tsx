@@ -6,37 +6,32 @@ import {Omit} from "@material-ui/core";
 
 import ListItem, {ListItemProps} from "@material-ui/core/ListItem/ListItem";
 
-import withStyles, {WithStyles} from "@material-ui/core/styles/withStyles";
+import makeStyles from "@material-ui/core/styles/makeStyles";
 
-const styles = {
+const useStyles = makeStyles({
 	selectedItem: {
 		"&:hover": {
 			backgroundColor: "rgba(0, 0, 0, 0.2)",
 		},
 		"backgroundColor": "rgba(0, 0, 0, 0.2)",
 	},
-};
+});
 
 export interface NavLinkListItemProps
-	extends
-	Omit<ListItemProps, "classes">,
-	Omit<NavLinkProps, keyof NavLinkProps & keyof ListItemProps> {
+	extends ListItemProps, Omit<NavLinkProps, keyof NavLinkProps & keyof ListItemProps> {
 }
 
-class NavLinkListItem extends React.Component<NavLinkListItemProps & WithStyles<keyof typeof styles>> {
-	public render() {
-		const {classes, button, ...rest} = this.props;
-		const {selectedItem, ...restClasses} = classes;
-		const props = {...rest, activeClassName: selectedItem};
-		return (
-			<ListItem
-				button
-				component={NavLink}
-				classes={restClasses}
-				{...props}
-			/>
-		);
-	}
-}
+const NavLinkListItem: React.FunctionComponent<NavLinkListItemProps> = (props) => {
+	const classes = useStyles();
+	const {button, ...rest} = props;
+	return (
+		<ListItem
+			button
+			component={NavLink}
+			{...rest}
+			activeClassName={classes.selectedItem}
+		/>
+	);
+};
 
-export default withStyles(styles)(NavLinkListItem);
+export default NavLinkListItem;

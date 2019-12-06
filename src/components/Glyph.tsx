@@ -5,61 +5,44 @@ import {ImageType, getSettings} from "../settings";
 interface GlyphProps {
 	name: string;
 }
-interface GlyphState {
-	newpage: boolean;
-}
 
 const extensions = {
 	[ImageType.PNG50]: ".50px.png",
 	[ImageType.SVG]: ".svg",
 };
 
-class Glyph extends React.Component<GlyphProps, GlyphState> {
-	public state: Readonly<GlyphState> = {
-		newpage: false,
-	};
-	private imageElement!: HTMLImageElement | null;
+const Glyph: React.FunctionComponent<GlyphProps> = (props) => {
+	const [newpage, setNewpage] = React.useState(false);
+	const imageRefContainer = React.useRef<HTMLImageElement>(null);
 
-	public componentDidUpdate(prevProps: Readonly<GlyphProps>) {
-		if (prevProps.name !== this.props.name) {
-			this.setState({
-				newpage: false,
-			});
-		}
-	}
+	React.useEffect(() => {setNewpage(false);}, [props.name]);
 
-	public render() {
-		const {imageType} = getSettings();
-		return (
-			<a
-				href={`https://glyphwiki.org/wiki/${this.props.name}`}
-				className={`glyphLink${this.state.newpage ? " newpage" : ""}`}>
-				{imageType !== ImageType.NONE && (
-					<img
-						src={`https://glyphwiki.org/glyph/${this.props.name}${extensions[imageType]}`}
-						width="50"
-						height="50"
-						alt={this.props.name}
-						className="thumb"
-						onLoad={this.handleLoad}
-						ref={(instance) => {
-							this.imageElement = instance;
-						}}
-					/>
-				)}
-				{this.props.name}
-			</a>
-		);
-	}
-
-	private handleLoad = () => {
+	const handleLoad = () => {
 		// GlyphWiki returns 100x100 red X image for glyphs that do not exist
-		if (this.imageElement && this.imageElement.naturalHeight === 100) {
-			this.setState({
-				newpage: true,
-			});
+		if (imageRefContainer.current && imageRefContainer.current.naturalHeight === 100) {
+			setNewpage(true);
 		}
-	}
-}
+	};
+
+	const {imageType} = getSettings();
+	return (
+		<a
+			href={`https://glyphwiki.org/wiki/${props.name}`}
+			className={`glyphLink${newpage ? " newpage" : ""}`}>
+			{imageType !== ImageType.NONE && (
+				<img
+					src={`https://glyphwiki.org/glyph/${props.name}${extensions[imageType]}`}
+					width="50"
+					height="50"
+					alt={props.name}
+					className="thumb"
+					onLoad={handleLoad}
+					ref={imageRefContainer}
+				/>
+			)}
+			{props.name}
+		</a>
+	);
+};
 
 export default Glyph;
