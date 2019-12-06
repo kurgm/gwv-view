@@ -35,7 +35,7 @@ const NavDrawer: React.FunctionComponent<NavDrawerProps & WithStyles<keyof typeo
 		if (props.onClose) {
 			props.onClose(e, "backdropClick");
 		}
-	}
+	};
 
 	const {
 		items,
