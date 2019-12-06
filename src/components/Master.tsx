@@ -7,7 +7,7 @@ import Typography from "@material-ui/core/Typography/Typography";
 
 import indigo from "@material-ui/core/colors/indigo";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
-import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
+import {ThemeProvider as MuiThemeProvider} from "@material-ui/core/styles";
 import withStyles, {WithStyles} from "@material-ui/core/styles/withStyles";
 import withWidth, {WithWidth, isWidthUp} from "@material-ui/core/withWidth/withWidth";
 
