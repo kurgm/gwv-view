@@ -7,55 +7,55 @@ import {SimpleColumnHeader, SimpleColumnRow} from "../PagingTable";
 
 type IValue = string[];
 
-class MustrenewComponent extends React.Component<{ result: { [type: string]: IValue[] } | null }, {}> {
-	public static id = "mustrenew";
-	public static title = "旧部品の更新";
+const id = "mustrenew";
+const title = "旧部品の更新";
 
-	public render() {
-		return (
-			<ValidateResult
-				description={
-					<p>
+const MustrenewComponent: React.FunctionComponent<{ result: { [type: string]: IValue[] } | null }> = (props) => {
+	return (
+		<ValidateResult
+			description={
+				<p>
 						旧版を引用しているグリフを検出します。この項目専用のページもどうぞ。→
-						<a href="https://ku6goma.appspot.com/gwv/mustrenew.html">GlyphWiki の Mustrenew みたいなやつ</a>
-					</p>
-				}
-				getGroupTitle={this.getGroupTitle}
-				getTableHeaderRow={this.getTableHeaderRow}
-				getRowRenderer={this.getRowRenderer}
-				result={this.props.result}
-			/>
-		);
-	}
+					<a href="https://ku6goma.appspot.com/gwv/mustrenew.html">GlyphWiki の Mustrenew みたいなやつ</a>
+				</p>
+			}
+			getGroupTitle={getGroupTitle}
+			getTableHeaderRow={getTableHeaderRow}
+			getRowRenderer={getRowRenderer}
+			result={props.result}
+		/>
+	);
+};
 
-	private getGroupTitle = (type: string) => {
-		return type === "@" ? "最新版が旧部品を引用している部品" : "最新版が旧部品を引用していない部品";
-	}
-	private getTableHeaderRow = (_type: string) => {
+const getGroupTitle = (type: string) => {
+	return type === "@" ? "最新版が旧部品を引用している部品" : "最新版が旧部品を引用していない部品";
+};
+const getTableHeaderRow = (_type: string) => {
+	return (
+		<SimpleColumnHeader columns={[
+			"旧部品",
+			"最新版",
+			"引用しているグリフ数",
+			"一括更新",
+		]} />
+	);
+};
+const getRowRenderer = (_type: string) => {
+	const RowRenderer = (props: { item: IValue }) => {
+		const newestname = props.item[0].split("@")[0];
 		return (
-			<SimpleColumnHeader columns={[
-				"旧部品",
-				"最新版",
-				"引用しているグリフ数",
-				"一括更新",
+			<SimpleColumnRow columns={[
+				<Glyph name={props.item[0]} />,
+				<Glyph name={newestname} />,
+				props.item.length - 1,
+				<a href={`https://glyphwiki.org/wiki/Special:Mustrenew?view=listup&target=${newestname}`}>
+						一括更新
+				</a>,
 			]} />
 		);
-	}
-	private getRowRenderer = (_type: string) => {
-		return (props: { item: IValue }) => {
-			const newestname = props.item[0].split("@")[0];
-			return (
-				<SimpleColumnRow columns={[
-					<Glyph name={props.item[0]} />,
-					<Glyph name={newestname} />,
-					props.item.length - 1,
-					<a href={`https://glyphwiki.org/wiki/Special:Mustrenew?view=listup&target=${newestname}`}>
-						一括更新
-					</a>,
-				]} />
-			);
-		};
-	}
-}
+	};
+	return RowRenderer;
+};
 
-export default MustrenewComponent;
+const validationItem = {id, title, Component: MustrenewComponent};
+export default validationItem;

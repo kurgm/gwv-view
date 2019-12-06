@@ -26,10 +26,10 @@ const App = () => (
 			>
 				<Switch>
 					<Route exact path="/" component={Home} />
-					{validationItems.map((ItemComponent) => (
-						<Route path={`/result/${ItemComponent.id}`} component={() => (
-							<ItemComponent result={dataToShow && (dataToShow.result[ItemComponent.id] || {})} />
-						)} key={ItemComponent.id} />
+					{validationItems.map(({id, Component: ItemComponent}) => (
+						<Route path={`/result/${id}`} component={() => (
+							<ItemComponent result={dataToShow && (dataToShow.result[id] || {})} />
+						)} key={id} />
 					))}
 					<Route path="/settings" component={Settings} />
 				</Switch>

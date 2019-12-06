@@ -7,49 +7,49 @@ import {SimpleColumnHeader, SimpleColumnRow} from "../PagingTable";
 
 type IValue = [string];
 
-class WidthComponent extends React.Component<{ result: { [type: string]: IValue[] } | null }, {}> {
-	public static id = "width";
-	public static title = "全角・半角";
+const id = "width";
+const title = "全角・半角";
 
-	public render() {
-		return (
-			<ValidateResult
-				description={
-					<p>
-						<a href="https://glyphwiki.org/wiki/Group:HalfwidthGlyphs">グループ:HalfwidthGlyphs</a>
+const WidthComponent: React.FunctionComponent<{ result: { [type: string]: IValue[] } | null }> = (props) => {
+	return (
+		<ValidateResult
+			description={
+				<p>
+					<a href="https://glyphwiki.org/wiki/Group:HalfwidthGlyphs">グループ:HalfwidthGlyphs</a>
 						のサブグループのいずれかに含まれているかどうかとグリフが半角かどうかが一致しないものを検出します。
-					</p>
-				}
-				getGroupTitle={this.getGroupTitle}
-				getTableHeaderRow={this.getTableHeaderRow}
-				getRowRenderer={this.getRowRenderer}
-				result={this.props.result}
-			/>
-		);
-	}
+				</p>
+			}
+			getGroupTitle={getGroupTitle}
+			getTableHeaderRow={getTableHeaderRow}
+			getRowRenderer={getRowRenderer}
+			result={props.result}
+		/>
+	);
+};
 
-	private getGroupTitle = (type: string) => {
-		const titleMap: { [type: string]: string } = {
-			0: "グループ:NonSpacingGlyphs-Halfwidthに含まれていますが全角です。",
-			1: "グループ:HalfwidthGlyphs-*に含まれていますが全角です。",
-			2: "半角ですがグループ:HalfwidthGlyphs-*に含まれていません。",
-		};
-		return titleMap[type];
-	}
-	private getTableHeaderRow = (_type: string) => {
-		return (
-			<SimpleColumnHeader columns={[
-				"グリフ名",
-			]} />
-		);
-	}
-	private getRowRenderer = (_type: string) => {
-		return (props: { item: IValue }) => (
-			<SimpleColumnRow columns={[
-				<Glyph name={props.item[0]} />,
-			]} />
-		);
-	}
-}
+const getGroupTitle = (type: string) => {
+	const titleMap: { [type: string]: string } = {
+		0: "グループ:NonSpacingGlyphs-Halfwidthに含まれていますが全角です。",
+		1: "グループ:HalfwidthGlyphs-*に含まれていますが全角です。",
+		2: "半角ですがグループ:HalfwidthGlyphs-*に含まれていません。",
+	};
+	return titleMap[type];
+};
+const getTableHeaderRow = (_type: string) => {
+	return (
+		<SimpleColumnHeader columns={[
+			"グリフ名",
+		]} />
+	);
+};
+const getRowRenderer = (_type: string) => {
+	const RowRenderer = (props: { item: IValue }) => (
+		<SimpleColumnRow columns={[
+			<Glyph name={props.item[0]} />,
+		]} />
+	);
+	return RowRenderer;
+};
 
-export default WidthComponent;
+const validationItem = {id, title, Component: WidthComponent};
+export default validationItem;
