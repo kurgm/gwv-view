@@ -2,6 +2,8 @@ import * as React from "react";
 
 import {RouteComponentProps, withRouter} from "react-router-dom";
 
+import {withTracker} from "./withTracker";
+
 import searchData from "../searchData";
 
 interface DataProviderProps {
@@ -72,4 +74,4 @@ class DataProvider extends React.Component<DataProviderProps & RouteComponentPro
 	}
 }
 
-export default withRouter(DataProvider);
+export default withRouter(withTracker(DataProvider));
