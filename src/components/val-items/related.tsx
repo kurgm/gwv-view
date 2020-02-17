@@ -1,9 +1,8 @@
 import * as React from "react";
 
-import Glyph from "../Glyph";
-import ValidateResult from "../ValidateResult";
+import {Column} from "material-table";
 
-import {SimpleColumnHeader, SimpleColumnRow} from "../PagingTable";
+import ValidateResult, {glyphColumnDef} from "../ValidateResult";
 
 type IValue = string[];
 
@@ -19,8 +18,7 @@ const RelatedComponent: React.FunctionComponent<{ result: { [type: string]: IVal
 				</p>
 			}
 			getGroupTitle={getGroupTitle}
-			getTableHeaderRow={getTableHeaderRow}
-			getRowRenderer={getRowRenderer}
+			getColumnDefs={getColumnDefs}
 			result={props.result}
 		/>
 	);
@@ -39,31 +37,57 @@ const getGroupTitle = (typeStr: string) => {
 	}
 	return "";
 };
-const getTableHeaderRow = (typeStr: string) => {
+const getColumnDefs = (typeStr: string): Column<IValue>[] => {
 	const type = parseInt(typeStr, 10);
-	let columns = type >= 10 ? ["グリフ名", "実体"] : ["グリフ名"];
+	let columns: Column<IValue>[] = type >= 10
+		? [
+			{
+				title: "グリフ名",
+				...glyphColumnDef<IValue, number>(0),
+			},
+			{
+				title: "実体",
+				...glyphColumnDef<IValue, number>(1),
+			},
+		]
+		: [
+			{
+				title: "グリフ名",
+				...glyphColumnDef<IValue, number>(0),
+			},
+		];
+	const offset = columns.length;
 	switch (type % 10) {
 		case 0:
-			columns = columns.concat(["現在の関連字", "正しい関連字"]);
+			columns = columns.concat([
+				{
+					title: "現在の関連字",
+					...glyphColumnDef(offset + 0),
+				},
+				{
+					title: "正しい関連字",
+					...glyphColumnDef(offset + 1),
+				},
+			]);
 			break;
 		case 1:
-			columns = columns.concat(["正しい関連字"]);
+			columns = columns.concat([
+				{
+					title: "正しい関連字",
+					...glyphColumnDef(offset + 0),
+				},
+			]);
 			break;
 		case 2:
-			columns = columns.concat(["存在しない実体"]);
+			columns = columns.concat([
+				{
+					title: "存在しない実体",
+					...glyphColumnDef(offset + 0),
+				},
+			]);
 			break;
 	}
-	return (
-		<SimpleColumnHeader columns={columns} />
-	);
-};
-const getRowRenderer = (_type: string) => {
-	const RowRenderer = (props: { item: IValue }) => (
-		<SimpleColumnRow columns={props.item.map((name, i) => (
-			<Glyph name={name} key={i} />
-		))} />
-	);
-	return RowRenderer;
+	return columns;
 };
 
 const validationItem = {id, title, Component: RelatedComponent};

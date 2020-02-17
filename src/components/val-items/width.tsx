@@ -1,9 +1,8 @@
 import * as React from "react";
 
-import Glyph from "../Glyph";
-import ValidateResult from "../ValidateResult";
+import {Column} from "material-table";
 
-import {SimpleColumnHeader, SimpleColumnRow} from "../PagingTable";
+import ValidateResult, {glyphColumnDef} from "../ValidateResult";
 
 type IValue = [string];
 
@@ -20,8 +19,7 @@ const WidthComponent: React.FunctionComponent<{ result: { [type: string]: IValue
 				</p>
 			}
 			getGroupTitle={getGroupTitle}
-			getTableHeaderRow={getTableHeaderRow}
-			getRowRenderer={getRowRenderer}
+			getColumnDefs={getColumnDefs}
 			result={props.result}
 		/>
 	);
@@ -35,20 +33,13 @@ const getGroupTitle = (type: string) => {
 	};
 	return titleMap[type];
 };
-const getTableHeaderRow = (_type: string) => {
-	return (
-		<SimpleColumnHeader columns={[
-			"グリフ名",
-		]} />
-	);
-};
-const getRowRenderer = (_type: string) => {
-	const RowRenderer = (props: { item: IValue }) => (
-		<SimpleColumnRow columns={[
-			<Glyph name={props.item[0]} />,
-		]} />
-	);
-	return RowRenderer;
+const getColumnDefs = (_type: string): Column<IValue>[] => {
+	return [
+		{
+			title: "グリフ名",
+			...glyphColumnDef(0),
+		},
+	];
 };
 
 const validationItem = {id, title, Component: WidthComponent};

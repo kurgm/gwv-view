@@ -1,10 +1,9 @@
 import * as React from "react";
 
-import Glyph from "../Glyph";
-import KageLine from "../KageLine";
-import ValidateResult from "../ValidateResult";
+import {Column} from "material-table";
 
-import {SimpleColumnHeader, SimpleColumnRow} from "../PagingTable";
+import Glyph from "../Glyph";
+import ValidateResult, {glyphColumnDef, kageLineColumnDef} from "../ValidateResult";
 
 type IValueBuhin = [string, string];
 type IValueLineData = [string, KageLineData];
@@ -22,8 +21,7 @@ const IdsComponent: React.FunctionComponent<{ result: { [type: string]: IValue[]
 				</p>
 			}
 			getGroupTitle={getGroupTitle}
-			getTableHeaderRow={getTableHeaderRow}
-			getRowRenderer={getRowRenderer}
+			getColumnDefs={getColumnDefs}
 			result={props.result}
 		/>
 	);
@@ -45,60 +43,54 @@ const getGroupTitle = (type: string) => {
 	};
 	return titleMap[type];
 };
-const getTableHeaderRow = (type: string) => {
-	let columns;
-	switch (type) {
-		case "1":
-		case "2":
-		case "10":
-		case "12":
-		case "22":
-			columns = ["グリフ名", "引用されているグリフ"];
-			break;
-		case "6":
-		case "15":
-			columns = ["グリフ名", "最初の部品"];
-			break;
-		default:
-			columns = ["グリフ名", "最初に引用している行"];
-	}
-	return (
-		<SimpleColumnHeader columns={columns} />
-	);
-};
-const getRowRenderer = (type: string) => {
+const getColumnDefs = (type: string): Column<IValue>[] => {
 	switch (type) {
 		case "1":
 		case "2":
 		case "10":
 		case "12":
 		case "22": {
-			const RowRenderer = (props: { item: IValueBuhin }) => (
-				<SimpleColumnRow columns={[
-					<Glyph name={props.item[0]} />,
-					<Glyph name={props.item[1]} />,
-				]} />
-			);
-			return RowRenderer;
+			const columns: Column<IValueBuhin>[] = [
+				{
+					title: "グリフ名",
+					...glyphColumnDef(0),
+				},
+				{
+					title: "引用されているグリフ",
+					...glyphColumnDef(1),
+				},
+			];
+			return columns as Column<IValue>[];
 		}
 		case "6":
 		case "15": {
-			const RowRenderer = (props: { item: IValueLineData }) => (
-				<SimpleColumnRow columns={[
-					<Glyph name={props.item[0]} />,
-					<Glyph name={props.item[1][1].split(":")[7]} />,
-				]} />
-			);
-			return RowRenderer;
+			const columns: Column<IValueLineData>[] = [
+				{
+					title: "グリフ名",
+					...glyphColumnDef(0),
+				},
+				{
+					title: "最初の部品",
+					sorting: false,
+					render(item) {
+						return <Glyph name={item[1][1].split(":")[7]} />;
+					},
+				},
+			];
+			return columns as Column<IValue>[];
 		}
 		default: {
-			const RowRenderer = (props: { item: IValueLineData }) => (
-				<SimpleColumnRow columns={[
-					<Glyph name={props.item[0]} />,
-					<KageLine data={props.item[1]} />,
-				]} />
-			);
-			return RowRenderer;
+			const columns: Column<IValueLineData>[] = [
+				{
+					title: "グリフ名",
+					...glyphColumnDef(0),
+				},
+				{
+					title: "最初に引用している行",
+					...kageLineColumnDef(1),
+				},
+			];
+			return columns as Column<IValue>[];
 		}
 	}
 };

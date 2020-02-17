@@ -1,9 +1,8 @@
 import * as React from "react";
 
-import Glyph from "../Glyph";
-import ValidateResult from "../ValidateResult";
+import {Column} from "material-table";
 
-import {SimpleColumnHeader, SimpleColumnRow} from "../PagingTable";
+import ValidateResult, {glyphColumnDef} from "../ValidateResult";
 
 type IValue = string[];
 
@@ -19,8 +18,7 @@ const KosekitokiComponent: React.FunctionComponent<{ result: { [type: string]: I
 				</p>
 			}
 			getGroupTitle={getGroupTitle}
-			getTableHeaderRow={getTableHeaderRow}
-			getRowRenderer={getRowRenderer}
+			getColumnDefs={getColumnDefs}
 			result={props.result}
 		/>
 	);
@@ -34,29 +32,43 @@ const getGroupTitle = (type: string) => {
 	};
 	return titleMap[type];
 };
-const getTableHeaderRow = (type: string) => {
-	const columns = (() => {
-		switch (type as "0" | "1" | "2") {
-			case "0":
-				return ["グリフ名"];
-			case "1":
-				return ["グリフ名", "実体"];
-			case "2":
-				return ["グリフ名", "実体", "koseki-xxxxxxの実体"];
-		}
-		return [];
-	})();
-	return (
-		<SimpleColumnHeader columns={columns} />
-	);
-};
-const getRowRenderer = (_type: string) => {
-	const RowRenderer = (props: { item: IValue }) => (
-		<SimpleColumnRow columns={props.item.map((name, i) => (
-			<Glyph name={name} key={i} />
-		))} />
-	);
-	return RowRenderer;
+const getColumnDefs = (type: string): Column<IValue>[] => {
+	switch (type as "0" | "1" | "2") {
+		case "0":
+			return [
+				{
+					title: "グリフ名",
+					...glyphColumnDef<IValue, number>(0),
+				},
+			];
+		case "1":
+			return [
+				{
+					title: "グリフ名",
+					...glyphColumnDef<IValue, number>(0),
+				},
+				{
+					title: "実体",
+					...glyphColumnDef<IValue, number>(1),
+				},
+			];
+		case "2":
+			return [
+				{
+					title: "グリフ名",
+					...glyphColumnDef<IValue, number>(0),
+				},
+				{
+					title: "実体",
+					...glyphColumnDef<IValue, number>(1),
+				},
+				{
+					title: "koseki-xxxxxxの実体",
+					...glyphColumnDef<IValue, number>(2),
+				},
+			];
+	}
+	return [];
 };
 
 const validationItem = {id, title, Component: KosekitokiComponent};

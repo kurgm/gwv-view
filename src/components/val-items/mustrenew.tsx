@@ -1,9 +1,9 @@
 import * as React from "react";
 
-import Glyph from "../Glyph";
-import ValidateResult from "../ValidateResult";
+import {Column} from "material-table";
 
-import {SimpleColumnHeader, SimpleColumnRow} from "../PagingTable";
+import Glyph from "../Glyph";
+import ValidateResult, {glyphColumnDef} from "../ValidateResult";
 
 type IValue = string[];
 
@@ -20,8 +20,7 @@ const MustrenewComponent: React.FunctionComponent<{ result: { [type: string]: IV
 				</p>
 			}
 			getGroupTitle={getGroupTitle}
-			getTableHeaderRow={getTableHeaderRow}
-			getRowRenderer={getRowRenderer}
+			getColumnDefs={getColumnDefs}
 			result={props.result}
 		/>
 	);
@@ -30,31 +29,39 @@ const MustrenewComponent: React.FunctionComponent<{ result: { [type: string]: IV
 const getGroupTitle = (type: string) => {
 	return type === "@" ? "最新版が旧部品を引用している部品" : "最新版が旧部品を引用していない部品";
 };
-const getTableHeaderRow = (_type: string) => {
-	return (
-		<SimpleColumnHeader columns={[
-			"旧部品",
-			"最新版",
-			"引用しているグリフ数",
-			"一括更新",
-		]} />
-	);
-};
-const getRowRenderer = (_type: string) => {
-	const RowRenderer = (props: { item: IValue }) => {
-		const newestname = props.item[0].split("@")[0];
-		return (
-			<SimpleColumnRow columns={[
-				<Glyph name={props.item[0]} />,
-				<Glyph name={newestname} />,
-				props.item.length - 1,
-				<a href={`https://glyphwiki.org/wiki/Special:Mustrenew?view=listup&target=${newestname}`}>
+const getColumnDefs = (_type: string): Column<IValue>[] => {
+	return [
+		{
+			title: "旧部品",
+			...glyphColumnDef<IValue, number>(0),
+		},
+		{
+			title: "最新版",
+			sorting: false,
+			render(item) {
+				return <Glyph name={item[0].split("@")[0]} />;
+			},
+		},
+		{
+			title: "引用しているグリフ数",
+			sorting: false,
+			type: "numeric",
+			render(item) {
+				return item.length - 1;
+			},
+		},
+		{
+			title: "一括更新",
+			sorting: false,
+			render(item) {
+				return (
+					<a href={`https://glyphwiki.org/wiki/Special:Mustrenew?view=listup&target=${item[0].split("@")[0]}`}>
 						一括更新
-				</a>,
-			]} />
-		);
-	};
-	return RowRenderer;
+					</a>
+				);
+			},
+		},
+	];
 };
 
 const validationItem = {id, title, Component: MustrenewComponent};

@@ -1,11 +1,14 @@
 import * as React from "react";
 
 import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
-import TableHead from "@material-ui/core/TableHead/TableHead";
 
 import makeStyles from "@material-ui/core/styles/makeStyles";
 
+import {Column} from "material-table";
+
 import PagingTable from "./PagingTable";
+import Glyph from "./Glyph";
+import KageLine from "./KageLine";
 
 const useStyles = makeStyles({
 	content: {
@@ -17,12 +20,11 @@ const useStyles = makeStyles({
 	},
 });
 
-export interface ValidateResultProps<T> {
+export interface ValidateResultProps<T extends object> {
 	description: React.ReactChild;
 	result: { [type: string]: T[] } | null;
 	getGroupTitle(type: string): string;
-	getTableHeaderRow(type: string): React.ReactChild;
-	getRowRenderer(type: string): React.FunctionComponent<{ item: T }>;
+	getColumnDefs(type: string): Column<T>[];
 }
 
 export const ValidateResult: React.FunctionComponent<ValidateResultProps<any>> = (props) => {
@@ -40,13 +42,9 @@ export const ValidateResult: React.FunctionComponent<ValidateResultProps<any>> =
 								<PagingTable
 									key={type}
 									title={props.getGroupTitle(type)}
-									thead={
-										<TableHead>
-											{props.getTableHeaderRow(type)}
-										</TableHead>
-									}
-									RowRenderer={props.getRowRenderer(type)}
-									items={props.result![type]} />
+									columns={props.getColumnDefs(type)}
+									items={props.result![type]}
+								/>
 							)
 							: null
 					))
@@ -62,3 +60,19 @@ export const ValidateResult: React.FunctionComponent<ValidateResultProps<any>> =
 };
 
 export default ValidateResult;
+
+export const glyphColumnDef = <
+	IValue extends { [key in Index]: string },
+	Index extends string | number,
+>(field: Index): Column<IValue> => ({
+	field: `${field}`,
+	render(item) {return <Glyph name={item[field]} />;},
+});
+
+export const kageLineColumnDef = <
+	IValue extends { [key in Index]: KageLineData },
+	Index extends string | number,
+>(field: Index): Column<IValue> => ({
+	field,
+	render(item) {return <KageLine data={item[field]} />;},
+});

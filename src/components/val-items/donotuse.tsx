@@ -1,9 +1,9 @@
 import * as React from "react";
 
-import Glyph from "../Glyph";
-import ValidateResult from "../ValidateResult";
+import {Column} from "material-table";
 
-import {SimpleColumnHeader, SimpleColumnRow} from "../PagingTable";
+import Glyph from "../Glyph";
+import ValidateResult, {glyphColumnDef} from "../ValidateResult";
 
 type IValue = string[];
 
@@ -19,8 +19,7 @@ const DonotuseComponent: React.FunctionComponent<{ result: { [type: string]: IVa
 				</p>
 			}
 			getGroupTitle={getGroupTitle}
-			getTableHeaderRow={getTableHeaderRow}
-			getRowRenderer={getRowRenderer}
+			getColumnDefs={getColumnDefs}
 			result={props.result}
 		/>
 	);
@@ -29,24 +28,22 @@ const DonotuseComponent: React.FunctionComponent<{ result: { [type: string]: IVa
 const getGroupTitle = (_type: string) => {
 	return "最新版がdo-not-useを引用しているグリフを引用しています。";
 };
-const getTableHeaderRow = (_type: string) => {
-	return (
-		<SimpleColumnHeader columns={[
-			"グリフ名",
-			"引用されているグリフ",
-		]} />
-	);
-};
-const getRowRenderer = (_type: string) => {
-	const RowRenderer = (props: { item: IValue }) => (
-		<SimpleColumnRow columns={[
-			<Glyph name={props.item[0]} />,
-			props.item.slice(1).map((name, i) => (
-				<Glyph name={name} key={i} />
-			)),
-		]} />
-	);
-	return RowRenderer;
+const getColumnDefs = (_type: string): Column<IValue>[] => {
+	return [
+		{
+			title: "グリフ名",
+			...glyphColumnDef<IValue, number>(0),
+		},
+		{
+			title: "引用されているグリフ",
+			sorting: false,
+			render(item) {
+				return item.slice(1).map((name, i) => (
+					<Glyph name={name} key={i} />
+				));
+			},
+		},
+	];
 };
 
 const validationItem = {id, title, Component: DonotuseComponent};
