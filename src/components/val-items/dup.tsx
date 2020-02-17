@@ -1,10 +1,8 @@
 import * as React from "react";
 
-import Glyph from "../Glyph";
-import KageLine from "../KageLine";
-import ValidateResult from "../ValidateResult";
+import {Column} from "material-table";
 
-import {SimpleColumnHeader, SimpleColumnRow} from "../PagingTable";
+import ValidateResult, {glyphColumnDef, kageLineColumnDef} from "../ValidateResult";
 
 type IValueWithoutLength = [string, KageLineData, KageLineData];
 type IValueWithLength = [string, KageLineData, KageLineData, number];
@@ -24,8 +22,7 @@ const DupComponent: React.FunctionComponent<{ result: { [type: string]: IValue[]
 				</p>
 			}
 			getGroupTitle={getGroupTitle}
-			getTableHeaderRow={getTableHeaderRow}
-			getRowRenderer={getRowRenderer}
+			getColumnDefs={getColumnDefs}
 			result={props.result}
 		/>
 	);
@@ -42,35 +39,29 @@ const getGroupTitle = (type: string) => {
 	};
 	return titleMap[type];
 };
-const getTableHeaderRow = (type: string) => {
-	const columns = ["グリフ名", "行1", "行2"];
+const getColumnDefs = (type: string): Column<IValue>[] => {
+	const columns: Column<IValue>[] = [
+		{
+			title: "グリフ名",
+			...glyphColumnDef(0),
+		},
+		{
+			title: "行1",
+			...kageLineColumnDef(1),
+		},
+		{
+			title: "行2",
+			...kageLineColumnDef(2),
+		},
+	];
 	if (type === "10" || type === "11") {
-		columns.push("重複");
+		columns.push({
+			title: "重複",
+			field: "3",
+			type: "numeric",
+		});
 	}
-	return (
-		<SimpleColumnHeader columns={columns} />
-	);
-};
-const getRowRenderer = (type: string) => {
-	if (type === "10" || type === "11") {
-		const RowRenderer = (props: { item: IValueWithLength }) => (
-			<SimpleColumnRow columns={[
-				<Glyph name={props.item[0]} />,
-				<KageLine data={props.item[1]} />,
-				<KageLine data={props.item[2]} />,
-				props.item[3],
-			]} />
-		);
-		return RowRenderer;
-	}
-	const RowRenderer = (props: { item: IValueWithoutLength }) => (
-		<SimpleColumnRow columns={[
-			<Glyph name={props.item[0]} />,
-			<KageLine data={props.item[1]} />,
-			<KageLine data={props.item[2]} />,
-		]} />
-	);
-	return RowRenderer;
+	return columns;
 };
 
 const validationItem = {id, title, Component: DupComponent};

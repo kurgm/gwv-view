@@ -1,9 +1,8 @@
 import * as React from "react";
 
-import Glyph from "../Glyph";
-import ValidateResult from "../ValidateResult";
+import {Column} from "material-table";
 
-import {SimpleColumnHeader, SimpleColumnRow} from "../PagingTable";
+import ValidateResult, {glyphColumnDef} from "../ValidateResult";
 
 type IValueIDS = [string, string]; // glyph name, parsed IDS structure
 type IValueCDP = [string, string, string]; // glyph name, CDP glyph name, alternative UCS glyph name
@@ -32,8 +31,7 @@ const NamingComponent: React.FunctionComponent<{ result: { [type: string]: IValu
 				</p>
 			}
 			getGroupTitle={getGroupTitle}
-			getTableHeaderRow={getTableHeaderRow}
-			getRowRenderer={getRowRenderer}
+			getColumnDefs={getColumnDefs}
 			result={props.result}
 		/>
 	);
@@ -49,32 +47,31 @@ const getGroupTitle = (type: string) => {
 	};
 	return titleMap[type];
 };
-const getTableHeaderRow = (type: string) => {
-	return (
-		<SimpleColumnHeader columns={
-			type === "3"
-				? ["グリフ名", "CDP外字", "UCS"]
-				: ["グリフ名"]
-		} />
-	);
-};
-const getRowRenderer = (type: string) => {
+const getColumnDefs = (type: string): Column<IValue>[] => {
 	if (type === "3") {
-		const RowRenderer = (props: { item: IValueCDP }) => (
-			<SimpleColumnRow columns={[
-				<Glyph name={props.item[0]} />,
-				<Glyph name={props.item[1]} />,
-				<Glyph name={props.item[2]} />,
-			]} />
-		);
-		return RowRenderer;
+		const columns: Column<IValueCDP>[] = [
+			{
+				title: "グリフ名",
+				...glyphColumnDef(0),
+			},
+			{
+				title: "CDP外字",
+				...glyphColumnDef(1),
+			},
+			{
+				title: "UCS",
+				...glyphColumnDef(2),
+			},
+		];
+		return columns as Column<IValue>[];
 	}
-	const RowRenderer = (props: { item: IValueIDS | IValueNone }) => (
-		<SimpleColumnRow columns={[
-			<Glyph name={props.item[0]} />,
-		]} />
-	);
-	return RowRenderer;
+	const columns: Column<IValueIDS | IValueNone>[] = [
+		{
+			title: "グリフ名",
+			...glyphColumnDef(0),
+		},
+	];
+	return columns as Column<IValue>[];
 };
 
 const validationItem = {id, title, Component: NamingComponent};

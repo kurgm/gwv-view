@@ -1,9 +1,9 @@
 import * as React from "react";
 
-import Glyph from "../Glyph";
-import ValidateResult from "../ValidateResult";
+import {Column} from "material-table";
 
-import {SimpleColumnHeader, SimpleColumnRow} from "../PagingTable";
+import Glyph from "../Glyph";
+import ValidateResult, {glyphColumnDef} from "../ValidateResult";
 
 type IValueWithoutEntity = [string];
 type IValueWithEntity = [string, string];
@@ -22,8 +22,7 @@ const UcsaliasComponent: React.FunctionComponent<{ result: { [type: string]: IVa
 				</p>
 			}
 			getGroupTitle={getGroupTitle}
-			getTableHeaderRow={getTableHeaderRow}
-			getRowRenderer={getRowRenderer}
+			getColumnDefs={getColumnDefs}
 			result={props.result}
 		/>
 	);
@@ -45,31 +44,34 @@ const getGroupTitle = (typeStr: string) => {
 		}
 	}
 };
-const getTableHeaderRow = (_type: string) => {
-	return (
-		<SimpleColumnHeader columns={[
-			"グリフ名",
-			"実体",
-		]} />
-	);
-};
-const getRowRenderer = (type: string) => {
+const getColumnDefs = (type: string): Column<IValue>[] => {
 	if (type === "1") {
-		const RowRenderer = (props: { item: IValueWithoutEntity }) => (
-			<SimpleColumnRow columns={[
-				<Glyph name={props.item[0]} />,
-				<Glyph name={props.item[0].split("-")[0]} />,
-			]} />
-		);
-		return RowRenderer;
+		const columns: Column<IValueWithoutEntity>[] = [
+			{
+				title: "グリフ名",
+				...glyphColumnDef(0),
+			},
+			{
+				title: "実体",
+				sorting: false,
+				render(item) {
+					return <Glyph name={item[0].split("-")[0]} />;
+				}
+			},
+		];
+		return columns as Column<IValue>[];
 	}
-	const RowRenderer = (props: { item: IValueWithEntity }) => (
-		<SimpleColumnRow columns={[
-			<Glyph name={props.item[0]} />,
-			<Glyph name={props.item[1]} />,
-		]} />
-	);
-	return RowRenderer;
+	const columns: Column<IValueWithEntity>[] = [
+		{
+			title: "グリフ名",
+			...glyphColumnDef(0),
+		},
+		{
+			title: "実体",
+			...glyphColumnDef(1),
+		},
+	];
+	return columns as Column<IValue>[];
 };
 
 const validationItem = {id, title, Component: UcsaliasComponent};

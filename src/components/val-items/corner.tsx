@@ -1,10 +1,8 @@
 import * as React from "react";
 
-import Glyph from "../Glyph";
-import KageLine from "../KageLine";
-import ValidateResult from "../ValidateResult";
+import {Column} from "material-table";
 
-import {SimpleColumnHeader, SimpleColumnRow} from "../PagingTable";
+import ValidateResult, {glyphColumnDef, kageLineColumnDef} from "../ValidateResult";
 
 type IValue = [string, KageLineData, KageLineData]; // glyph name, tate, yoko
 
@@ -20,8 +18,7 @@ const CornerComponent: React.FunctionComponent<{ result: { [type: string]: IValu
 				</p>
 			}
 			getGroupTitle={getGroupTitle}
-			getTableHeaderRow={getTableHeaderRow}
-			getRowRenderer={getRowRenderer}
+			getColumnDefs={getColumnDefs}
 			result={props.result}
 		/>
 	);
@@ -57,24 +54,22 @@ const getGroupTitle = (typeStr: string) => {
 	}
 	return `${guessedCornerType}に${usedCornerType}形状が使用されています。`;
 };
-const getTableHeaderRow = (_type: string) => {
-	return (
-		<SimpleColumnHeader columns={[
-			"グリフ名",
-			"縦画",
-			"横画",
-		]} />
-	);
-};
-const getRowRenderer = (_type: string) => {
-	const RowRenderer = (props: { item: IValue }) => (
-		<SimpleColumnRow columns={[
-			<Glyph name={props.item[0]} />,
-			<KageLine data={props.item[1]} />,
-			<KageLine data={props.item[2]} />,
-		]} />
-	);
-	return RowRenderer;
+
+const getColumnDefs = (_type: string): Column<IValue>[] => {
+	return [
+		{
+			title: "グリフ名",
+			...glyphColumnDef(0),
+		},
+		{
+			title: "縦画",
+			...kageLineColumnDef(1),
+		},
+		{
+			title: "横画",
+			...kageLineColumnDef(2),
+		},
+	];
 };
 
 const validationItem = {id, title, Component: CornerComponent};

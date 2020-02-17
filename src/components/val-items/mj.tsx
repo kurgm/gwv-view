@@ -1,9 +1,9 @@
 import * as React from "react";
 
-import Glyph from "../Glyph";
-import ValidateResult from "../ValidateResult";
+import {Column} from "material-table";
 
-import {SimpleColumnHeader, SimpleColumnRow} from "../PagingTable";
+import Glyph from "../Glyph";
+import ValidateResult, {glyphColumnDef} from "../ValidateResult";
 
 type IValueInvalidMJ = [string];
 type IValueUnset = [string, null, string[]];
@@ -27,8 +27,7 @@ const MjComponent: React.FunctionComponent<{ result: { [type: string]: IValue[] 
 				</p>
 			}
 			getGroupTitle={getGroupTitle}
-			getTableHeaderRow={getTableHeaderRow}
-			getRowRenderer={getRowRenderer}
+			getColumnDefs={getColumnDefs}
 			result={props.result}
 		/>
 	);
@@ -43,56 +42,56 @@ const getGroupTitle = (type: string) => {
 	};
 	return titleMap[type];
 };
-const getTableHeaderRow = (type: string) => {
-	const columns = (() => {
-		switch (type as "0" | "1" | "2" | "3") {
-			case "0":
-				return ["グリフ名", "現在の実体", "提案"];
-			case "1":
-				return ["グリフ名", "現在の関連字", "提案"];
-			case "2":
-				return ["グリフ名", "提案"];
-			case "3":
-				return ["グリフ名"];
-		}
-		return [];
-	})();
-	return (
-		<SimpleColumnHeader columns={columns} />
-	);
-};
-const getRowRenderer = (type: string) => {
+const getColumnDefs = (type: string): Column<IValue>[] => {
 	switch (type as "0" | "1" | "2" | "3") {
 		case "0":
 		case "1": {
-			const RowRenderer = (props: { item: IValueIncorrect }) => (
-				<SimpleColumnRow columns={[
-					<Glyph name={props.item[0]} />,
-					<Glyph name={props.item[1]} />,
-					props.item[2].map((name, i) => [i === 0 ? "" : "または", <Glyph name={name} key={i} />]),
-				]} />
-			);
-			return RowRenderer;
+			const columns: Column<IValueIncorrect>[] = [
+				{
+					title: "グリフ名",
+					...glyphColumnDef(0),
+				},
+				{
+					title: type === "0" ? "現在の実体" : "現在の関連字",
+					...glyphColumnDef(1),
+				},
+				{
+					title: "提案",
+					field: "2",
+					render(item) {
+						return item[2].map((name, i) => [i === 0 ? "" : "または", <Glyph name={name} key={i} />]);
+					},
+				},
+			];
+			return columns as Column<IValue>[];
 		}
 		case "2": {
-			const RowRenderer = (props: { item: IValueUnset }) => (
-				<SimpleColumnRow columns={[
-					<Glyph name={props.item[0]} />,
-					props.item[2].map((name, i) => [i === 0 ? "" : "または", <Glyph name={name} key={i} />]),
-				]} />
-			);
-			return RowRenderer;
+			const columns: Column<IValueUnset>[] = [
+				{
+					title: "グリフ名",
+					...glyphColumnDef(0),
+				},
+				{
+					title: "提案",
+					field: "2",
+					render(item) {
+						return item[2].map((name, i) => [i === 0 ? "" : "または", <Glyph name={name} key={i} />]);
+					},
+				},
+			];
+			return columns as Column<IValue>[];
 		}
 		case "3": {
-			const RowRenderer = (props: { item: IValueInvalidMJ }) => (
-				<SimpleColumnRow columns={[
-					<Glyph name={props.item[0]} />,
-				]} />
-			);
-			return RowRenderer;
+			const columns: Column<IValueInvalidMJ>[] = [
+				{
+					title: "グリフ名",
+					...glyphColumnDef(0),
+				},
+			];
+			return columns as Column<IValue>[];
 		}
 	}
-	return () => null;
+	return [];
 };
 
 const validationItem = {id, title, Component: MjComponent};

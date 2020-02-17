@@ -1,10 +1,8 @@
 import * as React from "react";
 
-import Glyph from "../Glyph";
-import KageLine from "../KageLine";
-import ValidateResult from "../ValidateResult";
+import {Column} from "material-table";
 
-import {SimpleColumnHeader, SimpleColumnRow} from "../PagingTable";
+import ValidateResult, {glyphColumnDef, kageLineColumnDef} from "../ValidateResult";
 
 type IValue = [string, string, KageLineData]; // glyph name, stroke type (?:?:?), line data
 
@@ -20,8 +18,7 @@ const IllegalComponent: React.FunctionComponent<{ result: { [type: string]: IVal
 				</p>
 			}
 			getGroupTitle={getGroupTitle}
-			getTableHeaderRow={getTableHeaderRow}
-			getRowRenderer={getRowRenderer}
+			getColumnDefs={getColumnDefs}
 			result={props.result}
 		/>
 	);
@@ -47,19 +44,17 @@ const getGroupTitle = (type: string) => {
 	};
 	return titleMap[type];
 };
-const getTableHeaderRow = (_type: string) => {
-	return (
-		<SimpleColumnHeader columns={["グリフ名", "データ"]} />
-	);
-};
-const getRowRenderer = (_type: string) => {
-	const RowRenderer = (props: { item: IValue }) => (
-		<SimpleColumnRow columns={[
-			<Glyph name={props.item[0]} />,
-			<KageLine data={props.item[2]} />,
-		]} />
-	);
-	return RowRenderer;
+const getColumnDefs = (_type: string): Column<IValue>[] => {
+	return [
+		{
+			title: "グリフ名",
+			...glyphColumnDef(0),
+		},
+		{
+			title: "データ",
+			...kageLineColumnDef(2),
+		},
+	];
 };
 
 const validationItem = {id, title, Component: IllegalComponent};

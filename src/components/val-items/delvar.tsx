@@ -1,9 +1,8 @@
 import * as React from "react";
 
-import Glyph from "../Glyph";
-import ValidateResult from "../ValidateResult";
+import {Column} from "material-table";
 
-import {SimpleColumnHeader, SimpleColumnRow} from "../PagingTable";
+import ValidateResult, {glyphColumnDef} from "../ValidateResult";
 
 type IValue = [string, string]; // glyph name, base name
 
@@ -19,8 +18,7 @@ const DelvarComponent: React.FunctionComponent<{ result: { [type: string]: IValu
 				</p>
 			}
 			getGroupTitle={getGroupTitle}
-			getTableHeaderRow={getTableHeaderRow}
-			getRowRenderer={getRowRenderer}
+			getColumnDefs={getColumnDefs}
 			result={props.result}
 		/>
 	);
@@ -29,22 +27,17 @@ const DelvarComponent: React.FunctionComponent<{ result: { [type: string]: IValu
 const getGroupTitle = (_type: string) => {
 	return "派生元が存在しません。";
 };
-const getTableHeaderRow = (_type: string) => {
-	return (
-		<SimpleColumnHeader columns={[
-			"グリフ名",
-			"派生元",
-		]} />
-	);
-};
-const getRowRenderer = (_type: string) => {
-	const RowRenderer = (props: { item: IValue }) => (
-		<SimpleColumnRow columns={[
-			<Glyph name={props.item[0]} />,
-			<Glyph name={props.item[1]} />,
-		]} />
-	);
-	return RowRenderer;
+const getColumnDefs = (_type: string): Column<IValue>[] => {
+	return [
+		{
+			title: "グリフ名",
+			...glyphColumnDef(0),
+		},
+		{
+			title: "派生元",
+			...glyphColumnDef(1),
+		},
+	];
 };
 
 const validationItem = {id, title, Component: DelvarComponent};

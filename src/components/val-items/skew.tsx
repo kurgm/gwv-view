@@ -1,10 +1,8 @@
 import * as React from "react";
 
-import Glyph from "../Glyph";
-import KageLine from "../KageLine";
-import ValidateResult from "../ValidateResult";
+import {Column} from "material-table";
 
-import {SimpleColumnHeader, SimpleColumnRow} from "../PagingTable";
+import ValidateResult, {glyphColumnDef, kageLineColumnDef} from "../ValidateResult";
 
 type IValueWithoutAngle = [string, KageLineData]; // glyph name, line data
 type IValueWithAngle = [string, KageLineData, number]; // glyph name, line data, skew angle
@@ -22,8 +20,7 @@ const SkewComponent: React.FunctionComponent<{ result: { [type: string]: IValue[
 				</p>
 			}
 			getGroupTitle={getGroupTitle}
-			getTableHeaderRow={getTableHeaderRow}
-			getRowRenderer={getRowRenderer}
+			getColumnDefs={getColumnDefs}
 			result={props.result}
 		/>
 	);
@@ -42,33 +39,37 @@ const getGroupTitle = (type: string) => {
 	};
 	return titleMap[type];
 };
-const getTableHeaderRow = (type: string) => {
-	return (
-		<SimpleColumnHeader columns={
-			type === "70"
-				? ["グリフ名", "データ"]
-				: ["グリフ名", "角度", "データ"]
-		} />
-	);
-};
-const getRowRenderer = (type: string) => {
+const getColumnDefs = (type: string): Column<IValue>[] => {
 	if (type === "70") {
-		const RowRenderer = (props: { item: IValueWithoutAngle }) => (
-			<SimpleColumnRow columns={[
-				<Glyph name={props.item[0]} />,
-				<KageLine data={props.item[1]} />,
-			]} />
-		);
-		return RowRenderer;
+		const columns: Column<IValueWithoutAngle>[] = [
+			{
+				title: "グリフ名",
+				...glyphColumnDef(0),
+			},
+			{
+				title: "データ",
+				...kageLineColumnDef(1),
+			},
+		];
+		return columns as Column<IValue>[];
 	}
-	const RowRenderer = (props: { item: IValueWithAngle }) => (
-		<SimpleColumnRow columns={[
-			<Glyph name={props.item[0]} />,
-			`${props.item[2]}°`,
-			<KageLine data={props.item[1]} />,
-		]} />
-	);
-	return RowRenderer;
+	const columns: Column<IValueWithAngle>[] = [
+		{
+			title: "グリフ名",
+			...glyphColumnDef(0),
+		},
+		{
+			title: "角度",
+			field: "2",
+			type: "numeric",
+			render(item) { return `${item[2]}°`; },
+		},
+		{
+			title: "データ",
+			...kageLineColumnDef(1),
+		},
+	];
+	return columns as Column<IValue>[];
 };
 
 const validationItem = {id, title, Component: SkewComponent};

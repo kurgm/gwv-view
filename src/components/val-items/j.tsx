@@ -1,9 +1,9 @@
 import * as React from "react";
 
-import Glyph from "../Glyph";
-import ValidateResult from "../ValidateResult";
+import {Column} from "material-table";
 
-import {SimpleColumnHeader, SimpleColumnRow} from "../PagingTable";
+import Glyph from "../Glyph";
+import ValidateResult, {glyphColumnDef} from "../ValidateResult";
 
 type IValueNone = [string];
 type IValueSource = [string, string];
@@ -23,8 +23,7 @@ const JComponent: React.FunctionComponent<{ result: { [type: string]: IValue[] }
 				</p>
 			}
 			getGroupTitle={getGroupTitle}
-			getTableHeaderRow={getTableHeaderRow}
-			getRowRenderer={getRowRenderer}
+			getColumnDefs={getColumnDefs}
 			result={props.result}
 		/>
 	);
@@ -47,76 +46,84 @@ const getGroupTitle = (typeStr: string) => {
 	};
 	return titleMap[typeStr];
 };
-const getTableHeaderRow = (type: string) => {
-	const columns = (() => {
-		switch (type as "0" | "1" | "2" | "4" | "40" | "41" | "5" | "30" | "31") {
-			case "0":
-			case "4":
-			case "40":
-			case "41":
-			case "5":
-				return ["グリフ名", "無印グリフ"];
-			case "1":
-				return ["グリフ名", "jまたはja"];
-			case "2":
-				return ["グリフ名", "使わない部品", "使う部品"];
-			case "30":
-			case "31":
-				return ["グリフ名", "無印グリフ", "ソース"];
-		}
-		return [];
-	})();
-	return (
-		<SimpleColumnHeader columns={columns} />
-	);
-};
-const getRowRenderer = (type: string) => {
+const getColumnDefs = (type: string): Column<IValue>[] => {
 	switch (type as "0" | "1" | "2" | "4" | "40" | "41" | "5" | "30" | "31") {
 		case "0":
 		case "4":
 		case "40":
 		case "41":
 		case "5": {
-			const RowRenderer = (props: { item: IValueNone }) => (
-				<SimpleColumnRow columns={[
-					<Glyph name={props.item[0]} />,
-					<Glyph name={props.item[0].split("-")[0]} />,
-				]} />
-			);
-			return RowRenderer;
+			const columns: Column<IValueNone>[] = [
+				{
+					title: "グリフ名",
+					...glyphColumnDef(0),
+				},
+				{
+					title: "無印グリフ",
+					sorting: false,
+					render(item) {
+						return <Glyph name={item[0].split("-")[0]} />;
+					}
+				},
+			];
+			return columns as Column<IValue>[];
 		}
 		case "1": {
-			const RowRenderer = (props: { item: IValueJVJ }) => (
-				<SimpleColumnRow columns={[
-					<Glyph name={props.item[0]} />,
-					<Glyph name={`${props.item[0]}-${props.item[1]}`} />,
-				]} />
-			);
-			return RowRenderer;
+			const columns: Column<IValueJVJ>[] = [
+				{
+					title: "グリフ名",
+					...glyphColumnDef(0),
+				},
+				{
+					title: "jまたはja",
+					sorting: false,
+					render(item) {
+						return <Glyph name={`${item[0]}-${item[1]}`} />;
+					}
+				},
+			];
+			return columns as Column<IValue>[];
 		}
 		case "2": {
-			const RowRenderer = (props: { item: IValueJVBuhin }) => (
-				<SimpleColumnRow columns={[
-					<Glyph name={props.item[0]} />,
-					<Glyph name={props.item[1]} />,
-					<Glyph name={props.item[2]} />,
-				]} />
-			);
-			return RowRenderer;
+			const columns: Column<IValueJVBuhin>[] = [
+				{
+					title: "グリフ名",
+					...glyphColumnDef(0),
+				},
+				{
+					title: "使わない部品",
+					...glyphColumnDef(1),
+				},
+				{
+					title: "使う部品",
+					...glyphColumnDef(2),
+				},
+			];
+			return columns as Column<IValue>[];
 		}
 		case "30":
 		case "31": {
-			const RowRenderer = (props: { item: IValueSource }) => (
-				<SimpleColumnRow columns={[
-					<Glyph name={props.item[0]} />,
-					<Glyph name={props.item[0].split("-")[0]} />,
-					props.item[1],
-				]} />
-			);
-			return RowRenderer;
+			const columns: Column<IValueSource>[] = [
+				{
+					title: "グリフ名",
+					...glyphColumnDef(0),
+				},
+				{
+					title: "無印グリフ",
+					sorting: false,
+					render(item) {
+						return <Glyph name={item[0].split("-")[0]} />;
+					}
+				},
+				{
+					title: "ソース",
+					field: "1",
+				},
+			];
+			return columns as Column<IValue>[];
 		}
 	}
-	return () => null;
+	return [];
 };
 
 const validationItem = {id, title, Component: JComponent};
