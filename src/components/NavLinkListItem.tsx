@@ -4,9 +4,9 @@ import {NavLink, NavLinkProps} from "react-router-dom";
 
 import {Omit} from "@material-ui/core";
 
-import ListItem, {ListItemProps} from "@material-ui/core/ListItem/ListItem";
+import ListItem, {ListItemProps} from "@material-ui/core/ListItem";
 
-import makeStyles from "@material-ui/core/styles/makeStyles";
+import {makeStyles} from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
 	selectedItem: {

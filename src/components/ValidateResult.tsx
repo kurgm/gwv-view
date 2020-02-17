@@ -1,8 +1,8 @@
 import * as React from "react";
 
-import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
-import makeStyles from "@material-ui/core/styles/makeStyles";
+import {makeStyles} from "@material-ui/core/styles";
 
 import {Column} from "material-table";
 

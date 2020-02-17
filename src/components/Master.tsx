@@ -1,15 +1,13 @@
 import * as React from "react";
 
-import AppBar from "@material-ui/core/AppBar/AppBar";
-import IconButton from "@material-ui/core/IconButton/IconButton";
-import Toolbar from "@material-ui/core/Toolbar/Toolbar";
-import Typography from "@material-ui/core/Typography/Typography";
+import AppBar from "@material-ui/core/AppBar";
+import IconButton from "@material-ui/core/IconButton";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
 
-import indigo from "@material-ui/core/colors/indigo";
-import {ThemeProvider} from "@material-ui/core/styles";
-import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
-import makeStyles from "@material-ui/core/styles/makeStyles";
-import useMediaQuery from "@material-ui/core/useMediaQuery/useMediaQuery";
+import {indigo} from "@material-ui/core/colors";
+import {ThemeProvider, createMuiTheme, makeStyles} from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 import MenuIcon from "@material-ui/icons/Menu";
 

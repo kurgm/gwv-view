@@ -2,16 +2,16 @@ import * as React from "react";
 
 import {useLocation} from "react-router-dom";
 
-import CircularProgress from "@material-ui/core/CircularProgress/CircularProgress";
-import Divider from "@material-ui/core/Divider/Divider";
-import Drawer, {DrawerProps} from "@material-ui/core/Drawer/Drawer";
-import IconButton from "@material-ui/core/IconButton/IconButton";
-import List from "@material-ui/core/List/List";
-import ListItemText from "@material-ui/core/ListItemText/ListItemText";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Divider from "@material-ui/core/Divider";
+import Drawer, {DrawerProps} from "@material-ui/core/Drawer";
+import IconButton from "@material-ui/core/IconButton";
+import List from "@material-ui/core/List";
+import ListItemText from "@material-ui/core/ListItemText";
 
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 
-import withStyles, {StyleRules, WithStyles} from "@material-ui/core/styles/withStyles";
+import {withStyles, StyleRules, WithStyles} from "@material-ui/core/styles";
 
 import NavLinkListItem from "./NavLinkListItem";
 
