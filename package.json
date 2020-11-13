@@ -1,0 +1,44 @@
+{
+  "name": "gwv-view",
+  "version": "1.0.0",
+  "description": "Viewer of results of GlyphWiki data validator",
+  "private": true,
+  "scripts": {
+    "build": "webpack",
+    "start": "webpack serve --mode=development",
+    "lint": "eslint src --ext .tsx,.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kurgm/gwv-view.git"
+  },
+  "author": "Kurogoma",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kurgm/gwv-view/issues"
+  },
+  "homepage": "https://github.com/kurgm/gwv-view#readme",
+  "dependencies": {
+    "ra-data-fakerest": "^3.9.3",
+    "react": "^17.0.1",
+    "react-admin": "^3.10.0",
+    "react-dom": "^17.0.1",
+    "react-ga": "^3.2.1"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.56",
+    "@types/react-dom": "^16.9.9",
+    "@typescript-eslint/eslint-plugin": "^4.7.0",
+    "@typescript-eslint/parser": "^4.7.0",
+    "eslint": "^7.13.0",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "html-webpack-plugin": "^4.5.0",
+    "ts-loader": "^8.0.11",
+    "typescript": "^4.0.5",
+    "webpack": "^5.4.0",
+    "webpack-cli": "^4.2.0",
+    "webpack-dev-server": "^3.11.0"
+  }
+}
