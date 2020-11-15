@@ -20,7 +20,9 @@
   },
   "homepage": "https://github.com/kurgm/gwv-view#readme",
   "dependencies": {
+    "@bicstone/ra-language-japanese": "^3.8.0",
     "ra-data-fakerest": "^3.9.3",
+    "ra-i18n-polyglot": "^3.10.1",
     "react": "^17.0.1",
     "react-admin": "^3.10.1",
     "react-dom": "^17.0.1",
