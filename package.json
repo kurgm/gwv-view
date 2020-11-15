@@ -22,7 +22,7 @@
   "dependencies": {
     "ra-data-fakerest": "^3.9.3",
     "react": "^17.0.1",
-    "react-admin": "^3.10.0",
+    "react-admin": "^3.10.1",
     "react-dom": "^17.0.1",
     "react-ga": "^3.2.1"
   },
