@@ -2,6 +2,7 @@ import * as React from "react";
 import { useSelector } from "react-redux";
 import { MenuItemLink, getResources, MenuProps, ResourceProps, DashboardMenuItem } from "react-admin";
 import Divider from "@material-ui/core/Divider";
+import FolderIcon from "@material-ui/icons/Folder";
 import DefaultIcon from "@material-ui/icons/ViewList";
 
 import SubMenu from "./SubMenu";
@@ -41,7 +42,7 @@ const Menu: React.FC<MenuProps> = ({ onMenuClick }) => {
 				<SubMenu
 					open={!!submenuOpenState[validator.name]}
 					handleToggle={handleSubmenuToggle[validator.name]}
-					icon={<DefaultIcon />}
+					icon={<FolderIcon />}
 					title={validator.title}
 					sidebarIsOpen={open}
 				>
