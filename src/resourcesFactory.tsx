@@ -147,6 +147,7 @@ export const resourcesFactory = ({ result }: GWVJSON) => {
 		resources.push({
 			name: `${validatorName}/${errorCode}`,
 			list,
+			options: { label: title },
 		});
 	}
 

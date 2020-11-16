@@ -9,6 +9,7 @@ import { fetchResultJson } from "./fetchResult";
 import { resourcesFactory } from "./resourcesFactory";
 import { validateItems } from "./validateItems";
 import Dashboard from "./Dashboard";
+import Layout from "./Layout";
 
 const i18nMesssages: Record<string, TranslationMessages> = {
 	ja: {
@@ -52,6 +53,7 @@ const App = () => {
 			dataProvider={dataProvider}
 			i18nProvider={i18nProvider}
 			dashboard={Dashboard}
+			layout={Layout}
 		>
 			{loadResources}
 		</Admin>
