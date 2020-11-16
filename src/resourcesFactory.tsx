@@ -104,7 +104,9 @@ const EntryRenderer: React.FC<EntryRendererProps> = ({ entryType }) => {
 					<GlyphField source="quoted" label="旧部品" />
 					<FunctionField
 						label="最新版"
-						render={(record?: Record<string, unknown>) => (record?.quoted as string)?.split("@")[0]}
+						render={(record?: Record<string, unknown>) => (
+							<GlyphLink name={(record?.quoted as string)?.split("@")[0]} />
+						)}
 					/>
 					<NumberField source="quoteCount" label="引用しているグリフ数" />
 					<FunctionField
