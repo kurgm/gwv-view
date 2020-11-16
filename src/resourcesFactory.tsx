@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Datagrid, FunctionField, List, ListProps, NumberField, ResourceProps, TextField, TextFieldProps } from "react-admin";
+import { Datagrid, Filter, FilterProps, FunctionField, List, ListProps, NumberField, ResourceProps, TextField, TextFieldProps, TextInput } from "react-admin";
 
 import GlyphField from "./components/GlyphField";
 import GlyphLink from "./components/GlyphLink";
@@ -11,7 +11,7 @@ interface FieldRendererProps extends TextFieldProps {
 	columnType: TabularCellType;
 }
 
-const FieldRenderer = ({ columnType, ...restProps }: FieldRendererProps) => {
+const FieldRenderer: React.FC<FieldRendererProps> = ({ columnType, ...restProps }) => {
 	if (typeof columnType === "object") {
 		switch (columnType.type) {
 			case "number":
@@ -67,7 +67,7 @@ interface EntryRendererProps {
 	entryType: ValidateItemEntryType;
 }
 
-const EntryRenderer = ({ entryType }: EntryRendererProps) => {
+const EntryRenderer: React.FC<EntryRendererProps> = ({ entryType }) => {
 	switch (entryType.type) {
 		case "tabular":
 			return (
@@ -126,6 +126,12 @@ const EntryRenderer = ({ entryType }: EntryRendererProps) => {
 	}
 };
 
+const SimpleFilter: React.FC<Omit<FilterProps, "children">> = (props) => (
+	<Filter {...props}>
+		<TextInput source="q" label="検索" alwaysOn />
+	</Filter>
+);
+
 export const resourcesFactory = ({ result }: GWVJSON) => {
 	const resources: ResourceProps[] = [];
 
@@ -134,11 +140,12 @@ export const resourcesFactory = ({ result }: GWVJSON) => {
 			continue;
 		}
 
-		const list = (props: Omit<ListProps, "children">) => (
+		const list: React.FC<ListProps> = (props) => (
 			<List
 				{...props}
 				bulkActionButtons={false}
 				title={title}
+				filters={<SimpleFilter />}
 			>
 				<EntryRenderer entryType={entryType} />
 			</List>
