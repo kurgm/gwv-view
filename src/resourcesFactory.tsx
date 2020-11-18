@@ -1,5 +1,7 @@
 import * as React from "react";
 import { Datagrid, Filter, FilterProps, FunctionField, List, ListProps, NumberField, ResourceProps, TextField, TextFieldProps, TextInput } from "react-admin";
+import Badge from "@material-ui/core/Badge";
+import ViewListIcon from "@material-ui/icons/ViewList";
 
 import GlyphField from "./components/GlyphField";
 import GlyphLink from "./components/GlyphLink";
@@ -153,10 +155,17 @@ export const resourcesFactory = ({ result }: GWVJSON) => {
 			</List>
 		);
 
+		const icon: React.FC = () => (
+			<Badge badgeContent={result[validatorName][errorCode].length} max={Infinity} color="primary">
+				<ViewListIcon />
+			</Badge>
+		);
+
 		resources.push({
 			name: `${validatorName}/${errorCode}`,
 			list,
 			options: { label: title },
+			icon,
 		});
 	}
 
