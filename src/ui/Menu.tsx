@@ -7,7 +7,7 @@ import DefaultIcon from "@material-ui/icons/ViewList";
 import SettingsIcon from '@material-ui/icons/Settings';
 
 import SubMenu from "./SubMenu";
-import { validators } from "./validateItems";
+import { validators } from "../validateItems";
 
 const Menu: React.FC<MenuProps> = ({ onMenuClick }) => {
 	// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-explicit-any

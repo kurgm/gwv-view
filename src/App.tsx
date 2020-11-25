@@ -10,8 +10,8 @@ import { fetchResultJson } from "./fetchResult";
 import { resourcesFactory } from "./resourcesFactory";
 import { validateItems } from "./validateItems";
 import Dashboard from "./Dashboard";
-import Layout from "./Layout";
-import ConfigEdit from "./ConfigEdit";
+import Layout from "./ui/Layout";
+import ConfigEdit from "./config/ConfigEdit";
 
 const i18nMesssages: Record<string, TranslationMessages> = {
 	ja: {
