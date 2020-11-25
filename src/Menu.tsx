@@ -40,6 +40,7 @@ const Menu: React.FC<MenuProps> = ({ onMenuClick }) => {
 			<Divider />
 			{validators.filter((validator) => !!resourcesByValidator[validator.name]).map((validator) => (
 				<SubMenu
+					key={validator.name}
 					open={!!submenuOpenState[validator.name]}
 					handleToggle={handleSubmenuToggle[validator.name]}
 					icon={<FolderIcon />}
