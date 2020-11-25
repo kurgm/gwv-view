@@ -16,6 +16,7 @@
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/indent": ["error", "tab"],
     "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-unused-vars": ["warn", { "ignoreRestSiblings": true }],
     "@typescript-eslint/semi": "error",
     "react/jsx-key": "off",
     "react/prop-types": "off",

@@ -1,8 +1,9 @@
 import * as React from "react";
-import { Admin, DataProvider, Resource, TranslationMessages } from 'react-admin';
-import fakeDataProvider from 'ra-data-fakerest';
-import polyglotI18nProvider from 'ra-i18n-polyglot';
-import japaneseMessages from '@bicstone/ra-language-japanese';
+import { Route } from "react-router-dom";
+import { Admin, DataProvider, Resource, TranslationMessages } from "react-admin";
+import fakeDataProvider from "ra-data-fakerest";
+import polyglotI18nProvider from "ra-i18n-polyglot";
+import japaneseMessages from "@bicstone/ra-language-japanese";
 
 import { dataProviderFactory } from "./dataProviderFactory";
 import { fetchResultJson } from "./fetchResult";
@@ -10,6 +11,7 @@ import { resourcesFactory } from "./resourcesFactory";
 import { validateItems } from "./validateItems";
 import Dashboard from "./Dashboard";
 import Layout from "./Layout";
+import ConfigEdit from "./ConfigEdit";
 
 const i18nMesssages: Record<string, TranslationMessages> = {
 	ja: {
@@ -54,6 +56,9 @@ const App = () => {
 			i18nProvider={i18nProvider}
 			dashboard={Dashboard}
 			layout={Layout}
+			customRoutes={[
+				<Route key="config" exact path="/config" component={ConfigEdit} />,
+			]}
 		>
 			{loadResources}
 		</Admin>

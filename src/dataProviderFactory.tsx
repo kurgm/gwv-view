@@ -1,8 +1,10 @@
+import { DataProvider, GetOneParams, GetOneResult, Record as RaRecord, UpdateParams, UpdateResult } from 'react-admin';
 import fakeDataProvider from 'ra-data-fakerest';
 
 import { validateItems } from './validateItems';
+import { Config, defaultConfig } from './config';
 
-export const dataProviderFactory = ({ result }: GWVJSON) => {
+export const dataProviderFactory = ({ result }: GWVJSON): DataProvider => {
 	const collectionMap: Record<string, unknown[]> = {};
 
 	for (const { validatorName, errorCode, entryType } of validateItems) {
@@ -33,5 +35,41 @@ export const dataProviderFactory = ({ result }: GWVJSON) => {
 		collectionMap[`${validatorName}/${errorCode}`] = adaptedEntries;
 	}
 
-	return fakeDataProvider(collectionMap);
+	const resultDataProvider = fakeDataProvider(collectionMap);
+
+	const dataProvider: DataProvider = {
+		...resultDataProvider,
+		getOne: async <RecordType extends RaRecord = RaRecord>(resource: string, params: GetOneParams): Promise<GetOneResult<RecordType>> => {
+			if (resource !== "config") {
+				return resultDataProvider.getOne(resource, params);
+			}
+
+			const config: Config = { ...defaultConfig };
+
+			const storedConfigString = localStorage.getItem("preference");
+			if (storedConfigString !== null) {
+				Object.assign(config, JSON.parse(storedConfigString));
+			}
+			return {
+				data: {
+					id: params.id,
+					...config,
+				} as RaRecord as RecordType,
+			};
+		},
+		update: async <RecordType extends RaRecord = RaRecord>(resource: string, params: UpdateParams): Promise<UpdateResult<RecordType>> => {
+			if (resource !== "config") {
+				return resultDataProvider.update(resource, params);
+			}
+
+			const { id, ...config } = params.data as RaRecord;
+			localStorage.setItem("preference", JSON.stringify(config));
+
+			return {
+				data: params.data as RecordType,
+			};
+		},
+	};
+
+	return dataProvider;
 };

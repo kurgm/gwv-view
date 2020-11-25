@@ -4,6 +4,7 @@ import { MenuItemLink, getResources, MenuProps, ResourceProps, DashboardMenuItem
 import Divider from "@material-ui/core/Divider";
 import FolderIcon from "@material-ui/icons/Folder";
 import DefaultIcon from "@material-ui/icons/ViewList";
+import SettingsIcon from '@material-ui/icons/Settings';
 
 import SubMenu from "./SubMenu";
 import { validators } from "./validateItems";
@@ -61,6 +62,14 @@ const Menu: React.FC<MenuProps> = ({ onMenuClick }) => {
 					))}
 				</SubMenu>
 			))}
+			<Divider />
+			<MenuItemLink
+				to="/config"
+				primaryText="設定"
+				leftIcon={<SettingsIcon />}
+				onClick={onMenuClick}
+				sidebarIsOpen={open}
+			/>
 		</div>
 	);
 };

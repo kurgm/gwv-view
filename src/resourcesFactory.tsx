@@ -169,5 +169,11 @@ export const resourcesFactory = ({ result }: GWVJSON) => {
 		});
 	}
 
+	resources.push(
+		{
+			name: "config",
+		},
+	);
+
 	return resources;
 };
