@@ -2,7 +2,7 @@ import { DataProvider, GetOneParams, GetOneResult, Record as RaRecord, UpdatePar
 import fakeDataProvider from 'ra-data-fakerest';
 
 import { validateItems } from './validateItems';
-import { Config, defaultConfig } from './config';
+import { Config, getConfig, setConfig } from './config';
 
 export const dataProviderFactory = ({ result }: GWVJSON): DataProvider => {
 	const collectionMap: Record<string, unknown[]> = {};
@@ -44,12 +44,7 @@ export const dataProviderFactory = ({ result }: GWVJSON): DataProvider => {
 				return resultDataProvider.getOne(resource, params);
 			}
 
-			const config: Config = { ...defaultConfig };
-
-			const storedConfigString = localStorage.getItem("preference");
-			if (storedConfigString !== null) {
-				Object.assign(config, JSON.parse(storedConfigString));
-			}
+			const config = getConfig();
 			return {
 				data: {
 					id: params.id,
@@ -63,7 +58,7 @@ export const dataProviderFactory = ({ result }: GWVJSON): DataProvider => {
 			}
 
 			const { id, ...config } = params.data as RaRecord;
-			localStorage.setItem("preference", JSON.stringify(config));
+			setConfig(config as Config);
 
 			return {
 				data: params.data as RecordType,
