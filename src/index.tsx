@@ -16,3 +16,5 @@ ReactDOM.render(
 	<App />,
 	document.getElementById("app"),
 );
+
+ReactGA.pageview(location.pathname);

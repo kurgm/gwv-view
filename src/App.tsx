@@ -4,6 +4,8 @@ import { Admin, DataProvider, Resource, TranslationMessages } from "react-admin"
 import fakeDataProvider from "ra-data-fakerest";
 import polyglotI18nProvider from "ra-i18n-polyglot";
 import japaneseMessages from "@bicstone/ra-language-japanese";
+import * as ReactGA from "react-ga";
+import { createHashHistory } from "history";
 
 import { dataProviderFactory } from "./dataProviderFactory";
 import { fetchResultJson } from "./fetchResult";
@@ -27,6 +29,11 @@ const i18nMesssages: Record<string, TranslationMessages> = {
 };
 
 const i18nProvider = polyglotI18nProvider((locale) => i18nMesssages[locale], "ja");
+
+const history = createHashHistory();
+history.listen((hLocation) => {
+	ReactGA.pageview(location.pathname + "#" + hLocation.pathname);
+});
 
 const dataPromise = fetchResultJson();
 
@@ -56,6 +63,7 @@ const App = () => {
 			i18nProvider={i18nProvider}
 			dashboard={Dashboard}
 			layout={Layout}
+			history={history}
 			customRoutes={[
 				<Route key="config" exact path="/config" component={ConfigEdit} />,
 			]}
