@@ -7,7 +7,6 @@ const MyLayout: React.FC<LayoutProps> = (props) => (
 	<Layout
 		{...props}
 		menu={Menu}
-		// @ts-expect-error 2322
 		appBar={AppBar}
 	/>
 );
