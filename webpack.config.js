@@ -1,7 +1,10 @@
+// @ts-check
+
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-module.exports = {
+/** @return {import("webpack").Configuration} */
+module.exports = (env, argv) => ({
     entry: ["./src/index.tsx"],
     output: {
         path: path.resolve(__dirname, "dist"),
@@ -9,7 +12,7 @@ module.exports = {
     },
 
     // Enable sourcemaps for debugging webpack's output.
-    devtool: "inline-source-map",
+    devtool: argv.mode === "production" ? false : "eval-source-map",
 
     devServer: {
         static: {
@@ -46,4 +49,4 @@ module.exports = {
             template: "./src/index.html",
         }),
     ]
-};
+});
