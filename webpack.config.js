@@ -12,7 +12,9 @@ module.exports = {
     devtool: "inline-source-map",
 
     devServer: {
-        contentBase: "./dist",
+        static: {
+            directory: "./dist",
+        },
     },
 
     resolve: {
