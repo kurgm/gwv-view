@@ -186,7 +186,6 @@ export const validateItems: ValidateItem[] = [
 		{ errorCode: "4", title: "不正な列数" },
 		{ errorCode: "5", title: "不正なデータ" },
 		{ errorCode: "6", title: "ありえない形状の組み合わせ" },
-		{ errorCode: "7", title: "不正なエイリアス書式" },
 		{ errorCode: "9", title: "部品位置の指定がある" },
 		{ errorCode: "10", title: "横画に縦画用の接続形状を使用" },
 		{ errorCode: "11", title: "縦画に接続(横)を使用" },
@@ -206,6 +205,21 @@ export const validateItems: ValidateItem[] = [
 				{ type: "kageline", label: "データ" },
 			],
 		},
+	})),
+
+	...[
+		{ errorCode: "7", title: "不正なエイリアス書式" },
+		{ errorCode: "8", title: "不正な空白グリフ書式" },
+	].map(({ errorCode, title }): ValidateItem => ({
+		validatorName: "illegal",
+		errorCode,
+		title,
+		entryType: {
+			type: "tabular",
+			columns: [
+				{ type: "glyphname", label: "グリフ名" },
+			],
+		}
 	})),
 
 	...[
