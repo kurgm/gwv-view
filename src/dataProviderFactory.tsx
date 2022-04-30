@@ -1,4 +1,4 @@
-import { DataProvider, GetOneParams, GetOneResult, Record as RaRecord, UpdateParams, UpdateResult } from 'react-admin';
+import { DataProvider, GetOneParams, GetOneResult, RaRecord, UpdateParams, UpdateResult } from 'react-admin';
 import fakeDataProvider from 'ra-data-fakerest';
 
 import { validateItems } from './validateItems';
@@ -39,7 +39,7 @@ export const dataProviderFactory = ({ result }: GWVJSON): DataProvider => {
 
 	const dataProvider: DataProvider = {
 		...resultDataProvider,
-		getOne: async <RecordType extends RaRecord = RaRecord>(resource: string, params: GetOneParams): Promise<GetOneResult<RecordType>> => {
+		getOne: async <RecordType extends RaRecord = RaRecord>(resource: string, params: GetOneParams<RecordType>): Promise<GetOneResult<RecordType>> => {
 			if (resource !== "config") {
 				return resultDataProvider.getOne(resource, params);
 			}
@@ -52,7 +52,7 @@ export const dataProviderFactory = ({ result }: GWVJSON): DataProvider => {
 				} as RaRecord as RecordType,
 			};
 		},
-		update: async <RecordType extends RaRecord = RaRecord>(resource: string, params: UpdateParams): Promise<UpdateResult<RecordType>> => {
+		update: async <RecordType extends RaRecord = RaRecord>(resource: string, params: UpdateParams<RecordType>): Promise<UpdateResult<RecordType>> => {
 			if (resource !== "config") {
 				return resultDataProvider.update(resource, params);
 			}

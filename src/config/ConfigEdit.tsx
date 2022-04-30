@@ -5,7 +5,6 @@ const ConfigEdit: React.FC<EditProps> = (props) => (
 	<Edit
 		resource="config"
 		id="undefined"
-		basePath="/config"
 		title="設定"
 		{...props}
 	>
@@ -13,8 +12,9 @@ const ConfigEdit: React.FC<EditProps> = (props) => (
 			<SelectInput
 				source="imageType"
 				label="画像の形式"
+				emptyValue={"none"}
+				emptyText={"表示しない"}
 				choices={[
-					{ id: "none", name: "表示しない" },
 					{ id: "png50", name: "PNG (50px)" },
 					{ id: "svg", name: "SVG" },
 				]}

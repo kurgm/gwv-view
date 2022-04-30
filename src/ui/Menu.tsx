@@ -1,18 +1,16 @@
 import * as React from "react";
-import { useSelector } from "react-redux";
-import { MenuItemLink, getResources, MenuProps, ResourceProps, DashboardMenuItem } from "react-admin";
-import Divider from "@material-ui/core/Divider";
-import FolderIcon from "@material-ui/icons/Folder";
-import DefaultIcon from "@material-ui/icons/ViewList";
-import SettingsIcon from '@material-ui/icons/Settings';
+import { MenuItemLink, MenuProps, ResourceProps, DashboardMenuItem, Menu, useResourceDefinitions } from "react-admin";
+import Divider from "@mui/material/Divider";
+import FolderIcon from "@mui/icons-material/Folder";
+import DefaultIcon from "@mui/icons-material/ViewList";
+import SettingsIcon from '@mui/icons-material/Settings';
 
 import SubMenu from "./SubMenu";
 import { validators } from "../validateItems";
 
-const Menu: React.FC<MenuProps> = ({ onMenuClick }) => {
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-explicit-any
-	const open = useSelector((state) => (state as any).admin.ui.sidebarOpen as boolean);
-	const resources = useSelector(getResources) as ResourceProps[];
+const MyMenu: React.FC<MenuProps> = (props) => {
+	const resourcesDefinitions = useResourceDefinitions();
+	const resources = Object.keys(resourcesDefinitions).map(name => resourcesDefinitions[name]);
 
 	const resourcesByValidator: Record<string, ResourceProps[]> = {};
 	for (const resource of resources) {
@@ -36,8 +34,8 @@ const Menu: React.FC<MenuProps> = ({ onMenuClick }) => {
 	}, []);
 
 	return (
-		<div>
-			<DashboardMenuItem onClick={onMenuClick} sidebarIsOpen={open} />
+		<Menu {...props}>
+			<DashboardMenuItem dense={props.dense} />
 			<Divider />
 			{validators.filter((validator) => !!resourcesByValidator[validator.name]).map((validator) => (
 				<SubMenu
@@ -46,7 +44,7 @@ const Menu: React.FC<MenuProps> = ({ onMenuClick }) => {
 					handleToggle={handleSubmenuToggle[validator.name]}
 					icon={<FolderIcon />}
 					title={validator.title}
-					sidebarIsOpen={open}
+					dense={props.dense}
 				>
 					{resourcesByValidator[validator.name].map((resource) => (
 						<MenuItemLink
@@ -56,8 +54,7 @@ const Menu: React.FC<MenuProps> = ({ onMenuClick }) => {
 								((resource.options as { label?: string; })?.label) ||
 								resource.name}
 							leftIcon={resource.icon ? <resource.icon /> : <DefaultIcon />}
-							onClick={onMenuClick}
-							sidebarIsOpen={open}
+							dense={props.dense}
 						/>
 					))}
 				</SubMenu>
@@ -67,11 +64,10 @@ const Menu: React.FC<MenuProps> = ({ onMenuClick }) => {
 				to="/config"
 				primaryText="設定"
 				leftIcon={<SettingsIcon />}
-				onClick={onMenuClick}
-				sidebarIsOpen={open}
+				dense={props.dense}
 			/>
-		</div>
+		</Menu>
 	);
 };
 
-export default Menu;
+export default MyMenu;

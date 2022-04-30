@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Datagrid, Filter, FilterProps, FunctionField, List, ListProps, NumberField, ResourceProps, TextField, TextFieldProps, TextInput } from "react-admin";
-import Badge from "@material-ui/core/Badge";
-import ViewListIcon from "@material-ui/icons/ViewList";
+import Badge from "@mui/material/Badge";
+import ViewListIcon from "@mui/icons-material/ViewList";
 
 import GlyphField from "./components/GlyphField";
 import GlyphLink from "./components/GlyphLink";
@@ -73,7 +73,7 @@ const EntryRenderer: React.FC<EntryRendererProps> = ({ entryType }) => {
 	switch (entryType.type) {
 		case "tabular":
 			return (
-				<Datagrid>
+				<Datagrid bulkActionButtons={false}>
 					{...entryType.columns.map((column, index) => (
 						column.type === "ignore"
 							? null
@@ -88,7 +88,7 @@ const EntryRenderer: React.FC<EntryRendererProps> = ({ entryType }) => {
 			);
 		case "headtail":
 			return (
-				<Datagrid>
+				<Datagrid bulkActionButtons={false}>
 					<FieldRenderer
 						source="head"
 						columnType={entryType.headType}
@@ -102,7 +102,7 @@ const EntryRenderer: React.FC<EntryRendererProps> = ({ entryType }) => {
 			);
 		case "mustrenew":
 			return (
-				<Datagrid>
+				<Datagrid bulkActionButtons={false}>
 					<GlyphField source="quoted" label="旧部品" />
 					<FunctionField
 						label="最新版"
@@ -147,7 +147,6 @@ export const resourcesFactory = ({ result }: GWVJSON) => {
 		const list: React.FC<ListProps> = (props) => (
 			<List
 				{...props}
-				bulkActionButtons={false}
 				title={title}
 				filters={<SimpleFilter />}
 			>

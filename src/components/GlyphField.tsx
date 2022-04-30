@@ -1,13 +1,16 @@
 import * as React from "react";
-import { TextFieldProps } from 'react-admin';
+import { TextFieldProps, useRecordContext } from 'react-admin';
 import GlyphLink from "./GlyphLink";
 
 export type GlyphFieldProps = TextFieldProps;
 
-const GlyphField = ({ record, source }: GlyphFieldProps) => (
-	record && source
-		? <GlyphLink name={record[source] as string} />
-		: null
-);
+const GlyphField: React.FC<GlyphFieldProps> = ({ source }) => {
+	const record = useRecordContext();
+	if (!(record && source)) {
+		return null;
+	}
+	const name = record[source] as string;
+	return <GlyphLink name={name} />;
+};
 
 export default GlyphField;
