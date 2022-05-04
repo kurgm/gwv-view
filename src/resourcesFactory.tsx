@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Datagrid, Filter, FilterProps, FunctionField, List, ListProps, NumberField, ResourceProps, TextField, TextFieldProps, TextInput } from "react-admin";
+import { Datagrid, FunctionField, List, ListProps, NumberField, ResourceProps, SearchInput, TextField, TextFieldProps } from "react-admin";
 import Badge from "@mui/material/Badge";
 import ViewListIcon from "@mui/icons-material/ViewList";
 
@@ -130,12 +130,6 @@ const EntryRenderer: React.FC<EntryRendererProps> = ({ entryType }) => {
 	}
 };
 
-const SimpleFilter: React.FC<Omit<FilterProps, "children">> = (props) => (
-	<Filter {...props}>
-		<TextInput source="q" label="検索" alwaysOn />
-	</Filter>
-);
-
 export const resourcesFactory = ({ result }: GWVJSON) => {
 	const resources: ResourceProps[] = [];
 
@@ -148,7 +142,7 @@ export const resourcesFactory = ({ result }: GWVJSON) => {
 			<List
 				{...props}
 				title={title}
-				filters={<SimpleFilter />}
+				filters={[<SearchInput key="q" source="q" alwaysOn />]}
 			>
 				<EntryRenderer entryType={entryType} />
 			</List>
