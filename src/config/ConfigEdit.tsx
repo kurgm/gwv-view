@@ -1,5 +1,11 @@
 import * as React from "react";
-import { Edit, EditProps, SelectInput, SimpleForm } from "react-admin";
+import { Edit, EditProps, SaveButton, SelectInput, SimpleForm, Toolbar } from "react-admin";
+
+const toolbar = (
+	<Toolbar>
+		<SaveButton />
+	</Toolbar>
+);
 
 const ConfigEdit: React.FC<EditProps> = (props) => (
 	<Edit
@@ -8,7 +14,7 @@ const ConfigEdit: React.FC<EditProps> = (props) => (
 		title="設定"
 		{...props}
 	>
-		<SimpleForm>
+		<SimpleForm toolbar={toolbar}>
 			<SelectInput
 				source="imageType"
 				label="画像の形式"
