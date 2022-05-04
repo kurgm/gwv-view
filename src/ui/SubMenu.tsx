@@ -14,13 +14,18 @@ export interface SubMenuProps {
 	icon: React.ReactElement;
 	title: string;
 	dense?: boolean;
+	selected?: boolean;
 }
 
 const SubMenu: React.FC<SubMenuProps> = (props) => {
 	const [sidebarIsOpen] = useSidebarState();
 
 	const parentItem = (
-		<MenuItem onClick={props.handleToggle} dense={props.dense}>
+		<MenuItem
+			onClick={props.handleToggle}
+			dense={props.dense}
+			selected={props.selected}
+		>
 			<ListItemIcon
 				sx={{
 					minWidth: (theme) => theme.spacing(5),
@@ -46,7 +51,7 @@ const SubMenu: React.FC<SubMenuProps> = (props) => {
 					disablePadding
 					sx={{
 						"& a": {
-							paddingLeft: (theme) => sidebarIsOpen ? theme.spacing(4): theme.spacing(2),
+							paddingLeft: (theme) => sidebarIsOpen ? theme.spacing(4) : theme.spacing(2),
 						},
 					}}
 				>

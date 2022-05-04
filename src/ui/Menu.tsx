@@ -4,6 +4,7 @@ import Divider from "@mui/material/Divider";
 import FolderIcon from "@mui/icons-material/Folder";
 import DefaultIcon from "@mui/icons-material/ViewList";
 import SettingsIcon from '@mui/icons-material/Settings';
+import { matchPath, useLocation } from "react-router";
 
 import SubMenu from "./SubMenu";
 import { validators } from "../validateItems";
@@ -37,6 +38,8 @@ const MyMenu: React.FC<MenuProps> = (props) => {
 		return handlers;
 	}, []);
 
+	const location = useLocation();
+
 	return (
 		<Menu {...props}>
 			<DashboardMenuItem dense={props.dense} />
@@ -48,6 +51,7 @@ const MyMenu: React.FC<MenuProps> = (props) => {
 					handleToggle={handleSubmenuToggle[validator.name]}
 					icon={<FolderIcon />}
 					title={validator.title}
+					selected={!!matchPath(`/${validator.name}/*`, location.pathname)}
 					dense={props.dense}
 				>
 					{resourcesByValidator[validator.name].map((resource) => (
@@ -56,6 +60,7 @@ const MyMenu: React.FC<MenuProps> = (props) => {
 							to={`/${resource.name}`}
 							primaryText={resource.options?.label || resource.name}
 							leftIcon={resource.icon ? <resource.icon /> : <DefaultIcon />}
+							selected={!!matchPath(`/${resource.name}`, location.pathname)}
 							dense={props.dense}
 						/>
 					))}
