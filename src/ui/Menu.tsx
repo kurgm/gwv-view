@@ -71,6 +71,7 @@ const MyMenu: React.FC<MenuProps> = (props) => {
 				to="/config"
 				primaryText="設定"
 				leftIcon={<SettingsIcon />}
+				selected={!!matchPath("/config", location.pathname)}
 				dense={props.dense}
 			/>
 		</Menu>
