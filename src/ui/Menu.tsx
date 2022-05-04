@@ -10,16 +10,20 @@ import { validators } from "../validateItems";
 
 const MyMenu: React.FC<MenuProps> = (props) => {
 	const resourcesDefinitions = useResourceDefinitions();
-	const resources = Object.keys(resourcesDefinitions).map(name => resourcesDefinitions[name]);
 
-	const resourcesByValidator: Record<string, ResourceProps[]> = {};
-	for (const resource of resources) {
-		const validatorName = resource.name.split("/")[0];
-		if (!resourcesByValidator[validatorName]) {
-			resourcesByValidator[validatorName] = [];
+	const resourcesByValidator = React.useMemo(() => {
+		const resources = Object.keys(resourcesDefinitions).map(name => resourcesDefinitions[name]);
+
+		const result: Record<string, ResourceProps[]> = {};
+		for (const resource of resources) {
+			const validatorName = resource.name.split("/")[0];
+			if (!result[validatorName]) {
+				result[validatorName] = [];
+			}
+			result[validatorName].push(resource);
 		}
-		resourcesByValidator[validatorName].push(resource);
-	}
+		return result;
+	}, [resourcesDefinitions]);
 
 	const [submenuOpenState, setSubmenuOpenState] = React.useState<Record<string, boolean>>({});
 	const handleSubmenuToggle = React.useMemo(() => {
@@ -50,9 +54,7 @@ const MyMenu: React.FC<MenuProps> = (props) => {
 						<MenuItemLink
 							key={resource.name}
 							to={`/${resource.name}`}
-							primaryText={
-								((resource.options as { label?: string; })?.label) ||
-								resource.name}
+							primaryText={resource.options?.label || resource.name}
 							leftIcon={resource.icon ? <resource.icon /> : <DefaultIcon />}
 							dense={props.dense}
 						/>

@@ -39,7 +39,7 @@ const SubMenu: React.FC<SubMenuProps> = (props) => {
 					{parentItem}
 				</Tooltip>
 			)}
-			<Collapse in={props.open}>
+			<Collapse in={props.open} mountOnEnter unmountOnExit>
 				<List
 					component="div"
 					dense={props.dense}

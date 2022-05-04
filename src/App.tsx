@@ -39,18 +39,21 @@ const dataPromise = fetchResultJson();
 
 const emptyDataProvider = fakeDataProvider({});
 
-const loadResources = async () => {
-	const data = await dataPromise;
-	const resources = resourcesFactory(data);
-	return <>
-		{resources.map((props) => (
-			<Resource key={props.name} {...props} />
-		))}
-		<CustomRoutes>
-			<Route path="/config" element={<ConfigEdit />} />
-		</CustomRoutes>
-	</>;
-};
+const loadResources = (() => {
+	const resourcesPromise = (async () => {
+		const data = await dataPromise;
+		const resources = resourcesFactory(data);
+		return <>
+			{resources.map((props) => (
+				<Resource key={props.name} {...props} />
+			))}
+			<CustomRoutes>
+				<Route path="/config" element={<ConfigEdit />} />
+			</CustomRoutes>
+		</>;
+	})();
+	return () => resourcesPromise;
+})();
 
 const App = () => {
 	const [dataProvider, setDataProvider] = React.useState<DataProvider>(emptyDataProvider);
