@@ -25,8 +25,7 @@
     "ra-i18n-polyglot": "^4.0.2",
     "react": "^17.0.2",
     "react-admin": "^4.0.2",
-    "react-dom": "^17.0.2",
-    "react-ga": "^3.3.0"
+    "react-dom": "^17.0.2"
   },
   "devDependencies": {
     "@types/react": "^17.0.44",
