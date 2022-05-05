@@ -1,7 +1,7 @@
 import * as React from "react";
-import { Datagrid, FunctionField, List, ListProps, NumberField, ResourceProps, SearchInput, TextField, TextFieldProps } from "react-admin";
-import Badge from "@mui/material/Badge";
 import ViewListIcon from "@mui/icons-material/ViewList";
+import Badge from "@mui/material/Badge";
+import { Datagrid, FunctionField, List, ListProps, NumberField, ResourceProps, SearchInput, TextField, TextFieldProps } from "react-admin";
 
 import GlyphField from "./components/GlyphField";
 import GlyphLink from "./components/GlyphLink";

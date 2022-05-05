@@ -1,8 +1,8 @@
-import { DataProvider, GetOneParams, GetOneResult, RaRecord, UpdateParams, UpdateResult } from 'react-admin';
-import fakeDataProvider from 'ra-data-fakerest';
+import fakeDataProvider from "ra-data-fakerest";
+import { DataProvider, GetOneParams, GetOneResult, RaRecord, UpdateParams, UpdateResult } from "react-admin";
 
-import { validateItems } from './validateItems';
-import { Config, getConfig, setConfig } from './config';
+import { Config, getConfig, setConfig } from "./config";
+import { validateItems } from "./validateItems";
 
 export const dataProviderFactory = ({ result }: GWVJSON): DataProvider => {
 	const collectionMap: Record<string, unknown[]> = {};

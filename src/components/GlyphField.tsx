@@ -1,5 +1,6 @@
 import * as React from "react";
-import { TextFieldProps, useRecordContext } from 'react-admin';
+import { TextFieldProps, useRecordContext } from "react-admin";
+
 import GlyphLink from "./GlyphLink";
 
 export type GlyphFieldProps = TextFieldProps;

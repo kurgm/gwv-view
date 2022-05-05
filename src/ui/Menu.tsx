@@ -1,9 +1,9 @@
 import * as React from "react";
-import { MenuItemLink, MenuProps, ResourceProps, DashboardMenuItem, Menu, useResourceDefinitions } from "react-admin";
-import Divider from "@mui/material/Divider";
 import FolderIcon from "@mui/icons-material/Folder";
+import SettingsIcon from "@mui/icons-material/Settings";
 import DefaultIcon from "@mui/icons-material/ViewList";
-import SettingsIcon from '@mui/icons-material/Settings';
+import Divider from "@mui/material/Divider";
+import { DashboardMenuItem, Menu, MenuItemLink, MenuProps, ResourceProps, useResourceDefinitions } from "react-admin";
 import { matchPath, useLocation } from "react-router";
 
 import SubMenu from "./SubMenu";
