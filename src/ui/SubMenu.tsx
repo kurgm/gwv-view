@@ -15,6 +15,7 @@ export interface SubMenuProps {
 	title: string;
 	dense?: boolean;
 	selected?: boolean;
+	children?: React.ReactNode;
 }
 
 const SubMenu: React.FC<SubMenuProps> = (props) => {
