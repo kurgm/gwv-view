@@ -2,7 +2,7 @@ import * as React from "react";
 import japaneseMessages from "@bicstone/ra-language-japanese";
 import fakeDataProvider from "ra-data-fakerest";
 import polyglotI18nProvider from "ra-i18n-polyglot";
-import { Admin, CustomRoutes, DataProvider, Resource, TranslationMessages } from "react-admin";
+import { Admin, AdminChildren, CustomRoutes, DataProvider, Resource, TranslationMessages } from "react-admin";
 import { Route } from "react-router-dom";
 
 import Dashboard from "./Dashboard";
@@ -32,30 +32,30 @@ const dataPromise = fetchResultJson();
 
 const emptyDataProvider = fakeDataProvider({});
 
-const loadResources = (() => {
-	const resourcesPromise = (async () => {
-		const data = await dataPromise;
-		const resources = resourcesFactory(data);
-		return <>
-			{resources.map((props) => (
-				<Resource key={props.name} {...props} />
-			))}
-			<CustomRoutes>
-				<Route path="/config" element={<ConfigEdit />} />
-			</CustomRoutes>
-		</>;
-	})();
-	return () => resourcesPromise;
-})();
+const loadResources = (data: GWVJSON) => {
+	const resources = resourcesFactory(data);
+	return <>
+		{resources.map((props) => (
+			<Resource key={props.name} {...props} />
+		))}
+		<CustomRoutes>
+			<Route path="/config" element={<ConfigEdit />} />
+		</CustomRoutes>
+	</>;
+};
 
 const App = () => {
 	const [dataProvider, setDataProvider] = React.useState<DataProvider>(emptyDataProvider);
+	const [resources, setResources] = React.useState<React.ReactNode | undefined>(undefined);
 
 	React.useEffect(() => {
 		void dataPromise.then((data) => {
 			setDataProvider(dataProviderFactory(data));
+			setResources(loadResources(data));
 		});
 	}, []);
+
+	const adminChildren: AdminChildren = resources || (() => new Promise(() => { /* never resolves */ }));
 
 	return (
 		<Admin
@@ -65,7 +65,7 @@ const App = () => {
 			dashboard={Dashboard}
 			layout={Layout}
 		>
-			{loadResources}
+			{adminChildren}
 		</Admin>
 	);
 };
