@@ -1,27 +1,30 @@
 import * as React from "react";
-import { useSelector } from "react-redux";
-import { MenuItemLink, getResources, MenuProps, ResourceProps, DashboardMenuItem } from "react-admin";
-import Divider from "@material-ui/core/Divider";
-import FolderIcon from "@material-ui/icons/Folder";
-import DefaultIcon from "@material-ui/icons/ViewList";
-import SettingsIcon from '@material-ui/icons/Settings';
+import FolderIcon from "@mui/icons-material/Folder";
+import SettingsIcon from "@mui/icons-material/Settings";
+import DefaultIcon from "@mui/icons-material/ViewList";
+import Divider from "@mui/material/Divider";
+import { DashboardMenuItem, Menu, MenuItemLink, MenuProps, ResourceProps, useResourceDefinitions } from "react-admin";
+import { matchPath, useLocation } from "react-router";
 
 import SubMenu from "./SubMenu";
 import { validators } from "../validateItems";
 
-const Menu: React.FC<MenuProps> = ({ onMenuClick }) => {
-	// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-explicit-any
-	const open = useSelector((state) => (state as any).admin.ui.sidebarOpen as boolean);
-	const resources = useSelector(getResources) as ResourceProps[];
+const MyMenu: React.FC<MenuProps> = (props) => {
+	const resourcesDefinitions = useResourceDefinitions();
 
-	const resourcesByValidator: Record<string, ResourceProps[]> = {};
-	for (const resource of resources) {
-		const validatorName = resource.name.split("/")[0];
-		if (!resourcesByValidator[validatorName]) {
-			resourcesByValidator[validatorName] = [];
+	const resourcesByValidator = React.useMemo(() => {
+		const resources = Object.keys(resourcesDefinitions).map(name => resourcesDefinitions[name]);
+
+		const result: Record<string, ResourceProps[]> = {};
+		for (const resource of resources) {
+			const validatorName = resource.name.split("/")[0];
+			if (!result[validatorName]) {
+				result[validatorName] = [];
+			}
+			result[validatorName].push(resource);
 		}
-		resourcesByValidator[validatorName].push(resource);
-	}
+		return result;
+	}, [resourcesDefinitions]);
 
 	const [submenuOpenState, setSubmenuOpenState] = React.useState<Record<string, boolean>>({});
 	const handleSubmenuToggle = React.useMemo(() => {
@@ -35,9 +38,11 @@ const Menu: React.FC<MenuProps> = ({ onMenuClick }) => {
 		return handlers;
 	}, []);
 
+	const location = useLocation();
+
 	return (
-		<div>
-			<DashboardMenuItem onClick={onMenuClick} sidebarIsOpen={open} />
+		<Menu {...props}>
+			<DashboardMenuItem dense={props.dense} />
 			<Divider />
 			{validators.filter((validator) => !!resourcesByValidator[validator.name]).map((validator) => (
 				<SubMenu
@@ -46,18 +51,17 @@ const Menu: React.FC<MenuProps> = ({ onMenuClick }) => {
 					handleToggle={handleSubmenuToggle[validator.name]}
 					icon={<FolderIcon />}
 					title={validator.title}
-					sidebarIsOpen={open}
+					selected={!!matchPath(`/${validator.name}/*`, location.pathname)}
+					dense={props.dense}
 				>
 					{resourcesByValidator[validator.name].map((resource) => (
 						<MenuItemLink
 							key={resource.name}
 							to={`/${resource.name}`}
-							primaryText={
-								((resource.options as { label?: string; })?.label) ||
-								resource.name}
+							primaryText={resource.options?.label || resource.name}
 							leftIcon={resource.icon ? <resource.icon /> : <DefaultIcon />}
-							onClick={onMenuClick}
-							sidebarIsOpen={open}
+							selected={!!matchPath(`/${resource.name}`, location.pathname)}
+							dense={props.dense}
 						/>
 					))}
 				</SubMenu>
@@ -67,11 +71,11 @@ const Menu: React.FC<MenuProps> = ({ onMenuClick }) => {
 				to="/config"
 				primaryText="設定"
 				leftIcon={<SettingsIcon />}
-				onClick={onMenuClick}
-				sidebarIsOpen={open}
+				selected={!!matchPath("/config", location.pathname)}
+				dense={props.dense}
 			/>
-		</div>
+		</Menu>
 	);
 };
 
-export default Menu;
+export default MyMenu;

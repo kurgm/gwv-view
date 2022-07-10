@@ -1,18 +1,23 @@
 import * as React from "react";
-import { TextFieldProps } from 'react-admin';
+import { TextFieldProps, useRecordContext } from "react-admin";
 
 import GlyphLink from "./GlyphLink";
 
 export type GlyphsFieldProps = TextFieldProps;
 
-const GlyphsField = ({ record, source }: GlyphsFieldProps) => (
-	record && source
-		? (
-			<span>
-				{...(record[source] as string[]).map((name, index) => <GlyphLink name={name} key={index} />)}
-			</span>
-		)
-		: null
-);
+const GlyphsField: React.FC<GlyphsFieldProps> = ({ source }) => {
+	const record = useRecordContext();
+	if (!(record && source)) {
+		return null;
+	}
+	const names = record[source] as string[];
+	return (
+		<span>
+			{...names.map((name, index) => (
+				<GlyphLink name={name} key={index} />
+			))}
+		</span>
+	);
+};
 
 export default GlyphsField;

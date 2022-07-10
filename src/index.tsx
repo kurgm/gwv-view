@@ -1,20 +1,10 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
-import * as ReactGA from "react-ga";
+import { createRoot } from "react-dom/client";
 
 import App from "./App";
 
-ReactGA.initialize(
-	'UA-15725089-5',
-	process.env.NODE_ENV === "production" ? {} : {
-		testMode: true,
-		// debug: true,
-	}
+createRoot(document.getElementById("app")!).render(
+	<React.StrictMode>
+		<App />
+	</React.StrictMode>
 );
-
-ReactDOM.render(
-	<App />,
-	document.getElementById("app"),
-);
-
-ReactGA.pageview(location.pathname);

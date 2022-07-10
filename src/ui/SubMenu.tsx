@@ -1,59 +1,60 @@
 import * as React from "react";
-import { makeStyles, createStyles } from "@material-ui/core/styles";
-import Collapse from "@material-ui/core/Collapse";
-import List from "@material-ui/core/List";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import MenuItem from "@material-ui/core/MenuItem";
-import Tooltip from "@material-ui/core/Tooltip";
-import Typography from "@material-ui/core/Typography";
-import ExpandMore from "@material-ui/icons/ExpandMore";
+import Collapse from "@mui/material/Collapse";
+import List from "@mui/material/List";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import MenuItem from "@mui/material/MenuItem";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import { useSidebarState } from "react-admin";
 
 export interface SubMenuProps {
 	open: boolean;
 	handleToggle: () => void;
 	icon: React.ReactElement;
 	title: string;
-	sidebarIsOpen: boolean;
+	dense?: boolean;
+	selected?: boolean;
+	children?: React.ReactNode;
 }
 
-const useStyles = makeStyles((theme) => createStyles({
-	icon: {
-		minWidth: theme.spacing(5),
-	},
-	openList: {
-		"& a": {
-			paddingLeft: theme.spacing(4),
-		},
-	},
-	closeList: {
-		"& a": {
-			paddingLeft: theme.spacing(2),
-		},
-	}
-}));
-
 const SubMenu: React.FC<SubMenuProps> = (props) => {
-	const classes = useStyles();
+	const [sidebarIsOpen] = useSidebarState();
 
 	const parentItem = (
-		<MenuItem button onClick={props.handleToggle}>
-			<ListItemIcon className={classes.icon}>{props.open ? <ExpandMore /> : props.icon}</ListItemIcon>
+		<MenuItem
+			onClick={props.handleToggle}
+			dense={props.dense}
+			selected={props.selected}
+		>
+			<ListItemIcon
+				sx={{
+					minWidth: (theme) => theme.spacing(5),
+				}}
+			>
+				{props.open ? <ExpandMore /> : props.icon}
+			</ListItemIcon>
 			<Typography color="textSecondary">{props.title}</Typography>
 		</MenuItem>
 	);
 
 	return (
 		<>
-			{props.sidebarIsOpen ? parentItem : (
+			{sidebarIsOpen ? parentItem : (
 				<Tooltip title={props.title} placement="right">
 					{parentItem}
 				</Tooltip>
 			)}
-			<Collapse in={props.open}>
+			<Collapse in={props.open} mountOnEnter unmountOnExit>
 				<List
 					component="div"
+					dense={props.dense}
 					disablePadding
-					className={props.sidebarIsOpen ? classes.openList : classes.closeList}
+					sx={{
+						"& a": {
+							paddingLeft: (theme) => sidebarIsOpen ? theme.spacing(4) : theme.spacing(2),
+						},
+					}}
 				>
 					{props.children}
 				</List>

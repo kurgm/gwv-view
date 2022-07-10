@@ -1,9 +1,10 @@
 import * as React from "react";
-import { TextFieldProps } from 'react-admin';
+import { TextFieldProps, useRecordContext } from "react-admin";
 
 export type KageLineFieldProps = TextFieldProps;
 
-const KageLineField = ({ record, source }: KageLineFieldProps) => {
+const KageLineField: React.FC<KageLineFieldProps> = ({ source }) => {
+	const record = useRecordContext();
 	if (!(record && source)) {
 		return null;
 	}

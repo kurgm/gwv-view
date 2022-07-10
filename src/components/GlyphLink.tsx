@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import { ImageType, useConfig } from "../config";
 
 function getGlyphImageUrl(name: string, imageType: ImageType): string {
