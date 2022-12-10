@@ -3,7 +3,7 @@ import FolderIcon from "@mui/icons-material/Folder";
 import SettingsIcon from "@mui/icons-material/Settings";
 import DefaultIcon from "@mui/icons-material/ViewList";
 import Divider from "@mui/material/Divider";
-import { DashboardMenuItem, Menu, MenuItemLink, MenuProps, ResourceProps, useResourceDefinitions } from "react-admin";
+import { Menu, MenuProps, ResourceProps, useResourceDefinitions } from "react-admin";
 import { matchPath, useLocation } from "react-router";
 
 import SubMenu from "./SubMenu";
@@ -42,7 +42,7 @@ const MyMenu: React.FC<MenuProps> = (props) => {
 
 	return (
 		<Menu {...props}>
-			<DashboardMenuItem dense={props.dense} />
+			<Menu.DashboardItem dense={props.dense} />
 			<Divider />
 			{validators.filter((validator) => !!resourcesByValidator[validator.name]).map((validator) => (
 				<SubMenu
@@ -55,7 +55,7 @@ const MyMenu: React.FC<MenuProps> = (props) => {
 					dense={props.dense}
 				>
 					{resourcesByValidator[validator.name].map((resource) => (
-						<MenuItemLink
+						<Menu.Item
 							key={resource.name}
 							to={`/${resource.name}`}
 							primaryText={resource.options?.label || resource.name}
@@ -67,7 +67,7 @@ const MyMenu: React.FC<MenuProps> = (props) => {
 				</SubMenu>
 			))}
 			<Divider />
-			<MenuItemLink
+			<Menu.Item
 				to="/config"
 				primaryText="設定"
 				leftIcon={<SettingsIcon />}
