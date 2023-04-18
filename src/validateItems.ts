@@ -497,7 +497,7 @@ export const validateItems: ValidateItem[] = [
 				{
 					type: {
 						type: "number",
-						options: { style: "unit", unit: "degree" } as Intl.NumberFormatOptions, // FIXME: ts does not know "unit" property?
+						options: { style: "unit", unit: "degree" },
 					},
 					label: "角度",
 				},
