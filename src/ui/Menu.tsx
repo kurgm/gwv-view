@@ -58,7 +58,7 @@ const MyMenu: React.FC<MenuProps> = (props) => {
 						<Menu.Item
 							key={resource.name}
 							to={`/${resource.name}`}
-							primaryText={resource.options?.label || resource.name}
+							primaryText={resource.options?.label ?? resource.name}
 							leftIcon={resource.icon ? <resource.icon /> : <DefaultIcon />}
 							selected={!!matchPath(`/${resource.name}`, location.pathname)}
 							dense={props.dense}

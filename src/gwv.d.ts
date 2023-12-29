@@ -1,4 +1,4 @@
 interface GWVJSON {
-	result: { [id: string]: { [type: string]: unknown[] } };
+	result: Record<string, Record<string, unknown[]>>;
 	lastModified: number;
 }

@@ -55,7 +55,7 @@ const App = () => {
 		});
 	}, []);
 
-	const adminChildren: AdminChildren = resources || (() => new Promise(() => { /* never resolves */ }));
+	const adminChildren: AdminChildren = resources ?? (() => new Promise(() => { /* never resolves */ }));
 
 	return (
 		<Admin
