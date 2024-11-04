@@ -25,13 +25,13 @@
     "@bicstone/ra-language-japanese": "^5.3.0",
     "ra-data-fakerest": "^5.3.2",
     "ra-i18n-polyglot": "^5.3.2",
-    "react": "^18.1.0",
+    "react": "^18.3.1",
     "react-admin": "^5.3.2",
-    "react-dom": "^18.1.0"
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@types/react": "18.2.42",
-    "@types/react-dom": "^18.2.18",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
     "@types/react-router-dom": "^5.3.2",
     "@typescript-eslint/eslint-plugin": "^8.12.2",
     "@typescript-eslint/parser": "^8.12.2",
