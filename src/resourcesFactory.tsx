@@ -1,6 +1,7 @@
 import * as React from "react";
 import ViewListIcon from "@mui/icons-material/ViewList";
 import Badge from "@mui/material/Badge";
+import Link from "@mui/material/Link";
 import { Datagrid, FunctionField, List, ListProps, NumberField, ResourceProps, SearchInput, TextField, TextFieldProps } from "react-admin";
 
 import GlyphField from "./components/GlyphField";
@@ -119,9 +120,9 @@ const EntryRenderer: React.FC<EntryRendererProps> = ({ entryType }) => {
 								return null;
 							}
 							return (
-								<a href={`https://glyphwiki.org/wiki/Special:Mustrenew?view=listup&target=${newest}`}>
+								<Link href={`https://glyphwiki.org/wiki/Special:Mustrenew?view=listup&target=${newest}`}>
 									一括更新
-								</a>
+								</Link>
 							);
 						}}
 					/>

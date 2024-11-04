@@ -1,4 +1,5 @@
 import * as React from "react";
+import Link from "@mui/material/Link";
 
 import { ImageType, useConfig } from "../config";
 
@@ -38,9 +39,9 @@ const GlyphLink = (props: GlyphLinkProps) => {
 	const { imageType } = useConfig();
 
 	return (
-		<a
+		<Link
 			href={`https://glyphwiki.org/wiki/${name}`}
-			className={isNewpage ? "newpage" : ""}
+			color={isNewpage ? "error" : "primary"}
 		>
 			{(imageType !== "none") && (
 				<img
@@ -52,7 +53,7 @@ const GlyphLink = (props: GlyphLinkProps) => {
 				/>
 			)}
 			{name}
-		</a>
+		</Link>
 	);
 };
 
