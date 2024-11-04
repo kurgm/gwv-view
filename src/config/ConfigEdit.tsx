@@ -7,7 +7,7 @@ const toolbar = (
 	</Toolbar>
 );
 
-const ConfigEdit: React.FC<EditProps> = (props) => (
+const ConfigEdit: React.FC<Omit<EditProps, "children">> = (props) => (
 	<Edit
 		resource="config"
 		id="undefined"
