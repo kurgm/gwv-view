@@ -88,6 +88,19 @@ export const validateItems: ValidateItem[] = [
 	},
 
 	{
+		validatorName: "delvar",
+		errorCode: "0",
+		title: "派生元が存在しない",
+		entryType: {
+			type: "tabular",
+			columns: [
+				{ type: "glyphname", label: "グリフ名" },
+				{ type: "glyphname", label: "派生元" },
+			],
+		},
+	},
+
+	{
 		validatorName: "donotuse",
 		errorCode: "0",
 		title: "「最新版がdo-not-useを引用するグリフ」を引用している",
@@ -206,7 +219,6 @@ export const validateItems: ValidateItem[] = [
 			],
 		},
 	})),
-
 	...[
 		{ errorCode: "7", title: "不正なエイリアス書式" },
 		{ errorCode: "8", title: "不正な空白グリフ書式" },
