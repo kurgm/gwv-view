@@ -7,6 +7,8 @@
     "build": "webpack --mode=production",
     "start": "webpack serve --mode=development",
     "lint": "eslint src --ext .tsx,.ts",
+    "prettier": "prettier --write .",
+    "prettier-check": "prettier --check .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -37,6 +39,7 @@
     "eslint-plugin-react": "^7.37.2",
     "eslint-plugin-react-hooks": "^5.0.0",
     "html-webpack-plugin": "^5.5.0",
+    "prettier": "3.3.3",
     "ts-loader": "^9.3.0",
     "typescript": "^5.0.4",
     "webpack": "^5.94.0",

@@ -32,6 +32,9 @@ jobs:
 
     - run: npm run lint
 
+    - run: npm run prettier-check
+      if: ${{ false }}
+
     - run: npm run build
 
     - name: Upload artifact
