@@ -2,40 +2,49 @@ import * as React from "react";
 import ViewListIcon from "@mui/icons-material/ViewList";
 import Badge from "@mui/material/Badge";
 import Link from "@mui/material/Link";
-import { Datagrid, FunctionField, List, ListProps, NumberField, ResourceProps, SearchInput, TextField, TextFieldProps } from "react-admin";
+import {
+	Datagrid,
+	FunctionField,
+	List,
+	ListProps,
+	NumberField,
+	ResourceProps,
+	SearchInput,
+	TextField,
+	TextFieldProps,
+} from "react-admin";
 
 import GlyphField from "./components/GlyphField";
 import GlyphLink from "./components/GlyphLink";
 import GlyphsField from "./components/GlyphsField";
 import KageLineField from "./components/KageLineField";
-import { TabularCellType, ValidateItemEntryType, validateItems } from "./validateItems";
+import {
+	TabularCellType,
+	ValidateItemEntryType,
+	validateItems,
+} from "./validateItems";
 
 interface FieldRendererProps extends TextFieldProps {
 	columnType: TabularCellType;
 }
 
-const FieldRenderer: React.FC<FieldRendererProps> = ({ columnType, ...restProps }) => {
+const FieldRenderer: React.FC<FieldRendererProps> = ({
+	columnType,
+	...restProps
+}) => {
 	if (typeof columnType === "object") {
 		switch (columnType.type) {
 			case "number":
-				return (
-					<NumberField options={columnType.options} {...restProps} />
-				);
+				return <NumberField options={columnType.options} {...restProps} />;
 		}
 	} else {
 		switch (columnType) {
 			case "glyphname":
-				return (
-					<GlyphField {...restProps} />
-				);
+				return <GlyphField {...restProps} />;
 			case "glyphnames":
-				return (
-					<GlyphsField {...restProps} />
-				);
+				return <GlyphsField {...restProps} />;
 			case "kageline":
-				return (
-					<KageLineField {...restProps} />
-				);
+				return <KageLineField {...restProps} />;
 			case "quotedpart":
 				return (
 					<FunctionField
@@ -52,19 +61,14 @@ const FieldRenderer: React.FC<FieldRendererProps> = ({ columnType, ...restProps 
 					/>
 				);
 			case "text":
-				return (
-					<TextField {...restProps} />
-				);
+				return <TextField {...restProps} />;
 			case "number":
-				return (
-					<NumberField {...restProps} />
-				);
+				return <NumberField {...restProps} />;
 			case "ignore":
 				return null;
 		}
 	}
 };
-
 
 interface EntryRendererProps {
 	entryType: ValidateItemEntryType;
@@ -75,16 +79,18 @@ const EntryRenderer: React.FC<EntryRendererProps> = ({ entryType }) => {
 		case "tabular":
 			return (
 				<Datagrid bulkActionButtons={false}>
-					{...entryType.columns.map((column, index) => (
-						column.type === "ignore"
-							? null
-							: <FieldRenderer
-								key={index}
-								source={`${index}`}
-								columnType={column.type}
-								label={column.label}
-							/>
-					)).filter((elem) => !!elem)}
+					{...entryType.columns
+						.map((column, index) =>
+							column.type === "ignore" ? null : (
+								<FieldRenderer
+									key={index}
+									source={`${index}`}
+									columnType={column.type}
+									label={column.label}
+								/>
+							),
+						)
+						.filter((elem) => !!elem)}
 				</Datagrid>
 			);
 		case "headtail":
@@ -95,10 +101,7 @@ const EntryRenderer: React.FC<EntryRendererProps> = ({ entryType }) => {
 						columnType={entryType.headType}
 						label={entryType.headLabel}
 					/>
-					<GlyphsField
-						source="tail"
-						label={entryType.tailLabel}
-					/>
+					<GlyphsField source="tail" label={entryType.tailLabel} />
 				</Datagrid>
 			);
 		case "mustrenew":
@@ -120,7 +123,9 @@ const EntryRenderer: React.FC<EntryRendererProps> = ({ entryType }) => {
 								return null;
 							}
 							return (
-								<Link href={`https://glyphwiki.org/wiki/Special:Mustrenew?view=listup&target=${newest}`}>
+								<Link
+									href={`https://glyphwiki.org/wiki/Special:Mustrenew?view=listup&target=${newest}`}
+								>
 									一括更新
 								</Link>
 							);
@@ -135,7 +140,7 @@ export const resourcesFactory = ({ result }: GWVJSON) => {
 	const resources: ResourceProps[] = [];
 
 	for (const { validatorName, errorCode, title, entryType } of validateItems) {
-		if (!(result[validatorName]?.[errorCode])) {
+		if (!result[validatorName]?.[errorCode]) {
 			continue;
 		}
 
@@ -150,7 +155,11 @@ export const resourcesFactory = ({ result }: GWVJSON) => {
 		);
 
 		const icon: React.FC = () => (
-			<Badge badgeContent={result[validatorName][errorCode].length} max={Infinity} color="primary">
+			<Badge
+				badgeContent={result[validatorName][errorCode].length}
+				max={Infinity}
+				color="primary"
+			>
 				<ViewListIcon />
 			</Badge>
 		);
@@ -163,11 +172,9 @@ export const resourcesFactory = ({ result }: GWVJSON) => {
 		});
 	}
 
-	resources.push(
-		{
-			name: "config",
-		},
-	);
+	resources.push({
+		name: "config",
+	});
 
 	return resources;
 };

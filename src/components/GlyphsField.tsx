@@ -13,9 +13,7 @@ const GlyphsField: React.FC<GlyphsFieldProps> = ({ source }) => {
 	const names = record[source] as string[];
 	return (
 		<span>
-			{...names.map((name, index) => (
-				<GlyphLink name={name} key={index} />
-			))}
+			{...names.map((name, index) => <GlyphLink name={name} key={index} />)}
 		</span>
 	);
 };

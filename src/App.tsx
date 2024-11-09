@@ -2,7 +2,14 @@ import * as React from "react";
 import japaneseMessages from "@bicstone/ra-language-japanese";
 import fakeDataProvider from "ra-data-fakerest";
 import polyglotI18nProvider from "ra-i18n-polyglot";
-import { Admin, AdminChildren, CustomRoutes, DataProvider, Resource, TranslationMessages } from "react-admin";
+import {
+	Admin,
+	AdminChildren,
+	CustomRoutes,
+	DataProvider,
+	Resource,
+	TranslationMessages,
+} from "react-admin";
 import { Route } from "react-router-dom";
 
 import Dashboard from "./Dashboard";
@@ -17,7 +24,7 @@ const i18nMesssages: Record<string, TranslationMessages> = {
 	ja: {
 		...japaneseMessages,
 		resources: (() => {
-			const resourceTranslations: Record<string, { name: string; }> = {};
+			const resourceTranslations: Record<string, { name: string }> = {};
 			for (const { validatorName, errorCode, title } of validateItems) {
 				resourceTranslations[`${validatorName}/${errorCode}`] = { name: title };
 			}
@@ -26,7 +33,10 @@ const i18nMesssages: Record<string, TranslationMessages> = {
 	},
 };
 
-const i18nProvider = polyglotI18nProvider((locale) => i18nMesssages[locale], "ja");
+const i18nProvider = polyglotI18nProvider(
+	(locale) => i18nMesssages[locale],
+	"ja",
+);
 
 const dataPromise = fetchResultJson();
 
@@ -34,19 +44,24 @@ const emptyDataProvider = fakeDataProvider({});
 
 const loadResources = (data: GWVJSON) => {
 	const resources = resourcesFactory(data);
-	return <>
-		{resources.map((props) => (
-			<Resource key={props.name} {...props} />
-		))}
-		<CustomRoutes>
-			<Route path="/config" element={<ConfigEdit />} />
-		</CustomRoutes>
-	</>;
+	return (
+		<>
+			{resources.map((props) => (
+				<Resource key={props.name} {...props} />
+			))}
+			<CustomRoutes>
+				<Route path="/config" element={<ConfigEdit />} />
+			</CustomRoutes>
+		</>
+	);
 };
 
 const App = () => {
-	const [dataProvider, setDataProvider] = React.useState<DataProvider>(emptyDataProvider);
-	const [resources, setResources] = React.useState<React.ReactNode | undefined>(undefined);
+	const [dataProvider, setDataProvider] =
+		React.useState<DataProvider>(emptyDataProvider);
+	const [resources, setResources] = React.useState<React.ReactNode | undefined>(
+		undefined,
+	);
 
 	React.useEffect(() => {
 		void dataPromise.then((data) => {
@@ -55,7 +70,12 @@ const App = () => {
 		});
 	}, []);
 
-	const adminChildren: AdminChildren = resources ?? (() => new Promise(() => { /* never resolves */ }));
+	const adminChildren: AdminChildren =
+		resources ??
+		(() =>
+			new Promise(() => {
+				/* never resolves */
+			}));
 
 	return (
 		<Admin

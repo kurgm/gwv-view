@@ -29,12 +29,15 @@ const GlyphLink = (props: GlyphLinkProps) => {
 	React.useEffect(() => {
 		setIsNewpage(false);
 	}, [name]);
-	const imgOnLoad = React.useCallback((evt: React.SyntheticEvent<HTMLImageElement>) => {
-		// GlyphWiki returns 100x100 red X image for glyphs that do not exist
-		if (evt.currentTarget.naturalHeight === 100) {
-			setIsNewpage(true);
-		}
-	}, []);
+	const imgOnLoad = React.useCallback(
+		(evt: React.SyntheticEvent<HTMLImageElement>) => {
+			// GlyphWiki returns 100x100 red X image for glyphs that do not exist
+			if (evt.currentTarget.naturalHeight === 100) {
+				setIsNewpage(true);
+			}
+		},
+		[],
+	);
 
 	const { imageType } = useConfig();
 
@@ -43,12 +46,13 @@ const GlyphLink = (props: GlyphLinkProps) => {
 			href={`https://glyphwiki.org/wiki/${name}`}
 			color={isNewpage ? "error" : "primary"}
 		>
-			{(imageType !== "none") && (
+			{imageType !== "none" && (
 				<img
 					className="thumb"
 					src={getGlyphImageUrl(name, imageType)}
 					onLoad={imgOnLoad}
-					width="50" height="50"
+					width="50"
+					height="50"
 					alt={name}
 				/>
 			)}

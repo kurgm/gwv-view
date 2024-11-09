@@ -3,7 +3,15 @@ export interface NumberCell {
 	options?: Intl.NumberFormatOptions;
 }
 
-export type TabularCellType = "glyphname" | "glyphnames" | "kageline" | "quotedpart" | "text" | "number" | NumberCell | "ignore";
+export type TabularCellType =
+	| "glyphname"
+	| "glyphnames"
+	| "kageline"
+	| "quotedpart"
+	| "text"
+	| "number"
+	| NumberCell
+	| "ignore";
 
 export interface TabularColumn {
 	type: TabularCellType;
@@ -27,7 +35,10 @@ export interface MustrenewEntry {
 	type: "mustrenew";
 }
 
-export type ValidateItemEntryType = TabularRowEntry | HeadTailEntry | MustrenewEntry;
+export type ValidateItemEntryType =
+	| TabularRowEntry
+	| HeadTailEntry
+	| MustrenewEntry;
 
 export interface ValidateItem {
 	validatorName: string;
@@ -37,7 +48,6 @@ export interface ValidateItem {
 }
 
 export const validateItems: ValidateItem[] = [
-
 	...(() => {
 		const cornerTypes = [
 			"左上カド",
@@ -52,26 +62,31 @@ export const validateItems: ValidateItem[] = [
 			"接続(縦)",
 			"右下H/Tカド",
 		];
-		return cornerTypes.map((guessedName, guessedIndex) => cornerTypes.map((usedName, usedIndex): ValidateItem => {
-			const errorCode = guessedIndex.toString(16) + usedIndex.toString(16);
-			const title = (guessedIndex === usedIndex)
-				? `${usedName}が離れている`
-				: `${guessedName}に${usedName}形状を使用している`;
+		return cornerTypes
+			.map((guessedName, guessedIndex) =>
+				cornerTypes.map((usedName, usedIndex): ValidateItem => {
+					const errorCode = guessedIndex.toString(16) + usedIndex.toString(16);
+					const title =
+						guessedIndex === usedIndex
+							? `${usedName}が離れている`
+							: `${guessedName}に${usedName}形状を使用している`;
 
-			return {
-				validatorName: "corner",
-				errorCode,
-				title,
-				entryType: {
-					type: "tabular",
-					columns: [
-						{ type: "glyphname", label: "グリフ名" },
-						{ type: "kageline", label: "縦画" },
-						{ type: "kageline", label: "横画" },
-					],
-				},
-			};
-		})).reduce((a, b) => a.concat(b), []);
+					return {
+						validatorName: "corner",
+						errorCode,
+						title,
+						entryType: {
+							type: "tabular",
+							columns: [
+								{ type: "glyphname", label: "グリフ名" },
+								{ type: "kageline", label: "縦画" },
+								{ type: "kageline", label: "横画" },
+							],
+						},
+					};
+				}),
+			)
+			.reduce((a, b) => a.concat(b), []);
 	})(),
 
 	{
@@ -145,51 +160,60 @@ export const validateItems: ValidateItem[] = [
 		{ errorCode: "2", title: "-02の部品を最初に引用している" },
 		{ errorCode: "10", title: "上下型のIDSだが、左右結合の部品を引用している" },
 		{ errorCode: "12", title: "下側にくる部品を最初に引用している" },
-		{ errorCode: "22", title: "囲い型のIDSだが、内側にくる部品を最初に引用している" },
-	].map(({ errorCode, title }): ValidateItem => ({
-		validatorName: "ids",
-		errorCode,
-		title,
-		entryType: {
-			type: "tabular",
-			columns: [
-				{ type: "glyphname", label: "グリフ名" },
-				{ type: "glyphname", label: "引用されているグリフ" },
-			],
+		{
+			errorCode: "22",
+			title: "囲い型のIDSだが、内側にくる部品を最初に引用している",
 		},
-	})),
+	].map(
+		({ errorCode, title }): ValidateItem => ({
+			validatorName: "ids",
+			errorCode,
+			title,
+			entryType: {
+				type: "tabular",
+				columns: [
+					{ type: "glyphname", label: "グリフ名" },
+					{ type: "glyphname", label: "引用されているグリフ" },
+				],
+			},
+		}),
+	),
 	...[
 		{ errorCode: "6", title: "左右型のIDSだが、最初の部品が横長" },
 		{ errorCode: "15", title: "上下型のIDSだが、最初の部品が縦長" },
-	].map(({ errorCode, title }): ValidateItem => ({
-		validatorName: "ids",
-		errorCode,
-		title,
-		entryType: {
-			type: "tabular",
-			columns: [
-				{ type: "glyphname", label: "グリフ名" },
-				{ type: "quotedpart", label: "最初の部品" },
-			],
-		},
-	})),
+	].map(
+		({ errorCode, title }): ValidateItem => ({
+			validatorName: "ids",
+			errorCode,
+			title,
+			entryType: {
+				type: "tabular",
+				columns: [
+					{ type: "glyphname", label: "グリフ名" },
+					{ type: "quotedpart", label: "最初の部品" },
+				],
+			},
+		}),
+	),
 	...[
 		{ errorCode: "3", title: "左右型のIDSの左の字を最初に引用していない" },
 		{ errorCode: "13", title: "上下型のIDSの上の字を最初に引用していない" },
 		{ errorCode: "23", title: "囲い型のIDSの外側の字を最初に引用していない" },
 		{ errorCode: "33", title: "重ね型のIDSの1番目の字を最初に引用していない" },
-	].map(({ errorCode, title }): ValidateItem => ({
-		validatorName: "ids",
-		errorCode,
-		title,
-		entryType: {
-			type: "tabular",
-			columns: [
-				{ type: "glyphname", label: "グリフ名" },
-				{ type: "kageline", label: "最初に引用している行" },
-			],
-		},
-	})),
+	].map(
+		({ errorCode, title }): ValidateItem => ({
+			validatorName: "ids",
+			errorCode,
+			title,
+			entryType: {
+				type: "tabular",
+				columns: [
+					{ type: "glyphname", label: "グリフ名" },
+					{ type: "kageline", label: "最初に引用している行" },
+				],
+			},
+		}),
+	),
 
 	...[
 		{ errorCode: "0", title: "未定義の筆画の種類" },
@@ -206,50 +230,52 @@ export const validateItems: ValidateItem[] = [
 		{ errorCode: "31", title: "折れの後半が縦" },
 		{ errorCode: "40", title: "乙線の前半が横" },
 		{ errorCode: "41", title: "乙線の後半が左向き" },
-	].map(({ errorCode, title }): ValidateItem => ({
-		validatorName: "illegal",
-		errorCode,
-		title,
-		entryType: {
-			type: "tabular",
-			columns: [
-				{ type: "glyphname", label: "グリフ名" },
-				{ type: "ignore" },
-				{ type: "kageline", label: "データ" },
-			],
-		},
-	})),
+	].map(
+		({ errorCode, title }): ValidateItem => ({
+			validatorName: "illegal",
+			errorCode,
+			title,
+			entryType: {
+				type: "tabular",
+				columns: [
+					{ type: "glyphname", label: "グリフ名" },
+					{ type: "ignore" },
+					{ type: "kageline", label: "データ" },
+				],
+			},
+		}),
+	),
 	...[
 		{ errorCode: "7", title: "不正なエイリアス書式" },
 		{ errorCode: "8", title: "不正な空白グリフ書式" },
-	].map(({ errorCode, title }): ValidateItem => ({
-		validatorName: "illegal",
-		errorCode,
-		title,
-		entryType: {
-			type: "tabular",
-			columns: [
-				{ type: "glyphname", label: "グリフ名" },
-			],
-		}
-	})),
+	].map(
+		({ errorCode, title }): ValidateItem => ({
+			validatorName: "illegal",
+			errorCode,
+			title,
+			entryType: {
+				type: "tabular",
+				columns: [{ type: "glyphname", label: "グリフ名" }],
+			},
+		}),
+	),
 
 	...[
 		{ errorCode: "0", title: "-{j,ja,jv}グリフと無印グリフで実体が異なる" },
 		{ errorCode: "40", title: "存在しない地域ソース" },
 		{ errorCode: "41", title: "存在しない地域ソース(偏化変形)" },
 		{ errorCode: "5", title: "原規格分離漢字-jvが作成されている" },
-	].map(({ errorCode, title }): ValidateItem => ({
-		validatorName: "j",
-		errorCode,
-		title,
-		entryType: {
-			type: "tabular",
-			columns: [
-				{ type: "glyphname", label: "グリフ名" },
-			],
-		},
-	})),
+	].map(
+		({ errorCode, title }): ValidateItem => ({
+			validatorName: "j",
+			errorCode,
+			title,
+			entryType: {
+				type: "tabular",
+				columns: [{ type: "glyphname", label: "グリフ名" }],
+			},
+		}),
+	),
 	{
 		validatorName: "j",
 		errorCode: "1",
@@ -275,18 +301,20 @@ export const validateItems: ValidateItem[] = [
 			],
 		},
 	},
-	...["J", "K"].map((source, index): ValidateItem => ({
-		validatorName: "j",
-		errorCode: `3${index}`,
-		title: `${source}ソースが存在するが-${source.toLowerCase()}vが存在`,
-		entryType: {
-			type: "tabular",
-			columns: [
-				{ type: "glyphname", label: "グリフ名" },
-				{ type: "text", label: "ソース" },
-			],
-		},
-	})),
+	...["J", "K"].map(
+		(source, index): ValidateItem => ({
+			validatorName: "j",
+			errorCode: `3${index}`,
+			title: `${source}ソースが存在するが-${source.toLowerCase()}vが存在`,
+			entryType: {
+				type: "tabular",
+				columns: [
+					{ type: "glyphname", label: "グリフ名" },
+					{ type: "text", label: "ソース" },
+				],
+			},
+		}),
+	),
 
 	{
 		validatorName: "kosekitoki",
@@ -294,9 +322,7 @@ export const validateItems: ValidateItem[] = [
 		title: "エイリアスでない",
 		entryType: {
 			type: "tabular",
-			columns: [
-				{ type: "glyphname", label: "グリフ名" },
-			],
+			columns: [{ type: "glyphname", label: "グリフ名" }],
 		},
 	},
 	{
@@ -329,49 +355,59 @@ export const validateItems: ValidateItem[] = [
 		{ errorCode: "0", title: "実体が間違っている" },
 		{ errorCode: "1", title: "関連字が間違っている" },
 		{ errorCode: "2", title: "関連字が未設定" },
-	].map(({ errorCode, title }): ValidateItem => ({
-		validatorName: "mj",
-		errorCode,
-		title,
-		entryType: {
-			type: "tabular",
-			columns: [
-				{ type: "glyphname", label: "グリフ名" },
-				{
-					type: errorCode === "2" ? "ignore" : "glyphname",
-					label: errorCode === "0" ? "現在の実体" : "現在の関連字",
-				},
-				{ type: "glyphnames", label: "提案" },
-			],
-		},
-	})),
+	].map(
+		({ errorCode, title }): ValidateItem => ({
+			validatorName: "mj",
+			errorCode,
+			title,
+			entryType: {
+				type: "tabular",
+				columns: [
+					{ type: "glyphname", label: "グリフ名" },
+					{
+						type: errorCode === "2" ? "ignore" : "glyphname",
+						label: errorCode === "0" ? "現在の実体" : "現在の関連字",
+					},
+					{ type: "glyphnames", label: "提案" },
+				],
+			},
+		}),
+	),
 
 	...[
-		{ errorCode: "0", title: "「最新版が旧部品を引用していない部品」の旧版を引用" },
-		{ errorCode: "@", title: "「最新版が旧部品を引用している部品」の旧版を引用" },
-	].map(({ errorCode, title }): ValidateItem => ({
-		validatorName: "mustrenew",
-		errorCode,
-		title,
-		entryType: { type: "mustrenew" },
-	})),
+		{
+			errorCode: "0",
+			title: "「最新版が旧部品を引用していない部品」の旧版を引用",
+		},
+		{
+			errorCode: "@",
+			title: "「最新版が旧部品を引用している部品」の旧版を引用",
+		},
+	].map(
+		({ errorCode, title }): ValidateItem => ({
+			validatorName: "mustrenew",
+			errorCode,
+			title,
+			entryType: { type: "mustrenew" },
+		}),
+	),
 
 	...[
 		{ errorCode: "0", title: "規則に無いグリフ名" },
 		{ errorCode: "1", title: "不正なIDS" },
 		{ errorCode: "2", title: "許可されていないグリフ名(欠番など)" },
 		{ errorCode: "4", title: "廃止予定の命名規則" },
-	].map(({ errorCode, title }): ValidateItem => ({
-		validatorName: "naming",
-		errorCode,
-		title,
-		entryType: {
-			type: "tabular",
-			columns: [
-				{ type: "glyphname", label: "グリフ名" },
-			],
-		},
-	})),
+	].map(
+		({ errorCode, title }): ValidateItem => ({
+			validatorName: "naming",
+			errorCode,
+			title,
+			entryType: {
+				type: "tabular",
+				columns: [{ type: "glyphname", label: "グリフ名" }],
+			},
+		}),
+	),
 	{
 		validatorName: "naming",
 		errorCode: "3",
@@ -391,18 +427,20 @@ export const validateItems: ValidateItem[] = [
 		{ errorCode: "1", title: "不正な文字" },
 		{ errorCode: "2", title: "10進数の整数として解釈できない値" },
 		{ errorCode: "3", title: "標準的でない数値の表記" },
-	].map(({ errorCode, title }): ValidateItem => ({
-		validatorName: "numexp",
-		errorCode,
-		title,
-		entryType: {
-			type: "tabular",
-			columns: [
-				{ type: "glyphname", label: "グリフ名" },
-				{ type: "kageline", label: "データ" },
-			],
-		},
-	})),
+	].map(
+		({ errorCode, title }): ValidateItem => ({
+			validatorName: "numexp",
+			errorCode,
+			title,
+			entryType: {
+				type: "tabular",
+				columns: [
+					{ type: "glyphname", label: "グリフ名" },
+					{ type: "kageline", label: "データ" },
+				],
+			},
+		}),
+	),
 
 	...[
 		{ errorCode: "2", title: "右にくる部品が最初に引用されている" },
@@ -411,18 +449,20 @@ export const validateItems: ValidateItem[] = [
 		{ errorCode: "11", title: "左にくる部品が最後に引用されている" },
 		{ errorCode: "13", title: "上にくる部品が最後に引用されている" },
 		{ errorCode: "15", title: "囲い結合の外にくる部品が最後に引用されている" },
-	].map(({ errorCode, title }): ValidateItem => ({
-		validatorName: "order",
-		errorCode,
-		title,
-		entryType: {
-			type: "tabular",
-			columns: [
-				{ type: "glyphname", label: "グリフ名" },
-				{ type: "glyphname", label: "引用されている部品" },
-			],
-		},
-	})),
+	].map(
+		({ errorCode, title }): ValidateItem => ({
+			validatorName: "order",
+			errorCode,
+			title,
+			entryType: {
+				type: "tabular",
+				columns: [
+					{ type: "glyphname", label: "グリフ名" },
+					{ type: "glyphname", label: "引用されている部品" },
+				],
+			},
+		}),
+	),
 
 	{
 		validatorName: "related",
@@ -495,27 +535,32 @@ export const validateItems: ValidateItem[] = [
 		{ errorCode: "30", title: "折れの後半が歪んでいる" },
 		{ errorCode: "31", title: "折れの前半が歪んでいる" },
 		{ errorCode: "40", title: "乙線の後半が歪んでいる" },
-		{ errorCode: "71", title: "縦払いの直線部分と曲線部分の間で折れ曲がっている" },
-		{ errorCode: "72", title: "縦払いの直線部分が歪んでいる" },
-	].map(({ errorCode, title }): ValidateItem => ({
-		validatorName: "skew",
-		errorCode,
-		title,
-		entryType: {
-			type: "tabular",
-			columns: [
-				{ type: "glyphname", label: "グリフ名" },
-				{ type: "kageline", label: "データ" },
-				{
-					type: {
-						type: "number",
-						options: { style: "unit", unit: "degree" },
-					},
-					label: "角度",
-				},
-			],
+		{
+			errorCode: "71",
+			title: "縦払いの直線部分と曲線部分の間で折れ曲がっている",
 		},
-	})),
+		{ errorCode: "72", title: "縦払いの直線部分が歪んでいる" },
+	].map(
+		({ errorCode, title }): ValidateItem => ({
+			validatorName: "skew",
+			errorCode,
+			title,
+			entryType: {
+				type: "tabular",
+				columns: [
+					{ type: "glyphname", label: "グリフ名" },
+					{ type: "kageline", label: "データ" },
+					{
+						type: {
+							type: "number",
+							options: { style: "unit", unit: "degree" },
+						},
+						label: "角度",
+					},
+				],
+			},
+		}),
+	),
 	{
 		validatorName: "skew",
 		errorCode: "70",
@@ -530,20 +575,36 @@ export const validateItems: ValidateItem[] = [
 	},
 
 	...[
-		{ errorCode: "0", title: "UCS無印グリフがUCS関連グリフ以外のエイリアスである" },
-		{ errorCode: "1", title: "UCS地域指定グリフがその無印グリフのエイリアスである" },
-		{ errorCode: "10", title: "UCS-var-グリフがその無印グリフと実体が同じである" },
-		{ errorCode: "11", title: "UCS無印グリフがその-var-グリフのエイリアスである" },
-		{ errorCode: "20", title: "UCS-itaiji-グリフがその無印グリフと実体が同じである" },
-		{ errorCode: "21", title: "UCS無印グリフがその-itaiji-グリフのエイリアスである" },
+		{
+			errorCode: "0",
+			title: "UCS無印グリフがUCS関連グリフ以外のエイリアスである",
+		},
+		{
+			errorCode: "1",
+			title: "UCS地域指定グリフがその無印グリフのエイリアスである",
+		},
+		{
+			errorCode: "10",
+			title: "UCS-var-グリフがその無印グリフと実体が同じである",
+		},
+		{
+			errorCode: "11",
+			title: "UCS無印グリフがその-var-グリフのエイリアスである",
+		},
+		{
+			errorCode: "20",
+			title: "UCS-itaiji-グリフがその無印グリフと実体が同じである",
+		},
+		{
+			errorCode: "21",
+			title: "UCS無印グリフがその-itaiji-グリフのエイリアスである",
+		},
 	].map(({ errorCode, title }): ValidateItem => {
-		const columns: TabularColumn[] = [
-			{ type: "glyphname", label: "グリフ名" },
-		];
+		const columns: TabularColumn[] = [{ type: "glyphname", label: "グリフ名" }];
 		if (errorCode !== "1") {
 			columns.push({ type: "glyphname", label: "実体" });
 		}
-		return ({
+		return {
 			validatorName: "ucsalias",
 			errorCode,
 			title,
@@ -551,25 +612,30 @@ export const validateItems: ValidateItem[] = [
 				type: "tabular",
 				columns,
 			},
-		});
+		};
 	}),
 
 	...[
-		{ errorCode: "0", title: "グループ:NonSpacingGlyphs-Halfwidthに含まれているが全角" },
-		{ errorCode: "1", title: "グループ:HalfwidthGlyphs-*に含まれているが全角" },
-		{ errorCode: "2", title: "半角だがグループ:HalfwidthGlyphs-*に含まれていない" },
-	].map(({ errorCode, title }): ValidateItem => ({
-		validatorName: "width",
-		errorCode,
-		title,
-		entryType: {
-			type: "tabular",
-			columns: [
-				{ type: "glyphname", label: "グリフ名" },
-			],
+		{
+			errorCode: "0",
+			title: "グループ:NonSpacingGlyphs-Halfwidthに含まれているが全角",
 		},
-	})),
-
+		{ errorCode: "1", title: "グループ:HalfwidthGlyphs-*に含まれているが全角" },
+		{
+			errorCode: "2",
+			title: "半角だがグループ:HalfwidthGlyphs-*に含まれていない",
+		},
+	].map(
+		({ errorCode, title }): ValidateItem => ({
+			validatorName: "width",
+			errorCode,
+			title,
+			entryType: {
+				type: "tabular",
+				columns: [{ type: "glyphname", label: "グリフ名" }],
+			},
+		}),
+	),
 ];
 
 export interface ValidatorDesc {

@@ -1,5 +1,12 @@
 import * as React from "react";
-import { Edit, EditProps, SaveButton, SelectInput, SimpleForm, Toolbar } from "react-admin";
+import {
+	Edit,
+	EditProps,
+	SaveButton,
+	SelectInput,
+	SimpleForm,
+	Toolbar,
+} from "react-admin";
 
 const toolbar = (
 	<Toolbar>
@@ -8,12 +15,7 @@ const toolbar = (
 );
 
 const ConfigEdit: React.FC<Omit<EditProps, "children">> = (props) => (
-	<Edit
-		resource="config"
-		id="undefined"
-		title="設定"
-		{...props}
-	>
+	<Edit resource="config" id="undefined" title="設定" {...props}>
 		<SimpleForm toolbar={toolbar}>
 			<SelectInput
 				source="imageType"

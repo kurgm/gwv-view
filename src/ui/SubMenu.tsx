@@ -40,7 +40,9 @@ const SubMenu: React.FC<SubMenuProps> = (props) => {
 
 	return (
 		<>
-			{sidebarIsOpen ? parentItem : (
+			{sidebarIsOpen ? (
+				parentItem
+			) : (
 				<Tooltip title={props.title} placement="right">
 					{parentItem}
 				</Tooltip>
@@ -52,7 +54,8 @@ const SubMenu: React.FC<SubMenuProps> = (props) => {
 					disablePadding
 					sx={{
 						"& a": {
-							paddingLeft: (theme) => sidebarIsOpen ? theme.spacing(4) : theme.spacing(2),
+							paddingLeft: (theme) =>
+								sidebarIsOpen ? theme.spacing(4) : theme.spacing(2),
 						},
 					}}
 				>
