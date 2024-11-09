@@ -9,7 +9,7 @@
     "build": "vite build",
     "serve": "vite preview",
     "type-check": "tsc --build",
-    "lint": "eslint src --ext .tsx,.ts",
+    "lint": "eslint . --ext .tsx,.ts",
     "prettier": "prettier --write .",
     "prettier-check": "prettier --check .",
     "test": "echo \"Error: no test specified\" && exit 1"
