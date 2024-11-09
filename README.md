@@ -1,7 +1,9 @@
 # gwv-view
 
-[![Node.js CI](https://github.com/kurgm/gwv-view/workflows/Node.js%20CI/badge.svg)](https://github.com/kurgm/gwv-view/actions?query=workflow%3A%22Node.js+CI%22)
+[![Node.js CI](https://github.com/kurgm/gwv-view/actions/workflows/build.yml/badge.svg)](https://github.com/kurgm/gwv-view/actions/workflows/build.yml)
 
-[Viewer of results of GlyphWiki data validator](https://kurgm.github.io/gwv-view/)
+**<https://kurgm.github.io/gwv-view/>**
 
-[The validator](https://github.com/kurgm/gwv)
+Viewer of results of [GlyphWiki data validator](https://github.com/kurgm/gwv).
+
+グリフウィキのdumpデータの検証結果を表示するためのビューアです。
