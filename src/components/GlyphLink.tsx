@@ -22,13 +22,8 @@ export interface GlyphLinkProps {
 	name: string;
 }
 
-const GlyphLink = (props: GlyphLinkProps) => {
-	const { name } = props;
-
+const GlyphLinkImpl: React.FC<GlyphLinkProps> = ({ name }) => {
 	const [isNewpage, setIsNewpage] = React.useState(false);
-	React.useEffect(() => {
-		setIsNewpage(false);
-	}, [name]);
 	const imgOnLoad = React.useCallback(
 		(evt: React.SyntheticEvent<HTMLImageElement>) => {
 			// GlyphWiki returns 100x100 red X image for glyphs that do not exist
@@ -59,6 +54,11 @@ const GlyphLink = (props: GlyphLinkProps) => {
 			{name}
 		</Link>
 	);
+};
+
+const GlyphLink: React.FC<GlyphLinkProps> = (props) => {
+	// Reset isNewpage state when name changes
+	return <GlyphLinkImpl key={props.name} {...props} />;
 };
 
 export default GlyphLink;

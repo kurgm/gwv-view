@@ -13,36 +13,43 @@ const defaultConfig: Config = {
 
 const LOCALSTORAGE_KEY = "preferences";
 
-export const getConfig = (): Config => {
-	const config: Config = { ...defaultConfig };
-
-	const storedConfigString = localStorage.getItem(LOCALSTORAGE_KEY);
-	if (storedConfigString !== null) {
-		try {
-			Object.assign(config, JSON.parse(storedConfigString));
-		} catch (e) {
-			console.log(e);
+export const getConfig: () => Readonly<Config> = (() => {
+	let memo: { config: Readonly<Config>; string: string | null } | null = null;
+	return () => {
+		const storedConfigString = localStorage.getItem(LOCALSTORAGE_KEY);
+		if (memo !== null && memo.string === storedConfigString) {
+			return memo.config;
 		}
-	}
-	return config;
-};
 
-const configHooks = new Set<React.Dispatch<React.SetStateAction<Config>>>();
+		const config: Config = { ...defaultConfig };
+		if (storedConfigString !== null) {
+			try {
+				Object.assign(config, JSON.parse(storedConfigString));
+			} catch (e) {
+				console.log(e);
+			}
+		}
+		memo = { config, string: storedConfigString };
+		return config;
+	};
+})();
+
+const configCallbacks = new Set<() => void>();
 
 export const setConfig = (config: Config): void => {
 	localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(config));
-	configHooks.forEach((hook) => {
-		hook(config);
+	configCallbacks.forEach((callback) => {
+		callback();
 	});
 };
 
-export const useConfig = (): Config => {
-	const [value, setValue] = React.useState(getConfig());
-	React.useEffect(() => {
-		configHooks.add(setValue);
-		return () => {
-			configHooks.delete(setValue);
-		};
-	}, []);
-	return value;
+const subscribeConfigChange = (callback: () => void) => {
+	configCallbacks.add(callback);
+	return () => {
+		configCallbacks.delete(callback);
+	};
+};
+
+export const useConfig = (): Readonly<Config> => {
+	return React.useSyncExternalStore(subscribeConfigChange, getConfig);
 };
