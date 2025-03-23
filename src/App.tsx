@@ -10,7 +10,7 @@ import {
 	Resource,
 	TranslationMessages,
 } from "react-admin";
-import { Route } from "react-router-dom";
+import { createHashRouter, Route, RouterProvider } from "react-router-dom";
 
 import Dashboard from "./Dashboard";
 import ConfigEdit from "./config/ConfigEdit";
@@ -90,4 +90,15 @@ const App = () => {
 	);
 };
 
-export default App;
+const router = createHashRouter([
+	{
+		path: "*",
+		element: <App />,
+	},
+]);
+
+const OuterApp = () => {
+	return <RouterProvider router={router} />;
+};
+
+export default OuterApp;
