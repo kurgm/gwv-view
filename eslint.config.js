@@ -1,11 +1,12 @@
 // @ts-check
 
 import js from "@eslint/js";
+import { defineConfig } from "eslint/config";
 import reactPlugin from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 import tseslint from "typescript-eslint";
 
-export default tseslint.config(
+export default defineConfig(
 	{ ignores: ["dist"] },
 	{
 		files: ["**/*.{ts,tsx}"],
@@ -19,7 +20,7 @@ export default tseslint.config(
 			tseslint.configs.recommendedTypeChecked,
 			tseslint.configs.stylisticTypeChecked,
 			reactPlugin.configs.flat.recommended,
-			reactHooks.configs["recommended-latest"],
+			reactHooks.configs.flat.recommended,
 		],
 		rules: {
 			"no-bitwise": "off",
