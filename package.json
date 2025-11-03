@@ -28,14 +28,14 @@
     "@bicstone/ra-language-japanese": "^5.12.1",
     "ra-data-fakerest": "^5.12.3",
     "ra-i18n-polyglot": "^5.12.3",
-    "react": "^19.0.0",
+    "react": "^19.2.0",
     "react-admin": "^5.12.3",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.0",
-    "@types/react": "^19.0.12",
-    "@types/react-dom": "^19.0.4",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
     "@vitejs/plugin-react": "^5.1.0",
     "eslint": "^9.39.0",
     "eslint-plugin-react": "^7.37.5",
